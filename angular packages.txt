@@ -1,0 +1,4 @@
+npm install ngx-bootstrap --save
+ng add @ng-bootstrap/ng-bootstrap
+npm install font-awesome --save
+npm install ngx-bootstrap bootstrap --save

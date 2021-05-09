@@ -1,0 +1,28 @@
+CREATE TABLE [dbo].[AccessControl] (
+    [Id]         NCHAR (100) NOT NULL,
+    [SystemName] NCHAR (100) NULL,
+    [Hyperlink]  NCHAR (200) NULL,
+    [Enabled]    NCHAR (10)  NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[Permissions] (
+    [UserId]   NCHAR (100) NULL,
+    [SystemId] NCHAR (10)  NULL
+);
+
+
+CREATE TABLE [dbo].[SystemUser] (
+    [Id]       NCHAR (100)    NOT NULL,
+    [Name]     NCHAR (100)    NULL,
+    [NIC]      NCHAR (10)     NULL,
+    [DOB]      NCHAR (50)     NULL,
+    [Address]  NCHAR (200)    NULL,
+    [Username] NCHAR (100)    NULL,
+    [Password] NVARCHAR (MAX) NULL,
+    [Phone]    NCHAR (10)     NULL,
+    [Active]   NCHAR (10)     NULL,
+    [UserRole] NCHAR (10)     NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
