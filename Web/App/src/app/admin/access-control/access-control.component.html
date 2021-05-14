@@ -1,0 +1,69 @@
+<nav>
+	<app-header></app-header>
+</nav>
+<app-sidebar></app-sidebar>
+
+<div class="maincontent">
+    <div class="main">
+    <input type="button" class="float-right" style="padding: 10px 40px;margin-bottom: 10px;margin-right: 1px;text-transform: uppercase;
+    overflow: hidden;" value="Create New Access Control" (click)="CreateAccessControl()">
+    <table>
+        <tr>
+          <th>System Name</th>
+          <th>Hyperlink</th>
+          <th>Status</th>
+          <th>View</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+        <tr *ngFor="let item of accesscontrollist">
+          <td>{{item.systemName}}</td>
+          <td>{{item.hyperlink}}</td>
+          <td>{{item.enabled}}</td>
+          <td><span id='clickableAwesomeFont' (click)="ViewAccessControl(item.id)"><i class="far fa-eye"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="EditAccessControl(item.id)"><i class="far fa-edit"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="DeleteAccessControl(item.id)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+      </table>
+    </div>
+</div>
+
+
+<ng-template #createnewaccesscontrol>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Access Control Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="CloseModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="systemname">System Name</label>
+        <div class="input-group">
+          <input type="text" id="systemname" class="form-control" style="text-align: left" placeholder="system name" name="systemname" 
+          [(ngModel)]="systemname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="hyperlink">Hyperlink</label>
+        <div class="input-group">
+          <input type="text" id="hyperlink" class="form-control" style="text-align: left" placeholder="hyperlink" name="hyperlink"
+          [(ngModel)]="hyperlink">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="status">Enable</label>
+        <div class="input-group">
+            <input type="radio" [(ngModel)]="status" id="enable" name="enable" value="enable">
+            <label for="enable" class="mt-2 mr-5">Enable</label><br>
+            <input type="radio" [(ngModel)]="status" id="disable" name="disable" value="disable">
+            <label for="disable" class="mt-2">Disable</label><br>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="SaveAccessControl()" [hidden]="!savebtn">Save</button>
+  </div>
+</ng-template>

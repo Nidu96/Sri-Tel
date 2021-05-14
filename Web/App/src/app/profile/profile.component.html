@@ -1,0 +1,17 @@
+<nav>
+	<app-header></app-header>
+</nav>
+
+<div class="main">
+    <ul class="cards">
+        <li class="cards_item" *ngFor="let accesscontrol of syslist">
+          <div class="newcard">
+            <div class="card_content">
+              <h2 class="card_title">{{accesscontrol.SystemName}}</h2>
+              <h3 class="card_text mt-3"><a class="underlineHover" href={{accesscontrol.Hyperlink}} target="_blank">{{accesscontrol.Hyperlink}}</a></h3>
+            </div>
+          </div>
+        </li>
+    </ul>
+</div>
+
