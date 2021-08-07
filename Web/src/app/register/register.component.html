@@ -1,0 +1,26 @@
+ <div class="content" role="main">  
+	<div class="card-container">
+		<div class="wrapper fadeInDown">
+			<div id="loginform" class="mt-5 mb-5"> 
+              <img class="mb-5 mt-5" width="200px" height="70px" src="../../assets/images/logo.png">  
+			  <h3 class="mb-3">Sign Up</h3>
+		  
+			  <!-- Login Form -->
+			  <form style="align-content: center">
+                <input type="text" id="fullname" class="fadeIn first" name="fullname" placeholder="name" [(ngModel)]="fullname">
+                <input type="text" id="username" class="fadeIn second" name="username" placeholder="email" [(ngModel)]="username">
+                <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="password">
+                <input type="password" id="confirmpassword" class="fadeIn third" name="confirmpassword" placeholder="confirm password" [(ngModel)]="confirmpassword">
+				<input type="button" class="fadeIn third btnsubmit" value="Sign Up" (click)="RegisterBtnClickEvent()" [disabled]="!savebtnactive">
+			  </form>
+		  
+			  <div id="formFooter">
+				<a href="/">Go to Home</a>
+			  </div>
+		  
+			</div>
+		</div>
+	</div>
+  </div>  
+
+

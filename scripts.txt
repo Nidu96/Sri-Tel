@@ -1,28 +1,52 @@
-CREATE TABLE [dbo].[AccessControl] (
-    [Id]         NCHAR (100) NOT NULL,
-    [SystemName] NCHAR (100) NULL,
-    [Hyperlink]  NCHAR (200) NULL,
-    [Enabled]    NCHAR (10)  NULL,
+CREATE TABLE [dbo].[Event] (
+    [Id]            NCHAR (100) NOT NULL,
+    [Title]         NCHAR (100) NULL,
+    [Description]   NTEXT       NULL,
+    [DatePublished] DATETIME    NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-CREATE TABLE [dbo].[Permissions] (
-    [UserId]   NCHAR (100) NULL,
-    [SystemId] NCHAR (10)  NULL
+CREATE TABLE [dbo].[Tutorial] (
+    [Id]               NCHAR (100) NOT NULL,
+    [Title]            NCHAR (100) NULL,
+    [Video]            NCHAR (200) NULL,
+    [Description]      NCHAR (250) NULL,
+    [DatePublished]    DATETIME    NULL,
+    [Price]            BIGINT      NULL,
+    [StripeProductKey] NCHAR (200) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
 
 CREATE TABLE [dbo].[SystemUser] (
     [Id]       NCHAR (100)    NOT NULL,
     [Name]     NCHAR (100)    NULL,
-    [NIC]      NCHAR (10)     NULL,
-    [DOB]      NCHAR (50)     NULL,
-    [Address]  NCHAR (200)    NULL,
     [Username] NCHAR (100)    NULL,
     [Password] NVARCHAR (MAX) NULL,
-    [Phone]    NCHAR (10)     NULL,
     [Active]   NCHAR (10)     NULL,
     [UserRole] NCHAR (10)     NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
+CREATE TABLE [dbo].[Post] (
+    [Id]            NCHAR (100) NOT NULL,
+    [Title]         NCHAR (100) NULL,
+    [Image]         NCHAR (200) NULL,
+    [Category]      NCHAR (100) NULL,
+    [Description]   NTEXT       NULL,
+    [DatePublished] DATETIME    NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+CREATE TABLE [dbo].[Permissions] (
+    [Id]            NCHAR (100) NOT NULL,
+    [UserId]        NCHAR (100) NULL,
+    [TutorialId]    NCHAR (100) NULL,
+    [DateOfPayment] DATETIME    NULL,
+    [Permissions]   NCHAR (100) NULL
+);
+
+
+
 

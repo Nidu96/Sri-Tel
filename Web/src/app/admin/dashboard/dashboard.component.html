@@ -1,0 +1,107 @@
+<app-sidebar></app-sidebar>
+
+<div class="maincontent">
+    <div class="main">
+      <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Dashboard</h1>
+      
+      <!-- users -->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Status</th>
+          <th scope="col">View</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of userlist">
+          <td>{{item.Name}}</td>
+          <td>{{item.Username}}</td>
+          <td>{{item.Active}}</td>
+          <td><span id='clickableAwesomeFont' (click)="ViewUser(item.Id)"><i class="far fa-eye"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="EditUser(item.Id)"><i class="far fa-edit"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="DeleteUser(item.Id)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <h3 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Payments</h3>
+      <!-- payments -->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Date Of Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of permissionlist">
+          <td>{{i.Name}}</td>
+          <td>{{i.Email}}</td>
+          <td>{{i.Date}}</td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+</div>
+
+
+<ng-template #createnewuser>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">User Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="CloseModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="fullname">Name</label>
+        <div class="input-group">
+          <input type="text" id="fullname" class="form-control" style="text-align: left" placeholder="name" name="fullname" 
+          [(ngModel)]="fullname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="username">Email</label>
+        <div class="input-group">
+          <input type="text" id="username" class="form-control" style="text-align: left" placeholder="username" name="username"
+          [(ngModel)]="username">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-group">
+          <input type="password" id="password" class="form-control" style="text-align: left" placeholder="password" name="password"
+          [(ngModel)]="password">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <div class="input-group">
+            <input type="radio" [(ngModel)]="status" id="active" name="status" value="active">
+            <label for="active" class="mb-1 mr-5">Active</label><br>
+            <input type="radio" [(ngModel)]="status" id="deactive" name="status" value="deactive">
+            <label for="deactive" class="mb-1">Deactive</label><br>
+        </div>
+      </div>
+      <div class="form-group">
+          <label for="status">User Role</label>
+          <div class="input-group">
+              <input type="radio" [(ngModel)]="userrole" id="user" name="userrole" value="user">
+              <label for="user" class="mb-1 mr-5">User</label><br>
+              <input type="radio" [(ngModel)]="userrole" id="admin" name="userrole" value="admin">
+              <label for="admin" class="mb-1">Admin</label><br>
+          </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="SaveUser()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
+  </div>
+</ng-template>

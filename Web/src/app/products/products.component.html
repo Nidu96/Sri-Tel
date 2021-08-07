@@ -1,0 +1,35 @@
+<app-header></app-header>
+<div class="row" style="height: 60%;text-align: center;">
+</div>
+<div class="row" style="background-color: white">
+<div class="col-1"></div>
+<div class="col-10">
+<section>
+    <div>
+        <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Products</h1>
+        <hr data-aos="zoom-in" data-aos-duration="2000">
+        <div class="row">
+            <ul class="cards2">
+                <li class="cards_item2 mt-5" data-aos="flip-left" data-aos-duration="2000" *ngFor="let item of productlist">
+                <div class="newcard">
+                    <div class="card_content">
+                    <img class="d-block w-100" [src]="item.Image">
+                    <p>{{item.Title}}</p>
+                    <button data-aos="zoom-in" data-aos-duration="2000" class="btnsubmit2" style="vertical-align:middle;" (click)="buyBtnClick(item)"><i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+                        <span>Buy </span>
+                    </button>
+                    </div>
+                </div>
+                </li>
+            </ul>
+        </div>
+        <div class="row mt-5" [hidden]="showproducts">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 div3 ml-1 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
+                <h2 style="margin-top: 5%;text-align: center;word-wrap:break-word;">Currently there are no Products</h2>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+</div>

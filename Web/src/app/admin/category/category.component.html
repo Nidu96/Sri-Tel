@@ -1,0 +1,76 @@
+<app-sidebar></app-sidebar>
+
+<div class="maincontent">
+    <div class="main">
+    <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Category</h1>
+    <input type="button" class="float-right" style="padding: 8px 20px;margin-bottom: 10px;margin-right: 1px;font-size: 16px;overflow: hidden;" value="Create New Category" (click)="CreateCategory()">
+    <table class="table">
+        <thead>
+        <tr>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Date Published/Updated</th>
+          <th>View</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of categorylist">
+          <td style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></td>
+          <td>{{item.Title}}</td>
+          <td>{{item.DatePublished}}</td>
+          <td><span id='clickableAwesomeFont' (click)="ViewCategory(item.Id)"><i class="far fa-eye"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="EditCategory(item.Id)"><i class="far fa-edit"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="DeleteCategory(item.Id, item.Image)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+<ng-template #createnewcategory>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Category Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="CloseModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <div class="input-group">
+          <input type="text" id="title" class="form-control" style="text-align: left" placeholder="title" name="title" 
+          [(ngModel)]="title">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="datepublished">Date</label>
+        <div class="input-group">
+          <input type="text" id="datepublished" class="form-control" style="text-align: left" placeholder="datepublished" name="datepublished"
+          [(ngModel)]="datepublished" disabled>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="image">Image</label>
+        <div class="input-group">
+          <input type="file" id="fileToUpload" class="form-control" style="text-align: left" placeholder="fileToUpload" name="fileToUpload"
+          [(ngModel)]="fileToUpload" autocomplete="off" (change)="FileUpload($event)" accept="image/*">
+          <img [src]="image" style="width:inherit; height: inherit;align-content: center;" [hidden]="!showImage">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <div class="input-group">
+          <textarea id="description" class="form-control" style="text-align: left" placeholder="description" name="description"
+          [(ngModel)]="description" rows="10"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="SaveCategory()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
+  </div>
+</ng-template>

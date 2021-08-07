@@ -21,6 +21,22 @@ namespace Service.Controllers
     {
         private DBContext db = new DBContext();
 
+        [ActionName("checkuserexist")]
+        [HttpPost]
+        public HttpResponseMessage CheckUserExist(SystemUser user)
+        {
+            try
+            {
+                Boolean userexists = db.CheckUserExist(user);
+                return Request.CreateResponse(HttpStatusCode.OK, userexists);
+            }
+            catch (Exception ex)
+            {
+                Boolean userexists = false;
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, userexists);
+            }
+        }
+
         [ActionName("saveuser")]
         [HttpPost]
         public HttpResponseMessage SaveUser(SystemUser user)
@@ -28,41 +44,6 @@ namespace Service.Controllers
             try
             {
                 SystemUser userdata = db.SaveUser(user);
-
-                if(userdata != null)
-                {
-                    System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
-                    mail.To.Add(userdata.Username);
-                    mail.From = new MailAddress("YOUR EMAIL", "Password", System.Text.Encoding.UTF8);
-                    mail.Subject = "Your password";
-                    mail.SubjectEncoding = System.Text.Encoding.UTF8;
-                    mail.Body = "Your password is " + userdata.Password;
-                    mail.BodyEncoding = System.Text.Encoding.UTF8;
-                    mail.IsBodyHtml = true;
-                    mail.Priority = MailPriority.High;
-                    SmtpClient client = new SmtpClient();
-                    client.Credentials = new System.Net.NetworkCredential("YOUR EMAIL", "YOUR PASSWORD");
-                    client.Port = 587;
-                    client.Host = "smtp.gmail.com";
-                    client.EnableSsl = true;
-                    try
-                    {
-                        client.Send(mail);
-                    }
-                    catch (Exception ex)
-                    {
-                        Exception ex2 = ex;
-                        string errorMessage = string.Empty;
-                        while (ex2 != null)
-                        {
-                            errorMessage += ex2.ToString();
-                            ex2 = ex2.InnerException;
-                        }
-
-                    }
-                }
-
-                db.SavePermissions(user);
 
                 return Request.CreateResponse(HttpStatusCode.OK, userdata);
             }

@@ -2,3 +2,14 @@ npm install ngx-bootstrap --save
 ng add @ng-bootstrap/ng-bootstrap
 npm install font-awesome --save
 npm install ngx-bootstrap bootstrap --save
+npm install --save flatpickr angularx-flatpickr
+npm i angular-calendar
+npm i date-fns
+npm install @angular/animation
+npm i ngx-bootstrap
+
+
+npm i direct-pay-online
+npm install express --save
+npm i cors --save
+Agrotest#00

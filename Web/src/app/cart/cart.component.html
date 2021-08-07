@@ -1,0 +1,68 @@
+<app-header></app-header>
+<div class="mt-5" height="100%" style="background-color: white">
+<section>
+  <div class="row justify-content-center mt-5 pt-5">
+    <h1 class="pt-5 pb-4" data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Checkout</h1>
+    <hr data-aos="zoom-in" data-aos-duration="2000">
+    <div class="col-md-8 div3 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
+    <table class="table">
+        <thead>
+        <tr>
+          <th></th>
+          <th>Product Details</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of bannerlist">
+          <td style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></td>
+          <td>{{item.Title}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><span id='clickableAwesomeFont' (click)="DeleteSelectedProduct(item.Id, item.Image)"><i class="fas fa-trash-alt"></i></span></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="col-md-4 div3 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
+            <form>
+            <div class="form-group">
+                <label for="fullname">Name</label>
+                <div class="input-group">
+                <input type="text" id="fullname" class="form-control" style="text-align: left" placeholder="name" name="fullname" 
+                [(ngModel)]="fullname">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username">Email</label>
+                <div class="input-group">
+                    <input type="text" id="username" class="form-control" style="text-align: left" placeholder="username" name="username"
+                    [(ngModel)]="username">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control" style="text-align: left" placeholder="password" name="password"
+                    [(ngModel)]="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmpassword">Confirm Password</label>
+                <div class="input-group">
+                    <input type="password" id="confirmpassword" class="form-control" style="text-align: left" placeholder="confirm password" name="confirmpassword"
+                    [(ngModel)]="confirmpassword">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-outline-dark" (click)="SaveUser()">Save</button>
+            </div>
+            </form>
+        </div>
+  </div>
+</section>
+</div>
