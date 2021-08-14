@@ -22,10 +22,10 @@ app.use(function (req, res, next) {
   });
 
 const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'agrodb'
+  host:'localhost',
+  user:'root',
+  password:'',
+  database:'agrodb'
 });
 
 con.connect((err) => {
@@ -283,7 +283,7 @@ app.post("/category/deletecategory", (req, res, next) => {
 //#endregion
 
 //#region products
-app.post("/product/saveproducts", (req, res, next) => {
+app.post("/product/saveproduct", (req, res, next) => {
   const product = req.body;
   if(product.Id == undefined || product.Id == null || product.Id == ""){
     product.Id = Math.random().toString(7).slice(2);
@@ -292,8 +292,8 @@ app.post("/product/saveproducts", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE Product SET title = ?,image = ?,category = ?,description = ?, datepublished = ? Where id = ?',
-    [product.Title,product.Image,product.Category,product.Description, product.DatePublished,product.Id], (err, row) => {
+    con.query('UPDATE Product SET title = ?,image = ?,price = ?, category = ?,description = ?, datepublished = ? Where id = ?',
+    [product.Title,product.Image,product.Price,product.Category,product.Description, product.DatePublished,product.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });

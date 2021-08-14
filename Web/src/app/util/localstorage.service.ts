@@ -12,4 +12,6 @@ export class LocalStorage {
     public static PRODUCT_ID: string = "product_id";
 
     public static PRODUCT_NAME: string = "product_name";
+
+    public static SHOPPING_CART: string = "selected_products_array";
 }

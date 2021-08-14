@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators' 
-import { Product } from 'src/app/models/product.model';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Payment } from '../models/payment.model';
 
@@ -13,14 +12,8 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-  payment(paymentdetails: FormData): Observable<any> {
- 	const httpOptions = {
-		headers: new HttpHeaders({
-			'Accept': 'application/json'
-		})
-    } 
-	return this.http.post<any>(environment.server_URL + environment.router_prefix + 'Payment/payment', paymentdetails,httpOptions)
-			 .pipe()
-	}
+	baseUrl = 'http://localhost:3000/payment';
+
+	payment(paymentdetails: FormData): Observable<any> {return this.http.post<any>(`${this.baseUrl}/payment`, paymentdetails);}
 }
 

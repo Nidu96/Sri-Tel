@@ -4,6 +4,7 @@ export class Product {
         public Title?: string,
         public Image?: string,
         public ImageFile?: string,
+        public Price?: string,
         public Description?: string,
         public Category?: string,
         public DatePublished?: Date

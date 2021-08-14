@@ -1,12 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="height: 12%;background-color: white;">
-    <div class="container" data-aos="fade-up" [hidden]="isAdminDashboard">
-        <a href="/"><img width="150px" height="50px" src="../../assets/images/logo.png"></a>
+<div class="fixed-top">
+<nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 5%;background-color: white;">
+	<div class="box justify-content-center">Welcome to Sri Lanka's biggest Online agriculture experience </div>
+</nav>
+<nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 60px;background-color: rgba(34,54,97,1);">
+</nav>
+<nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 50px;background-color: white;">
+    <div class="container-fluid" data-aos="fade-up" [hidden]="isAdminDashboard">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
     
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav">
 			    <li class="nav-item active">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="500" href="#">Home</a>
                 </li>
@@ -23,7 +28,10 @@
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="800" href="/dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item" [hidden]="!userLoggedIn">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/cart"><i class="fas fa-shopping-cart"></i></a>
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/cart">
+                        <i class="fa" style="font-size:24px">&#xf07a;</i>
+                        <span class="cart-span"> {{selectedProducts}} </span>
+                    </a>
 			    </li>
 			    <li class="nav-item" [hidden]="!userLoggedIn">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/profile">Hi {{name}}!</a>
@@ -41,3 +49,4 @@
         </div>
     </div>
 </nav>
+</div>

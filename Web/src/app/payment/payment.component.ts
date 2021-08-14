@@ -20,16 +20,18 @@ export class PaymentComponent implements OnInit {
   public user: SystemUser;
   public productid: string = "";
   public productname: string = "";
+  public stripeproductkey: string = "";
   public cardno: string = "";
 	public nameoncard: string = "";
   public price: string = "0";
-  public expmonth: string = "0";
-  public expyear: string = "0";
+  public expmonth: string = "00";
+  public expyear: string = "year of expiry";
   public cvv: string = "0";
 	public payment: Payment;
   public savebtnactive: boolean = true
   public paymentsuccess: boolean = false
   public cardtype: string = "";
+  public yearList: Array<string>
 
 	constructor(private router: Router,private paymentService: PaymentService,
 		private alertService: AlertService, private userService: UserService,) {
@@ -44,6 +46,13 @@ export class PaymentComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser; 
     if(this.user == null || this.user == "" || this.user == undefined){
       this.router.navigateByUrl('/login')
+    }
+
+    this.yearList = []
+    this.yearList.push("year of expiry")
+    let startyear = (new Date()).getFullYear();
+    for(let i=startyear;i < (startyear+12); i++){
+      this.yearList.push(i.toString())
     }
 	}
 
@@ -64,23 +73,46 @@ export class PaymentComponent implements OnInit {
       return false
     }
 
-    if(this.expmonth == null || this.expmonth == undefined || this.expmonth == "" || isNumber(this.expmonth)){
+    if(this.expmonth == null || this.expmonth == undefined || this.expmonth == "" || isNumber(this.expmonth) || this.expmonth == "00"){
       this.alertService.error('Invalid month of expiry')
       return false
     }
 
-    if(this.expyear == null || this.expyear == undefined || this.expyear == "" || isNumber(this.expyear)){
+    if(this.expyear == null || this.expyear == undefined || this.expyear == "" || isNumber(this.expyear)  || this.expyear == "year of expiry"){
       this.alertService.error('Invalid year of expiry')
       return false
     }
 
-    if(this.cvv == null || this.cvv == undefined || this.cvv == ""){
+    if(this.cvv == null || this.cvv == undefined || this.cvv == "" || this.cvv == "0"){
       this.alertService.error('Invalid CVV')
       return false
     }
 
     return true
   }
+
+  // Encrypt (msg, pass) {
+  //   // random salt for derivation
+  //   var keySize = 256;
+  //   var salt = CryptoJS.lib.WordArray.random(16);
+  //   // well known algorithm to generate key
+  //   var key = CryptoJS.PBKDF2(pass, salt, {
+  //       keySize: keySize/32,
+  //       iterations: 100
+  //     });
+  //   // random IV
+  //   var iv = CryptoJS.lib.WordArray.random(128/8);      
+  //   // specify everything explicitly
+  //   var encrypted = CryptoJS.AES.encrypt(msg, key, { 
+  //     iv: iv, 
+  //     padding: CryptoJS.pad.Pkcs7,
+  //     mode: CryptoJS.mode.CBC        
+  //   });
+  //   // combine everything together in base64 string
+  //   var result = CryptoJS.enc.Base64.stringify(salt.concat(iv).concat(encrypted.ciphertext));
+  //   return result;
+  // }
+
 
 	CheckoutBtnClickEvent(){
     this.alertService.clear()
@@ -92,15 +124,20 @@ export class PaymentComponent implements OnInit {
       this.payment = new Payment();
       this.payment.UserId = this.user.Id
       this.payment.TutorialId = this.productid
+      this.payment.StripeProductKey = this.stripeproductkey
       this.payment.TutorialName = this.productname
       this.payment.Price = parseFloat(this.price)
+      // this.payment.CardNumber = CryptoJS.AES.encrypt(this.cardno, "app0000").toString()
       this.payment.CardNumber = this.cardno
 			this.payment.NameOnCard = this.nameoncard
       this.payment.ExpMonth = parseInt(this.expmonth)
       this.payment.ExpYear = parseInt(this.expyear)
+      // this.payment.CVV = CryptoJS.AES.encrypt(this.cvv, "app0000").toString()
       this.payment.CVV = this.cvv
 
       const paymentdetails: FormData = new FormData();
+
+      //let payment = CryptoJS.AES.encrypt(JSON.stringify(this.payment), "app0000")
       paymentdetails.append("payment", JSON.stringify(this.payment));
       paymentdetails.append("user", JSON.stringify(this.user));
 

@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
+
+
 export class ProductsComponent implements OnInit {
   public productlist: Array<any> = []
   public showproducts: boolean = false;
@@ -30,6 +32,7 @@ export class ProductsComponent implements OnInit {
       this.productlist = data
       if(this.productlist != null && this.productlist != undefined && this.productlist.length != 0){
         this.showproducts = true
+        this.productlist.forEach(e => {e.IsAddedToCart = false;});
       }
     },
     error => { 
@@ -38,10 +41,31 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  buyBtnClick(item: any){
-    localStorage.setItem(LocalStorage.PRODUCT_PRICE, item.price);
-    localStorage.setItem(LocalStorage.PRODUCT_ID, item.id);
-    localStorage.setItem(LocalStorage.PRODUCT_NAME, item.title);
-    this.router.navigateByUrl('/payment')
+  addToCartBtnClick(item: any){
+    let selectedProducts = [] 
+    let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
+    if(temp != undefined && temp != null && temp != ""){
+      selectedProducts = JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART));
+    }
+    selectedProducts.push(item)
+    item.IsAddedToCart = true
+    localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(selectedProducts));
+    this.productService.refreshshoppingcart();
+    // this.router.navigateByUrl('/payment')
+  }
+
+  removeFromCartBtnClick(item: any){
+    let selectedProducts = [] 
+    let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
+    if(temp != undefined && temp != null && temp != ""){
+      selectedProducts = JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART));
+    }
+    if(selectedProducts != null && selectedProducts != undefined && selectedProducts.length != 0){
+      selectedProducts.splice(item, 1)
+      item.IsAddedToCart = false
+    }
+    localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(selectedProducts));
+    this.productService.refreshshoppingcart();
+    // this.router.navigateByUrl('/payment')
   }
 }

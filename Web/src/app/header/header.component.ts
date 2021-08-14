@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorage } from '../util/localstorage.service';
 import { SystemUser } from '../models/systemuser.model';
+import { ProductService } from '../admin/product/product.service';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +13,13 @@ export class HeaderComponent implements OnInit {
 
   public loggedinuser: SystemUser;
   public name: string;
+  public selectedProducts: string;
   public userLoggedIn: boolean = false;
   public isAdmin: boolean = false;
   public isUser: boolean = false;
   public isAdminDashboard: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private productService: ProductService) { }
 
   ngOnInit() {
     if(
@@ -52,6 +54,16 @@ export class HeaderComponent implements OnInit {
       }
     }
 
+
+    this.productService.selectedProducts.subscribe(res => {
+      this.selectedProducts = res;
+    });
+
+    let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
+    this.selectedProducts = "0";
+    if(temp != undefined && temp != null && temp != ""){
+      this.selectedProducts = (JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART))).length;
+    }
   }
 
   Logout(){

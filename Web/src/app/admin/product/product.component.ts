@@ -7,6 +7,7 @@ import { ProductService } from './product.service';
 import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-service';
 import { Product } from 'src/app/models/product.model';
 import { LocalStorage } from 'src/app/util/localstorage.service';
+import { CategoryService } from '../category/category.service';
 
 @Component({
   selector: 'app-product',
@@ -24,22 +25,25 @@ export class ProductComponent implements OnInit {
   public title: string;
   public description: string;
   public datepublished: string;
+  public price: string;
   public category: string;
   public fileToUpload;
   public image;
   public showImage: boolean = false;
   public valueChanged: boolean = false;
   public productlist: Array<Product> = []
+  public categorylist: Array<Product> = []
   public savebtn: boolean = true
   public savebtnactive: boolean = true
 
   @ViewChild('createnewproduct', {static: false}) createnewproduct: TemplateRef<any>
   
-  constructor(private bsModalService :BsModalService, private productService: ProductService, 
+  constructor(private bsModalService :BsModalService, private productService: ProductService, private categoryService: CategoryService,
     private parserFormatter: NgbDateParserFormatter, private alertService: AlertService) { }
 
   ngOnInit() {
     this.GetProducts()
+    this.GetCategories()
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
   }
 
@@ -73,12 +77,15 @@ export class ProductComponent implements OnInit {
       }
       this.product.Title = this.title;
       this.product.Image = this.image;
+      this.product.Price = this.price;
+      this.product.Category = this.category;
       this.product.Description = this.description;
       this.product.DatePublished = new Date(this.datepublished);
       this.productService.saveproduct(this.product).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
         this.GetProducts()
+        this.GetCategories()
         this.Initialize()
       },
       error => {
@@ -104,7 +111,17 @@ export class ProductComponent implements OnInit {
       return false
     }
 
-    if(this.category == "product" && (this.description == undefined || this.description == "" || this.description == null)){
+    if(this.price == undefined || this.price == "" || this.price == null){
+      this.alertService.error('Price is required')
+      return false
+    }
+
+    if(this.category == undefined || this.category == "" || this.category == null){
+      this.alertService.error('Category is required')
+      return false
+    }
+
+    if(this.description == undefined || this.description == "" || this.description == null){
       this.alertService.error('Description is required')
       return false
     }
@@ -126,6 +143,16 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  GetCategories(){
+    this.categoryService.getcategories().subscribe(data => {
+      this.categorylist = data
+    },
+    error => { 
+      this.alertService.clear()
+      this.alertService.error('Error!')
+    });
+  }
+
   ViewProduct(id: string){
     this.alertService.clear()
     this.product = new Product();
@@ -136,6 +163,8 @@ export class ProductComponent implements OnInit {
       this.id = data[0].Id;
       this.title = data[0].Title;
       this.image = data[0].Image;
+      this.price = data[0].Price;
+      this.category = data[0].Category;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -159,6 +188,8 @@ export class ProductComponent implements OnInit {
       this.id = data[0].Id;
       this.title = data[0].Title;
       this.image = data[0].Image;
+      this.price = data[0].Price;
+      this.category = data[0].Category;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true

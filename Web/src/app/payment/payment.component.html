@@ -24,14 +24,14 @@
 					<label for="price">Price ($)</label>
 					<div class="input-group">
 					  <input type="text" id="price" class="form-control" style="text-align: left" placeholder="price" name="price" 
-					  [(ngModel)]="price">
+					  [(ngModel)]="price" disabled>
 					</div>
 				  </div>
 				  <div class="form-group">
 					<label for="nameoncard">Name On Card</label>
 					<div class="input-group">
 					  <input type="text" id="nameoncard" class="form-control" style="text-align: left" placeholder="name on card" name="nameoncard"
-					  [(ngModel)]="nameoncard">
+					  [(ngModel)]="nameoncard" autocomplete="off">
 					</div>
 				  </div>
 				  <div class="form-group">
@@ -62,23 +62,43 @@
 					  <i class="fab fa-cc-visa cardicons mr-2 mt-2" style="color:navy;"></i>
 					  </span>
 					  <input type="text" id="cardno" class="form-control" style="text-align: left" placeholder="card number" name="cardno"
-					  [(ngModel)]="cardno" (keyup)="FormatCreditCard()">
+					  [(ngModel)]="cardno" (keyup)="FormatCreditCard()" autocomplete="off">
 					</div>
 				  </div>
 				  <div class="form-group">
 					<label for="expmonth">Expiry</label>
 					<div class="input-group">
-					  <input type="text" id="expmonth" class="form-control" style="text-align: left" placeholder="month of expiry" name="expmonth"
-					  [(ngModel)]="expmonth" (keyup)="FormatMonth()">
-					  <input type="text" id="expyear" class="form-control" style="text-align: left" placeholder="year of expiry" name="expyear"
-					  [(ngModel)]="expyear" (keyup)="FormatYear()">
+					  <!-- <input type="text" id="expmonth" class="form-control" style="text-align: left" placeholder="month of expiry" name="expmonth"
+					  [(ngModel)]="expmonth" (keyup)="FormatMonth()"> -->
+					  <select (keyup)="FormatMonth()" [(ngModel)]="expmonth" id="expmonth" class="form-control select-control" style="text-align: left" placeholder="month of expiry" name="expmonth">
+						  <option value='00'>month of expiry</option> 
+						  <option value='01'>01</option>
+						  <option value='02'>02</option>
+						  <option value='03'>03</option>
+						  <option value='04'>04</option>
+						  <option value='05'>05</option>
+						  <option value='06'>06</option>
+						  <option value='07'>07</option>
+						  <option value='08'>08</option>
+						  <option value='09'>09</option>
+						  <option value='10'>10</option>
+						  <option value='11'>11</option>
+						  <option value='12'>12</option>
+					  </select>
+					  <!-- <input type="text" id="expyear" class="form-control" style="text-align: left" placeholder="year of expiry" name="expyear"
+					  [(ngModel)]="expyear" (keyup)="FormatYear()"> -->
+					<select (keyup)="FormatYear()" [(ngModel)]="expyear" 
+					  id="expyear" class="form-control select-control" style="text-align: left"
+					   placeholder="year of expiry" name="expyear">
+						<option *ngFor="let year of yearList" value="{{year}}">{{year}}</option>
+					</select>
 					</div>
 				  </div>
 				  <div class="form-group">
 					<label for="cvv">CVV</label>
 					<div class="input-group">
 					  <input type="text" id="cvv" class="form-control" style="text-align: left" placeholder="cvv" name="cvv"
-					  [(ngModel)]="cvv" (keyup)="FormatCVV()">
+					  [(ngModel)]="cvv" (keyup)="FormatCVV()" autocomplete="off">
 					</div>
 				  </div>
 				  <div class="form-group">
@@ -89,7 +109,7 @@
 		  </div>
 		  <div class="row mt-5" [hidden]="!paymentsuccess">
             <div class="col-md-3"></div>
-            <div class="col-md-6 div3 col-sm-12">
+            <div class="col-md-6 div5 col-sm-12">
               <form>
                 <div class="form-group">
                   <label for="">Check your email for thr payment details</label>

@@ -11,6 +11,7 @@ import { DateFormat, DateType, DateValidators  } from 'ngx-mat-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarView, CalendarEvent } from 'angular-calendar';
 import { Category } from '../models/category.model';
+import { BannerService } from '../admin/banner/banner.service';
 
 @Component({
   selector: 'app-landing',
@@ -25,33 +26,27 @@ export class LandingComponent implements OnInit {
   public productlist: Array<any> = []
   public showproducts: boolean = false;
 
+  public bannerlist: Array<any> = []
+  public activeBanner: any;
+
   public viewDate: Date = new Date();
   public view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   public events: Array<CalendarEvent>
 
-  constructor(private router: Router,private categoryService: CategoryService, private productService: ProductService, private alertService: AlertService) { }
+  constructor(private router: Router,private categoryService: CategoryService, 
+    private productService: ProductService, private alertService: AlertService,
+    private bannerService: BannerService,) { }
 
   ngOnInit() {
     AOS.init();
     this.GetCategories();
     this.GetProducts();
+    this.GetBanners();
     localStorage.setItem(LocalStorage.LANDING_BODY, "1");
   }
 
   //#region navigation methods
-  ShowEvents(){
-    this.router.navigateByUrl('events')
-  }
-
-  ShowPosts(){
-    this.router.navigateByUrl('products')
-  }
-
-  ShowTutorials(){
-    this.router.navigateByUrl('tutorials')
-  }
-
   ShowServices(){
     this.router.navigateByUrl('services')
   }
@@ -108,6 +103,21 @@ export class LandingComponent implements OnInit {
 
     },
     error => { 
+    });
+  }
+
+
+  GetBanners(){
+    this.bannerService.getbanners().subscribe(data => {
+      this.bannerlist = data
+      if(data != null && data != undefined && data.length != 0 && data != ""){
+        this.activeBanner = data[0]
+        this.bannerlist.splice(this.activeBanner, 1)
+      }
+    },
+    error => { 
+      this.alertService.clear()
+      this.alertService.error('Error!')
     });
   }
   //#endregion
