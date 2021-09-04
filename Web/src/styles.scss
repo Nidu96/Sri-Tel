@@ -92,8 +92,8 @@ html {
 
 .cart-span{
 	font-size: 12px;
-	color: #0d0d0d;
-	background: #499c49;
+	color: #ffffff;
+	background: rgb(228, 120, 31);
 	border-radius: 50%;
 	padding: 5px;
 	position: relative;
@@ -490,11 +490,13 @@ html {
   
   .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
 	color: #030303;
+	background-color: white;
   }
   
   .navbar-light .navbar-nav .nav-link {
 	color: #030303;
 	padding: 8px;
+	background-color: white;
   }
   
   .navbar-toggler {
@@ -535,6 +537,46 @@ html {
     right: 0;
     left: 0;
     z-index: 1030;
+}
+
+.right_bar {		
+	position: relative;
+	z-index: 10;
+	.lang {
+		display: inline-block;
+		color: #f5f5f5;
+		font-size: 12px;
+		margin-left: 15px;
+	}
+}
+
+.navbar-address1 {
+	color: rgb(7, 7, 7);
+	font-size: 12px;
+}
+
+.navbar-address2 {
+	color: white;
+	font-size: 12px;
+}
+
+@media screen and (min-width: 992px) {
+	.right_bar {
+	position: absolute;
+	right: 0;
+	z-index: 10;
+	height: 63.6px;
+	padding: 0 30px 0 15px;
+	.member-bar {
+		ul {
+			>li {
+				a {
+					line-height: 5.3em;
+				}
+			}
+		}
+	}
+	}
 }
 
   .main {
