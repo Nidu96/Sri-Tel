@@ -1,6 +1,6 @@
 <div class="fixed-top">
 <nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 5%;background-color: white;">
-    <div class="right_bar">
+    <!-- <div class="right_bar">
         <div class="navbar-address1">
             <ul class="list-inline">
                 <li class="pl-3" id="memberLinkPanRegister">
@@ -18,7 +18,7 @@
 			    </li>
             </ul>
         </div>
-    </div>
+    </div> -->
     <div class="box justify-content-center">Welcome to Sri Lanka's biggest Online agriculture experience </div>
 
 </nav>
@@ -27,7 +27,7 @@
         <div class="navbar-address2">
             <ul class="list-inline">
                 <li class="pl-3" id="memberLinkPanRegister">
-                    <i class="fas fa-map-marker-alt" style="font-size:24px;color: rgb(228, 120, 31)"></i>
+                    <i class="fas fa-map-marker-alt pb-1" style="font-size:24px;color: rgb(228, 120, 31)"></i>
                 </li>
                 <li class="pt-3" id="memberLinkPanRegister">
                     <span>No 571, Highlevel Road,<br/>Delkanda, Nugegoda</span>
@@ -66,12 +66,6 @@
 			    <li class="nav-item" [hidden]="!isAdmin">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="800" href="/dashboard">Dashboard</a>
                 </li>
-                <li class="nav-item" [hidden]="!userLoggedIn">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/cart">
-                        <i class="fa" style="font-size:24px">&#xf07a;</i>
-                        <span class="cart-span"> {{selectedProducts}} </span>
-                    </a>
-			    </li>
 			    <li class="nav-item" [hidden]="!userLoggedIn">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/profile">Hi {{name}}!</a>
                 </li>

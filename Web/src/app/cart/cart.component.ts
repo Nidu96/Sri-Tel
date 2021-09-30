@@ -12,6 +12,11 @@ export class CartComponent implements OnInit {
 
   public selectedProducts: Array<any>;
   public emptyCart: boolean = true;
+  public name: string;
+  public phone: string;
+  public address: string;
+  public notes: string;
+  public city: string;
 
   constructor(private productService: ProductService) { }
 
@@ -48,4 +53,7 @@ export class CartComponent implements OnInit {
     // this.router.navigateByUrl('/payment')
   }
 
+  ContinueToPayment(){
+    
+  }
 }

@@ -50,6 +50,12 @@ html {
 	}
   }
 
+.landing-header-text{
+	text-align: left;
+	font-weight: bold;
+	font-size: 36px;
+}
+
   section {
 	margin-top: 4%;
 	margin-bottom: 4%;
@@ -717,7 +723,7 @@ html {
 	background-size: cover;
   }
   .carousel-caption {
-	bottom: 270px;
+	bottom: 200px;
   }
   
   .carousel-caption h5 {
@@ -732,6 +738,18 @@ html {
 	margin: auto;
 	font-size: 18px;
 	line-height: 1.9;
+  }
+
+  @media screen and (min-width: 601px) {
+	.carousel-caption {
+		bottom: 200px;
+	}
+  }
+  
+  @media screen and (max-width: 600px) {
+	.carousel-caption {
+		bottom: 0px;
+	}
   }
 
   .vl {
@@ -1061,6 +1079,15 @@ html {
 	text-align: center;
 }
 
+.divanglebutton {
+	border:2px solid rgb(216, 216, 216);
+	padding: 20px;
+	border: none;
+	align-content: center;
+	text-align: center;
+}
+
+
 .img-hover-zoom {
 	overflow: hidden;
 }
@@ -1209,7 +1236,7 @@ pre {
   }
 
   .box {
-	padding: 0px 20px 10px 0px;
+	padding: 5px 20px 10px 0px;
 	border: 2px solid rgba(82,183,136,1);
 	background-color: rgba(82,183,136,1);
 	display: inline-block;
@@ -1228,7 +1255,7 @@ pre {
 	top: -2px;
 	right: -10px;
 	left: 50%;
-	bottom: -1px;
+	bottom: -2px;
 	border: 2px solid rgba(82,183,136,1);
 	background-color: rgba(82,183,136,1);
 	border-left: 0;
@@ -1236,3 +1263,81 @@ pre {
 	transform: skew(-20deg);
 	z-index:-1;
   }
+
+  @media screen and (min-width: 601px) {
+	div.box {
+	  font-size: 18px;
+	}
+  }
+  
+  @media screen and (max-width: 600px) {
+	div.box {
+	  font-size: 10px;
+	}
+  }
+
+  .carousel-container{
+	padding-top: 150px;
+	background-repeat: no-repeat;
+	background-size: cover;
+  }
+
+  .banner {
+    float: left;
+    width:  100px;
+    height: 500px;
+    object-fit: cover;
+}
+
+
+ @media screen and (min-width: 601px) {
+	img.banner {
+		height: 500px;
+	}
+  }
+  
+  @media screen and (max-width: 600px) {
+	img.banner {
+		height: 200px;
+	}
+  }
+
+  .carousel-align{
+	display: flex;
+	align-items: center;
+	vertical-align:middle;
+  }
+  
+
+
+  //slider 
+  .toolbar {
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0px auto;
+    padding: 5px 0px;
+    background-color: skyblue;
+}
+
+#divA,
+#divB {
+    display: inline;
+}
+
+.inner {
+    float: right;
+    display: none;
+	padding-right: 20px;
+}
+
+#button1 {
+    float: right;
+    margin-right: 5px;
+}
+
+input,
+button {
+    padding: 5px;
+}

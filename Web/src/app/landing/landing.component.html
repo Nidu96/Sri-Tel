@@ -1,26 +1,26 @@
 <app-header></app-header>
-<div data-aos="fade-up" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div data-aos="fade-up" id="carouselExampleIndicators" class="carousel slide carousel-container" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-        <img class="d-block w-100" [src]="activeBanner.Image">
+        <img class="d-block w-100 banner" [src]="activeBanner.Image">
         <div class="carousel-caption d-none d-md-block">
             <h5>{{activeBanner.Title}}</h5>
             <p>{{activeBanner.Description}}</p>
         </div>
     </div>
     <div class="carousel-item" *ngFor="let item of bannerlist">
-        <img class="d-block w-100" [src]="item.Image">
+        <img class="d-block w-100 banner" [src]="item.Image">
         <div class="carousel-caption d-none d-md-block">
             <h5>{{item.Title}}</h5>
             <p>{{item.Description}}</p>
         </div>
     </div>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+  <a class="carousel-control-prev carousel-inner" href="#carouselExampleIndicators" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+  <a class="carousel-control-next carousel-inner" href="#carouselExampleIndicators" role="button" data-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
@@ -29,23 +29,16 @@
 <div style="background-color: white;align-content: center">
 <section id="services">
     <div class="row justify-content-center">
-        <div class="col-md-3 col-sm-4 div4 mb-3" data-aos="zoom-out-up" data-aos-duration="3000">
-            <img class="d-block w-100" src="../../assets/images/header1.jpg" alt="First slide">
-            <p class="textcenter">Description</p>
-            <input type="button" class="fadeIn third btnsubmitlanding" value="Button">
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-3 col-sm-4 div4 mb-3" data-aos="zoom-out-up" data-aos-duration="3000">
-            <img class="d-block w-100" src="../../assets/images/header1.jpg" alt="First slide">
-            <p class="textcenter">Description</p>
-            <input type="button" class="fadeIn third btnsubmitlanding" value="Button">
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-3 col-sm-4 div4 mb-3" data-aos="zoom-out-up" data-aos-duration="3000">
-            <img class="d-block w-100" src="../../assets/images/header1.jpg" alt="First slide">
-            <p class="textcenter">Description</p>
-            <input type="button" class="fadeIn third btnsubmitlanding" value="Button">
-        </div>
+      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddCategory()"><span><i class="fas fa-angle-left fa-3x"></i></span></a>
+      </div>
+      <div class="col-2 divgallery m-2 justify-content-center" data-aos="zoom-in-up" 
+      *ngFor="let item of categorylisttoshow" data-aos-duration="3000" [hidden]="item.Hidden">
+          <img class="d-block w-100" [src]="item.Image">
+      </div>
+      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveCategory()"><span ><i class="fas fa-angle-right fa-3x" (click)="RemoveCategory()"></i></span></a>
+      </div>
     </div>
 </section>
 <!-- <section id="posts">
@@ -87,7 +80,7 @@
 </section> -->
 
 <section id="aboutus">
-      <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">About Us</h1>
+      <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">About Us</h1>
       <hr data-aos="zoom-in" data-aos-duration="2000">
       <div class="row justify-content-center">
         <p class="textcenter">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
@@ -113,28 +106,32 @@
      </div>
 </section>
 
-<section id="categories">
-      <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Categories</h1>
-      <hr data-aos="zoom-in" data-aos-duration="2000">
-      <div class="row justify-content-center">
-        <div class="col-4 divgallery mb-3 justify-content-center" data-aos="zoom-in-up" 
-        *ngFor="let item of categorylist" data-aos-duration="3000">
-            <img class="d-block w-100" [src]="item.Image">
-            <input type="button" class="fadeIn third btnsubmitlanding" value="Button">
-        </div>
-     </div>
-</section>
-
 <section id="products">
-    <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Latest Products</h1>
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Best Sellers</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
-      <div class="col-4 divgallery mb-3 justify-content-center" data-aos="zoom-in-up" 
-      *ngFor="let item of categorylist" data-aos-duration="3000">
-          <img class="d-block w-100" [src]="item.Image">
-          <input type="button" class="fadeIn third btnsubmitlanding" value="Button">
+      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddCategory()"><span><i class="fas fa-angle-left fa-3x"></i></span></a>
+      </div>
+      <div class="col-2 divgallery m-3 justify-content-center" data-aos="zoom-in-up" 
+        *ngFor="let item of categorylisttoshow" data-aos-duration="3000" [hidden]="item.Hidden">
+        <img class="d-block w-100" [src]="item.Image">
+      </div>
+      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveCategory()"><span ><i class="fas fa-angle-right fa-3x" (click)="RemoveCategory()"></i></span></a>
       </div>
    </div>
+</section>
+
+<section id="categories">
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">New Arrivals</h1>
+    <hr data-aos="zoom-in" data-aos-duration="2000">
+    <div class="row justify-content-center">
+        <div class="col-3 divgallery m-2 justify-content-center" data-aos="zoom-in-up" 
+        *ngFor="let item of categorylist" data-aos-duration="3000">
+            <img class="d-block w-100" [src]="item.Image">
+        </div>
+    </div> 
 </section>
 <!-- <div class="jumbotron">
     <section id="about">

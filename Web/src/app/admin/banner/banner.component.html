@@ -19,7 +19,7 @@
         <tr *ngFor="let item of bannerlist">
           <td style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></td>
           <td>{{item.Title}}</td>
-          <td>{{item.DatePublished}}</td>
+          <td>{{item.DatePublished | date:'yyyy-MM-dd'}}</td>
           <td><span id='clickableAwesomeFont' (click)="ViewBanner(item.Id)"><i class="far fa-eye"></i></span></td>
           <td><span id='clickableAwesomeFont' (click)="EditBanner(item.Id)"><i class="far fa-edit"></i></span></td>
           <td><span id='clickableAwesomeFont' (click)="DeleteBanner(item.Id, item.Image)"><i class="fas fa-trash-alt" style="color:#a10606;"></i></span></td>

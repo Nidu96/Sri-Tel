@@ -13,3 +13,6 @@ npm i direct-pay-online
 npm install express --save
 npm i cors --save
 Agrotest#00
+
+
+npm i ngx-slick-carousel

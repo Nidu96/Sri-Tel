@@ -43,7 +43,7 @@
         <tr *ngFor="let i of permissionlist">
           <td>{{i.Name}}</td>
           <td>{{i.Email}}</td>
-          <td>{{i.Date}}</td>
+          <td>{{i.Date| date:'yyyy-MM-dd'}}</td>
         </tr>
       </tbody>
       </table>

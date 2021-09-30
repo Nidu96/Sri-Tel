@@ -21,6 +21,8 @@ import { BannerService } from '../admin/banner/banner.service';
 export class LandingComponent implements OnInit {
 
   public categorylist: Array<Category> = []
+  public categorylisttoshow: Array<any> = []
+  public categorylisttohidden: Array<Category> = []
   public showcategories: boolean = false;
 
   public productlist: Array<any> = []
@@ -39,10 +41,11 @@ export class LandingComponent implements OnInit {
     private bannerService: BannerService,) { }
 
   ngOnInit() {
-    AOS.init();
+    this.activeBanner = ""
     this.GetCategories();
     this.GetProducts();
     this.GetBanners();
+    AOS.init();
     localStorage.setItem(LocalStorage.LANDING_BODY, "1");
   }
 
@@ -60,18 +63,23 @@ export class LandingComponent implements OnInit {
   GetCategories(){
     this.showcategories = false
     this.categoryService.getcategories().subscribe(data => {
-      this.categorylist = []     
+      this.categorylist = data
+      this.categorylisttoshow = []    
       if(data != null && data != undefined && data.length != 0){
-        if(data.length >= 6){
-          this.categorylist.push(
-            data[0],
-            data[1],
-            data[2],
-            data[3],
-            data[4],
-            data[5])
+        if(data.length >= 5){
+          var i
+          for(i = 0; i < 4; i++){
+            this.categorylisttoshow.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+              Description: data[i].Description,
+              DatePublished: data[i].DatePublished, Hidden: false})
+          }
+          for(i = 4; i < data.length; i++){
+            this.categorylisttoshow.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+              Description: data[i].Description,
+              DatePublished: data[i].DatePublished, Hidden: true})
+          }
         }else{
-          this.categorylist = data
+          this.categorylisttoshow = data
         }
         this.showcategories = true
       }
@@ -113,6 +121,8 @@ export class LandingComponent implements OnInit {
       if(data != null && data != undefined && data.length != 0 && data != ""){
         this.activeBanner = data[0]
         this.bannerlist.splice(this.activeBanner, 1)
+      }else{
+        this.activeBanner.push({Image: "",Title:"",Description:""})
       }
     },
     error => { 
@@ -134,6 +144,39 @@ export class LandingComponent implements OnInit {
     //   }
     // });
     // //this.openAppointmentList(date)
+  }
+  //#endregion
+
+  //#region categories
+  AddCategory(){
+    if(this.categorylisttoshow != null && this.categorylisttoshow != undefined && this.categorylisttoshow.length != 0){
+      if(this.categorylisttoshow.length > 4){
+        var i
+        for(i = 0; i < this.categorylisttoshow.length; i++){
+          if((this.categorylisttoshow[i].Hidden == false) && (i - 1) > -1){
+            this.categorylisttoshow[i-1].Hidden = false
+            this.categorylisttoshow[i+3].Hidden = true
+            break
+          }
+        }
+      }
+    }
+  }
+
+  RemoveCategory(){
+    if(this.categorylisttoshow != null && this.categorylisttoshow != undefined && this.categorylisttoshow.length != 0){
+      if(this.categorylisttoshow.length > 4){
+        var i
+        for(i = 0; i < this.categorylisttoshow.length; i++){
+          if((this.categorylisttoshow[i].Hidden == false) && (i + 4) < this.categorylisttoshow.length){
+            this.categorylisttoshow[i].Hidden = true
+            this.categorylisttoshow[i+4].Hidden = false
+            break
+          }
+        }
+
+      }
+    }
   }
   //#endregion
 }
