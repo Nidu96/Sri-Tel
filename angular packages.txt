@@ -7,12 +7,10 @@ npm i angular-calendar
 npm i date-fns
 npm install @angular/animation
 npm i ngx-bootstrap
-
-
-npm i direct-pay-online
-npm install express --save
-npm i cors --save
-Agrotest#00
-
-
-npm i ngx-slick-carousel
+npm i crypto-js
+ng add @angular/material
+npm i ngx-mat-calendar@0.0.7
+npm i safe-pipe
+ng g pipe safe
+npm i angular2-text-mask
+npm i ngx-pagination

@@ -15,7 +15,8 @@ import { SystemUser } from 'src/app/models/systemuser.model';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
+  pusers: number = 1;
+  ppermissions: number = 1;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public user: SystemUser;

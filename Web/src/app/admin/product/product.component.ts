@@ -15,7 +15,7 @@ import { CategoryService } from '../category/category.service';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-
+  pproducts: number = 1;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public product: Product;
@@ -27,6 +27,7 @@ export class ProductComponent implements OnInit {
   public datepublished: string;
   public price: string;
   public category: string;
+  public categoryid: string;
   public fileToUpload;
   public image;
   public showImage: boolean = false;
@@ -51,7 +52,8 @@ export class ProductComponent implements OnInit {
     this.id = "";
     this.title = "";
     this.description = "";
-    this.category = "gallery";
+    this.category = "";
+    this.categoryid = "";
     this.image = "";
     this.showImage = false;
     this.datepublished = new Date().toDateString();
@@ -78,7 +80,7 @@ export class ProductComponent implements OnInit {
       this.product.Title = this.title;
       this.product.Image = this.image;
       this.product.Price = this.price;
-      this.product.Category = this.category;
+      this.product.CategoryId = this.categoryid;
       this.product.Description = this.description;
       this.product.DatePublished = new Date(this.datepublished);
       this.productService.saveproduct(this.product).subscribe(data => {
@@ -116,7 +118,7 @@ export class ProductComponent implements OnInit {
       return false
     }
 
-    if(this.category == undefined || this.category == "" || this.category == null){
+    if(this.categoryid == undefined || this.categoryid == "" || this.categoryid == null){
       this.alertService.error('Category is required')
       return false
     }
@@ -164,7 +166,8 @@ export class ProductComponent implements OnInit {
       this.title = data[0].Title;
       this.image = data[0].Image;
       this.price = data[0].Price;
-      this.category = data[0].Category;
+      this.categoryid = data[0].CategoryId;
+      this.category = this.categorylist.find( x=> x.Id  == this.categoryid).Title
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -189,7 +192,8 @@ export class ProductComponent implements OnInit {
       this.title = data[0].Title;
       this.image = data[0].Image;
       this.price = data[0].Price;
-      this.category = data[0].Category;
+      this.categoryid = data[0].CategoryId;
+      this.category = this.categorylist.find( x=> x.Id  == this.categoryid).Title
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true

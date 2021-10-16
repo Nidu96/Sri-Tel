@@ -40,7 +40,7 @@ con.connect((err) => {
 //#region authenticate
 app.post("/auth/authenticate", (req, res, next) => {
   const credentials = req.body;
-  con.query('SELECT * FROM SystemUser WHERE Username = ?', credentials.Username, function(err, rows, fields) {
+  con.query('SELECT * FROM systemuser WHERE Username = ?', credentials.Username, function(err, rows, fields) {
     if(err) throw err;
     var count = rows.length;
     res.json(rows);
@@ -83,12 +83,12 @@ app.post("/user/saveuser", (req, res, next) => {
   const user = req.body;
   if(user.Id == undefined || user.Id == null || user.Id == ""){
     user.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO SystemUser SET ?', user, (err, row) => {
+    con.query('INSERT INTO systemuser SET ?', user, (err, row) => {
       if(err) throw err;
       res.json("")
     });
   }else{
-    con.query('UPDATE SystemUser SET name = ?, username = ?, password = ?, active = ?, userrole = ? Where id = ?',
+    con.query('UPDATE systemuser SET name = ?, username = ?, password = ?, active = ?, userrole = ? Where id = ?',
     [user.Name,user.Username, user.Password,user.Active,user.UserRole,user.Id], (err, row) => {
       if(err) throw err;
       res.json("")
@@ -99,7 +99,7 @@ app.post("/user/saveuser", (req, res, next) => {
 
 app.post("/user/checkuserexist", (req, res, next) => {
   const credentials = req.body;
-  con.query('SELECT * FROM SystemUser WHERE Username = ?', credentials.Username, function(err, rows, fields) {
+  con.query('SELECT * FROM systemuser WHERE Username = ?', credentials.Username, function(err, rows, fields) {
     if(err) throw err;
     var count = rows.length;
     if (count) {
@@ -113,7 +113,7 @@ app.post("/user/checkuserexist", (req, res, next) => {
 
 app.get("/user/getusers", (req, res, next) => {
   let users = []
-  con.query('SELECT * FROM SystemUser', (err,rows) => {
+  con.query('SELECT * FROM systemuser', (err,rows) => {
     if(err) throw err;
     res.json(rows);
     var count = rows.length;
@@ -145,7 +145,7 @@ app.get("/user/getusers", (req, res, next) => {
 
 app.post("/user/getuserdata", (req, res, next) => {
   const user = req.body;
-  con.query('SELECT * FROM SystemUser WHERE Id = ?', user.Id.toString(), (err, rows) => {
+  con.query('SELECT * FROM systemuser WHERE Id = ?', user.Id.toString(), (err, rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -153,11 +153,11 @@ app.post("/user/getuserdata", (req, res, next) => {
 
 app.post("/user/deleteuser", (req, res, next) => {
   const user = req.body;
-  con.query('SELECT * FROM SystemUser WHERE Id = ?', user.Id.toString(), function(err, rows, fields) {
+  con.query('SELECT * FROM systemuser WHERE Id = ?', user.Id.toString(), function(err, rows, fields) {
     if(err) throw err;
     var count = rows.length;
     if (count) { 
-      con.query('DELETE FROM SystemUser WHERE Id = ?', user.Id.toString(), function(err, row, fields) {
+      con.query('DELETE FROM systemuser WHERE Id = ?', user.Id.toString(), function(err, row, fields) {
         if(err) throw err;
         res.json("");
       });
@@ -168,12 +168,12 @@ app.post("/user/deleteuser", (req, res, next) => {
 app.post("/user/deletepermissions", (req, res, next) => {
   const permissionlist = req.body;
   permissionlist.forEach(element => {
-    con.query('SELECT * FROM Permissions WHERE Id = ?', element.Id.toString(), function(err, rows, fields) {
+    con.query('SELECT * FROM permissions WHERE Id = ?', element.Id.toString(), function(err, rows, fields) {
       if(err) throw err;
       var count = rows.length;
       if (count) {
         var id = rows.map(i => i.Id); 
-        con.query('DELETE FROM Permissions WHERE Id = ?', element.Id.toString(), function(err, row, fields) {
+        con.query('DELETE FROM permissions WHERE Id = ?', element.Id.toString(), function(err, row, fields) {
           if(err) throw err;
           res.json("");
         });
@@ -189,12 +189,12 @@ app.post("/banner/savebanner", (req, res, next) => {
   const banner = req.body;
   if(banner.Id == undefined || banner.Id == null || banner.Id == ""){
     banner.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO Banner SET ?', banner, (err, row) => {
+    con.query('INSERT INTO banner SET ?', banner, (err, row) => {
       if(err) throw err;
       res.json("")
     });
   }else{
-    con.query('UPDATE Banner SET title = ?,image = ?, description = ?, datepublished = ? Where id = ?',
+    con.query('UPDATE banner SET title = ?,image = ?, description = ?, datepublished = ? Where id = ?',
     [banner.Title,banner.Image,banner.Description, banner.DatePublished,banner.Id], (err, row) => {
       if(err) throw err;
       res.json("")
@@ -204,7 +204,7 @@ app.post("/banner/savebanner", (req, res, next) => {
 });
 
 app.get("/banner/getbanners", (req, res, next) => {
-  con.query('SELECT * FROM Banner ORDER BY DatePublished DESC', (err,rows) => {
+  con.query('SELECT * FROM banner ORDER BY DatePublished DESC', (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -212,7 +212,7 @@ app.get("/banner/getbanners", (req, res, next) => {
 
 app.post("/banner/getbannerdata", (req, res, next) => {
   const banner = req.body;
-  con.query('SELECT * FROM Banner WHERE Id = ?', banner.Id.toString(), (err, rows) => {
+  con.query('SELECT * FROM banner WHERE Id = ?', banner.Id.toString(), (err, rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -220,11 +220,11 @@ app.post("/banner/getbannerdata", (req, res, next) => {
 
 app.post("/banner/deletebanner", (req, res, next) => {
   const banner = req.body;
-  con.query('SELECT * FROM Banner WHERE Id = ?', banner.Id.toString(), function(err, rows, fields) {
+  con.query('SELECT * FROM banner WHERE Id = ?', banner.Id.toString(), function(err, rows, fields) {
     if(err) throw err;
     var count = rows.length;
     if (count) {
-      con.query('DELETE FROM Banner WHERE Id = ?', banner.Id.toString(), function(err, row, fields) {
+      con.query('DELETE FROM banner WHERE Id = ?', banner.Id.toString(), function(err, row, fields) {
         if(err) throw err;
         res.json("");
       });
@@ -238,13 +238,13 @@ app.post("/category/savecategory", (req, res, next) => {
   const category = req.body;
   if(category.Id == undefined || category.Id == null || category.Id == ""){
     category.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO Category SET ?', category, (err, row) => {
+    con.query('INSERT INTO category SET ?', category, (err, row) => {
       if(err) throw err;
       res.json("")
     });
   }else{
-    con.query('UPDATE Category SET title = ?,image = ?, description = ?, datepublished = ? Where id = ?',
-    [category.Title,category.Image,category.Description, category.DatePublished,category.Id], (err, row) => {
+    con.query('UPDATE category SET title = ?, description = ?, datepublished = ? Where id = ?',
+    [category.Title,category.Description,category.DatePublished,category.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });
@@ -253,7 +253,7 @@ app.post("/category/savecategory", (req, res, next) => {
 });
 
 app.get("/category/getcategories", (req, res, next) => {
-  con.query('SELECT * FROM Category ORDER BY DatePublished DESC', (err,rows) => {
+  con.query('SELECT * FROM category ORDER BY DatePublished DESC', (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -261,7 +261,7 @@ app.get("/category/getcategories", (req, res, next) => {
 
 app.post("/category/getcategorydata", (req, res, next) => {
   const category = req.body;
-  con.query('SELECT * FROM Category WHERE Id = ?', category.Id.toString(), (err, rows) => {
+  con.query('SELECT * FROM category WHERE Id = ?', category.Id.toString(), (err, rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -269,11 +269,11 @@ app.post("/category/getcategorydata", (req, res, next) => {
 
 app.post("/category/deletecategory", (req, res, next) => {
   const category = req.body;
-  con.query('SELECT * FROM Category WHERE Id = ?', category.Id.toString(), function(err, rows, fields) {
+  con.query('SELECT * FROM category WHERE Id = ?', category.Id.toString(), function(err, rows, fields) {
     if(err) throw err;
     var count = rows.length;
     if (count) {
-      con.query('DELETE FROM Category WHERE Id = ?', category.Id.toString(), function(err, row, fields) {
+      con.query('DELETE FROM category WHERE Id = ?', category.Id.toString(), function(err, row, fields) {
         if(err) throw err;
         res.json("");
       });
@@ -287,13 +287,13 @@ app.post("/product/saveproduct", (req, res, next) => {
   const product = req.body;
   if(product.Id == undefined || product.Id == null || product.Id == ""){
     product.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO Product SET ?', product, (err, row) => {
+    con.query('INSERT INTO product SET ?', product, (err, row) => {
       if(err) throw err;
       res.json("")
     });
   }else{
-    con.query('UPDATE Product SET title = ?,image = ?,price = ?, category = ?,description = ?, datepublished = ? Where id = ?',
-    [product.Title,product.Image,product.Price,product.Category,product.Description, product.DatePublished,product.Id], (err, row) => {
+    con.query('UPDATE product SET categoryid = ?, title = ?,image = ?,price = ?, description = ?, datepublished = ? Where id = ?',
+    [product.CategoryId,product.Title,product.Image,product.Price,product.Description, product.DatePublished,product.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });
@@ -302,7 +302,7 @@ app.post("/product/saveproduct", (req, res, next) => {
 });
 
 app.get("/product/getproducts", (req, res, next) => {
-  con.query('SELECT * FROM Product ORDER BY DatePublished DESC', (err,rows) => {
+  con.query('SELECT * FROM product ORDER BY DatePublished DESC', (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -310,7 +310,7 @@ app.get("/product/getproducts", (req, res, next) => {
 
 app.post("/product/getproductdata", (req, res, next) => {
   const product = req.body;
-  con.query('SELECT * FROM Product WHERE Id = ?', product.Id.toString(), (err, rows) => {
+  con.query('SELECT * FROM product WHERE Id = ?', product.Id.toString(), (err, rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -318,11 +318,11 @@ app.post("/product/getproductdata", (req, res, next) => {
 
 app.post("/product/deleteproduct", (req, res, next) => {
   const product = req.body;
-  con.query('SELECT * FROM Product WHERE Id = ?', product.Id.toString(), function(err, rows, fields) {
+  con.query('SELECT * FROM product WHERE Id = ?', product.Id.toString(), function(err, rows, fields) {
     if(err) throw err;
     var count = rows.length;
     if (count) {
-      con.query('DELETE FROM Product WHERE Id = ?', product.Id.toString(), function(err, row, fields) {
+      con.query('DELETE FROM product WHERE Id = ?', product.Id.toString(), function(err, row, fields) {
         if(err) throw err;
         res.json("");
       });

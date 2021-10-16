@@ -7,7 +7,6 @@
     <table class="table">
         <thead>
         <tr>
-          <th>Image</th>
           <th>Title</th>
           <th>Date Published/Updated</th>
           <th>View</th>
@@ -16,8 +15,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of categorylist">
-          <td style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></td>
+        <tr *ngFor="let item of categorylist | paginate: { itemsPerPage: 5, currentPage: pcategories }; let i = index">
           <td>{{item.Title}}</td>
           <td>{{item.DatePublished | date:'yyyy-MM-dd'}}</td>
           <td><span id='clickableAwesomeFont' (click)="ViewCategory(item.Id)"><i class="far fa-eye"></i></span></td>
@@ -26,6 +24,7 @@
         </tr>
         </tbody>
       </table>
+      <pagination-controls (pageChange)="pcategories = $event" class="float-right"></pagination-controls>
     </div>
 </div>
 
@@ -51,14 +50,6 @@
         <div class="input-group">
           <input type="text" id="datepublished" class="form-control" style="text-align: left" placeholder="datepublished" name="datepublished"
           [(ngModel)]="datepublished" disabled>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="image">Image</label>
-        <div class="input-group">
-          <input type="file" id="fileToUpload" class="form-control" style="text-align: left" placeholder="fileToUpload" name="fileToUpload"
-          [(ngModel)]="fileToUpload" autocomplete="off" (change)="FileUpload($event)" accept="image/*">
-          <img [src]="image" style="width:inherit; height: inherit;align-content: center;" [hidden]="!showImage">
         </div>
       </div>
       <div class="form-group">

@@ -1,4 +1,19 @@
 <app-header></app-header>
+<script>
+const gra = function(min, max) {
+  return Math.random() * (max - min) + min;
+};
+const init = function() {
+  let items = document.querySelectorAll("li");
+  for (let i = 0; i < items.length; i++) {
+    items[i].style.minHeight = gra(120, 205) + "vh";
+    items[i].style.background = randomColor({ luminosity: "light" });
+  }
+
+  cssScrollSnapPolyfill();
+};
+init();
+</script>
 <div data-aos="fade-up" id="carouselExampleIndicators" class="carousel slide carousel-container" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -25,19 +40,18 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-
 <div style="background-color: white;align-content: center">
-<section id="services">
+<section id="products">
     <div class="row justify-content-center">
-      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
-        <a (click)="AddCategory()"><span><i class="fas fa-angle-left fa-3x"></i></span></a>
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddCategory()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #c9c9c9"></i></span></a>
       </div>
-      <div class="col-2 divgallery m-2 justify-content-center" data-aos="zoom-in-up" 
+      <div class="col-md-2 col-sm-12 divcard m-2 justify-content-center" data-aos="zoom-in-up" 
       *ngFor="let item of categorylisttoshow" data-aos-duration="3000" [hidden]="item.Hidden">
           <img class="d-block w-100" [src]="item.Image">
       </div>
-      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
-        <a (click)="RemoveCategory()"><span ><i class="fas fa-angle-right fa-3x" (click)="RemoveCategory()"></i></span></a>
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveCategory()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #c9c9c9" (click)="RemoveCategory()"></i></span></a>
       </div>
     </div>
 </section>
@@ -106,28 +120,28 @@
      </div>
 </section>
 
-<section id="products">
+<section id="bestsellers">
     <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Best Sellers</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
-      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
-        <a (click)="AddCategory()"><span><i class="fas fa-angle-left fa-3x"></i></span></a>
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddCategory()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #c9c9c9"></i></span></a>
       </div>
-      <div class="col-2 divgallery m-3 justify-content-center" data-aos="zoom-in-up" 
+      <div class="col-md-2 col-sm-12 divcard m-3 justify-content-center" data-aos="zoom-in-up" 
         *ngFor="let item of categorylisttoshow" data-aos-duration="3000" [hidden]="item.Hidden">
         <img class="d-block w-100" [src]="item.Image">
       </div>
-      <div class="col-1 divanglebutton justify-content-center" data-aos="zoom-in-up">
-        <a (click)="RemoveCategory()"><span ><i class="fas fa-angle-right fa-3x" (click)="RemoveCategory()"></i></span></a>
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveCategory()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #c9c9c9" (click)="RemoveCategory()"></i></span></a>
       </div>
    </div>
 </section>
 
-<section id="categories">
+<section id="newarrivals">
     <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">New Arrivals</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
-        <div class="col-3 divgallery m-2 justify-content-center" data-aos="zoom-in-up" 
+        <div class="col-md-3 col-sm-12 divgallery m-2 justify-content-center" data-aos="zoom-in-up" 
         *ngFor="let item of categorylist" data-aos-duration="3000">
             <img class="d-block w-100" [src]="item.Image">
         </div>
@@ -164,8 +178,11 @@
     </li>
 </ul>
 </section> -->
-
 </div>
-
+<footer>
+    <div class="row justify-content-center mb-5">
+      Copyright © 2021 AgroLinks 
+    </div>
+</footer>
 
 

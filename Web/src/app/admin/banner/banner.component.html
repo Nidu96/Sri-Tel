@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of bannerlist">
+        <tr *ngFor="let item of bannerlist | paginate: { itemsPerPage: 5, currentPage: pbanners }; let i = index">
           <td style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></td>
           <td>{{item.Title}}</td>
           <td>{{item.DatePublished | date:'yyyy-MM-dd'}}</td>
@@ -26,6 +26,7 @@
         </tr>
         </tbody>
       </table>
+      <pagination-controls (pageChange)="pbanners = $event" class="float-right"></pagination-controls>
     </div>
 </div>
 

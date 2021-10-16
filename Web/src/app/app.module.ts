@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BannerComponent } from './admin/banner/banner.component';
 import { CartComponent } from './cart/cart.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { CartComponent } from './cart/cart.component';
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    NgxPaginationModule
   ],
   entryComponents: [],
   providers: [BsDatepickerConfig],

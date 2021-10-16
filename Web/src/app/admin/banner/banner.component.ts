@@ -14,7 +14,7 @@ import { LocalStorage } from 'src/app/util/localstorage.service';
   styleUrls: ['./banner.component.scss']
 })
 export class BannerComponent implements OnInit {
-
+  pbanners: number = 1;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public banner: Banner;

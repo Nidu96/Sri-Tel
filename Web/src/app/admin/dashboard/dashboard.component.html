@@ -17,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of userlist">
+        <tr *ngFor="let item of userlist | paginate: { itemsPerPage: 5, currentPage: pusers }; let i = index">
           <td>{{item.Name}}</td>
           <td>{{item.Username}}</td>
           <td>{{item.Active}}</td>
@@ -27,7 +27,7 @@
         </tr>
         </tbody>
       </table>
-
+      <pagination-controls (pageChange)="pusers = $event" class="float-right"></pagination-controls>
 
       <h3 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Payments</h3>
       <!-- payments -->
@@ -40,13 +40,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let i of permissionlist">
+        <tr *ngFor="let i of permissionlist | paginate: { itemsPerPage: 5, currentPage: ppermissions }; let i = index">
           <td>{{i.Name}}</td>
           <td>{{i.Email}}</td>
           <td>{{i.Date| date:'yyyy-MM-dd'}}</td>
         </tr>
       </tbody>
       </table>
+      <pagination-controls (pageChange)="ppermissions = $event" class="float-right"></pagination-controls>
     </div>
 </div>
 
@@ -84,9 +85,9 @@
       <div class="form-group">
         <label for="status">Status</label>
         <div class="input-group">
-            <input type="radio" [(ngModel)]="status" id="active" name="status" value="active">
+            <input type="radio" [(ngModel)]="status" id="active" name="status" value="Active">
             <label for="active" class="mb-1 mr-5">Active</label><br>
-            <input type="radio" [(ngModel)]="status" id="deactive" name="status" value="deactive">
+            <input type="radio" [(ngModel)]="status" id="deactive" name="status" value="Deactive">
             <label for="deactive" class="mb-1">Deactive</label><br>
         </div>
       </div>

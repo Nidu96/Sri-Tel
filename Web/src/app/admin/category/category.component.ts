@@ -14,7 +14,7 @@ import { LocalStorage } from 'src/app/util/localstorage.service';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-
+  pcategories: number = 1;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public category: Category;
@@ -25,7 +25,6 @@ export class CategoryComponent implements OnInit {
   public description: string;
   public datepublished: string;
   public fileToUpload;
-  public image;
   public showImage: boolean = false;
   public valueChanged: boolean = false;
   public categorylist: Array<Category> = []
@@ -46,7 +45,6 @@ export class CategoryComponent implements OnInit {
     this.id = "";
     this.title = "";
     this.description = "";
-    this.image = "";
     this.showImage = false;
     this.datepublished = new Date().toDateString();
     this.savebtnactive = true
@@ -70,7 +68,6 @@ export class CategoryComponent implements OnInit {
         this.category.Id = this.id.trim();
       }
       this.category.Title = this.title;
-      this.category.Image = this.image;
       this.category.Description = this.description;
       this.category.DatePublished = new Date(this.datepublished);
       this.categoryService.savecategory(this.category).subscribe(data => {
@@ -94,16 +91,6 @@ export class CategoryComponent implements OnInit {
     this.alertService.clear()
     if(this.title == null || this.title == undefined || this.title == ""){
       this.alertService.error('Title is required')
-      return false
-    }
-
-    if(this.image == null || this.image == undefined || this.image == ""){
-      this.alertService.error('Image is required')
-      return false
-    }
-
-    if(this.description == undefined || this.description == "" || this.description == null){
-      this.alertService.error('Description is required')
       return false
     }
     return true
@@ -133,7 +120,6 @@ export class CategoryComponent implements OnInit {
 
       this.id = data[0].Id;
       this.title = data[0].Title;
-      this.image = data[0].Image;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -156,7 +142,6 @@ export class CategoryComponent implements OnInit {
 
       this.id = data[0].Id;
       this.title = data[0].Title;
-      this.image = data[0].Image;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -175,7 +160,6 @@ export class CategoryComponent implements OnInit {
       this.alertService.clear()
       this.category = new Category();
       this.category.Id = id
-      this.category.Image = image
       this.categoryService.deletecategory(this.category).subscribe(data => {
         this.alertService.success('Successfully deleted!')
         this.GetCategories()
@@ -184,22 +168,6 @@ export class CategoryComponent implements OnInit {
         this.alertService.clear() 
         this.alertService.error('Error!')
       });
-    }
-  }
-
-  FileUpload(event: any) {
-    this.fileToUpload = null
-      let data: any
-      data = event.target.files[0];
-    if(data != null && data != undefined){
-      this.fileToUpload = data
-      var reader = new FileReader();
-      reader.readAsDataURL(data); // read file as data url
-      reader.onload = (e) => { // called once readAsDataURL is completed
-        this.image = (<FileReader>e.target).result
-        this.showImage = true
-      }
-      this.valueChanged = true
     }
   }
 }

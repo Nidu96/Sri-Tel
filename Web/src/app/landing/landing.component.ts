@@ -47,6 +47,8 @@ export class LandingComponent implements OnInit {
     this.GetBanners();
     AOS.init();
     localStorage.setItem(LocalStorage.LANDING_BODY, "1");
+
+    
   }
 
   //#region navigation methods
