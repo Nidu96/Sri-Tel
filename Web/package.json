@@ -38,6 +38,7 @@
     "font-awesome": "^4.7.0",
     "method-override": "^3.0.0",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-image-compress": "^11.0.3",
     "ngx-mat-calendar": "0.0.7",
     "ngx-pagination": "^5.1.1",
     "rxjs": "~6.4.0",

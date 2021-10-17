@@ -7,6 +7,7 @@
     <table class="table">
         <thead>
         <tr>
+          <th>Icon</th>
           <th>Title</th>
           <th>Date Published/Updated</th>
           <th>View</th>
@@ -16,11 +17,12 @@
         </thead>
         <tbody>
         <tr *ngFor="let item of categorylist | paginate: { itemsPerPage: 5, currentPage: pcategories }; let i = index">
+          <td style="width:100px;height:100px"><img [src]="item.Icon" style="width:inherit; height: inherit;align-content: center;"></td>
           <td>{{item.Title}}</td>
           <td>{{item.DatePublished | date:'yyyy-MM-dd'}}</td>
           <td><span id='clickableAwesomeFont' (click)="ViewCategory(item.Id)"><i class="far fa-eye"></i></span></td>
           <td><span id='clickableAwesomeFont' (click)="EditCategory(item.Id)"><i class="far fa-edit"></i></span></td>
-          <td><span id='clickableAwesomeFont' (click)="DeleteCategory(item.Id, item.Image)"><i class="fas fa-trash-alt" style="color:#a10606;"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="DeleteCategory(item.Id, item.Icon)"><i class="fas fa-trash-alt" style="color:#a10606;"></i></span></td>
         </tr>
         </tbody>
       </table>
@@ -50,6 +52,14 @@
         <div class="input-group">
           <input type="text" id="datepublished" class="form-control" style="text-align: left" placeholder="datepublished" name="datepublished"
           [(ngModel)]="datepublished" disabled>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="image">Image</label>
+        <div class="input-group">
+          <input type="file" id="fileToUpload" class="form-control" style="text-align: left" placeholder="fileToUpload" name="fileToUpload"
+          [(ngModel)]="fileToUpload" autocomplete="off" (change)="FileUpload($event)">
+          <img [src]="image" style="width:inherit; height: inherit;align-content: center;" [hidden]="!showImage">
         </div>
       </div>
       <div class="form-group">

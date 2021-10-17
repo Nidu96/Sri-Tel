@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators'
 import { Product } from 'src/app/models/product.model';
 import { environment } from 'src/environments/environment';
 import { LocalStorage } from 'src/app/util/localstorage.service';
+import { Category } from 'src/app/models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,8 @@ export class ProductService {
   getproducts(): Observable<any> {return this.http.get<any>(`${this.baseUrl}/getproducts`);}
 
   getproductdata(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproductdata`, product);}
+
+  getproductoncategory(category: Category): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproductoncategory`, category);}
 
   deleteproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/deleteproduct`, product);}
 }

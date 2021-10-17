@@ -7,6 +7,7 @@ import { BannerService } from './banner.service';
 import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-service';
 import { Banner } from 'src/app/models/banner.model';
 import { LocalStorage } from 'src/app/util/localstorage.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-banner',
@@ -35,7 +36,7 @@ export class BannerComponent implements OnInit {
   @ViewChild('createnewbanner', {static: false}) createnewbanner: TemplateRef<any>
   
   constructor(private bsModalService :BsModalService, private bannerService: BannerService, 
-    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService) { }
+    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
     this.GetBanners()
@@ -194,6 +195,13 @@ export class BannerComponent implements OnInit {
       reader.onload = (e) => { // called once readAsDataURL is completed
         this.image = (<FileReader>e.target).result
         this.showImage = true
+
+        this.imageCompress.compressFile(this.image, -1, 50, 50).then(
+          result => {
+            this.image = result;
+            console.warn('Size in bytes is now:', this.image.byteCount(result));
+          }
+        );
       }
       this.valueChanged = true
     }

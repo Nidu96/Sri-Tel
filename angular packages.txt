@@ -14,3 +14,4 @@ npm i safe-pipe
 ng g pipe safe
 npm i angular2-text-mask
 npm i ngx-pagination
+npm i ngx-image-compress

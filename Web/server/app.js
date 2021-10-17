@@ -243,8 +243,8 @@ app.post("/category/savecategory", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE category SET title = ?, description = ?, datepublished = ? Where id = ?',
-    [category.Title,category.Description,category.DatePublished,category.Id], (err, row) => {
+    con.query('UPDATE category SET title = ?, icon = ?,description = ?, datepublished = ? Where id = ?',
+    [category.Title,category.Icon,category.Description,category.DatePublished,category.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });
@@ -303,6 +303,14 @@ app.post("/product/saveproduct", (req, res, next) => {
 
 app.get("/product/getproducts", (req, res, next) => {
   con.query('SELECT * FROM product ORDER BY DatePublished DESC', (err,rows) => {
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+app.post("/product/getproductoncategory", (req, res, next) => {
+  const category = req.body;
+  con.query('SELECT * FROM product WHERE CategoryId = ? ORDER BY DatePublished DESC', category.Id, (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });

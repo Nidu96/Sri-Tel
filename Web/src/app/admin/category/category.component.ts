@@ -7,6 +7,7 @@ import { CategoryService } from './category.service';
 import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-service';
 import { Category } from 'src/app/models/category.model';
 import { LocalStorage } from 'src/app/util/localstorage.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-category',
@@ -25,6 +26,7 @@ export class CategoryComponent implements OnInit {
   public description: string;
   public datepublished: string;
   public fileToUpload;
+  public icon;
   public showImage: boolean = false;
   public valueChanged: boolean = false;
   public categorylist: Array<Category> = []
@@ -34,7 +36,7 @@ export class CategoryComponent implements OnInit {
   @ViewChild('createnewcategory', {static: false}) createnewcategory: TemplateRef<any>
   
   constructor(private bsModalService :BsModalService, private categoryService: CategoryService, 
-    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService) { }
+    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
     this.GetCategories()
@@ -44,6 +46,7 @@ export class CategoryComponent implements OnInit {
   Initialize(){
     this.id = "";
     this.title = "";
+    this.icon = "";
     this.description = "";
     this.showImage = false;
     this.datepublished = new Date().toDateString();
@@ -68,6 +71,7 @@ export class CategoryComponent implements OnInit {
         this.category.Id = this.id.trim();
       }
       this.category.Title = this.title;
+      this.category.Icon = this.icon;
       this.category.Description = this.description;
       this.category.DatePublished = new Date(this.datepublished);
       this.categoryService.savecategory(this.category).subscribe(data => {
@@ -120,6 +124,7 @@ export class CategoryComponent implements OnInit {
 
       this.id = data[0].Id;
       this.title = data[0].Title;
+      this.icon = data[0].Image;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -142,6 +147,7 @@ export class CategoryComponent implements OnInit {
 
       this.id = data[0].Id;
       this.title = data[0].Title;
+      this.icon = data[0].Image;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -155,11 +161,12 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  DeleteCategory(id: string, image: string){
+  DeleteCategory(id: string, icon: string){
     if(confirm("Are you sure you want to delete this Category?")){
       this.alertService.clear()
       this.category = new Category();
       this.category.Id = id
+      this.category.Icon = icon
       this.categoryService.deletecategory(this.category).subscribe(data => {
         this.alertService.success('Successfully deleted!')
         this.GetCategories()
@@ -168,6 +175,29 @@ export class CategoryComponent implements OnInit {
         this.alertService.clear() 
         this.alertService.error('Error!')
       });
+    }
+  }
+
+  FileUpload(event: any) {
+    this.fileToUpload = null
+      let data: any
+      data = event.target.files[0];
+    if(data != null && data != undefined){
+      this.fileToUpload = data
+      var reader = new FileReader();
+      reader.readAsDataURL(data); // read file as data url
+      reader.onload = (e) => { // called once readAsDataURL is completed
+        this.icon = (<FileReader>e.target).result
+        this.showImage = true
+
+        this.imageCompress.compressFile(this.icon, -1, 50, 50).then(
+          result => {
+            this.icon = result;
+            console.warn('Size in bytes is now:', this.icon.byteCount(result));
+          }
+        );
+      }
+      this.valueChanged = true
     }
   }
 }

@@ -29,6 +29,7 @@ import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker
 import { BannerComponent } from './admin/banner/banner.component';
 import { CartComponent } from './cart/cart.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {NgxImageCompressService} from 'ngx-image-compress';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgxPaginationModule
   ],
   entryComponents: [],
-  providers: [BsDatepickerConfig],
+  providers: [BsDatepickerConfig,NgxImageCompressService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

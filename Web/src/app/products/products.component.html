@@ -8,28 +8,30 @@
     <div>
         <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Products</h1>
         <hr data-aos="zoom-in" data-aos-duration="2000">
-        <div class="row">
-            <ul class="cards2">
-                <li class="cards_item2 mt-5" data-aos="flip-left" data-aos-duration="2000" *ngFor="let item of productlist">
-                <div class="newcard">
-                    <div class="card_content">
-                    <img class="d-block w-100" [src]="item.Image">
-                    <p>{{item.Title}}</p>
-                    <button data-aos="zoom-in" data-aos-duration="2000" class="btnsubmit2" 
-                    style="vertical-align:middle;" (click)="addToCartBtnClick(item)" [hidden]="item.IsAddedToCart">
-                        <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
-                        <span>Add to cart </span>
-                    </button>
-                    <button data-aos="zoom-in" data-aos-duration="2000" class="btnsubmit3" 
-                    style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)" [hidden]="!item.IsAddedToCart">
-                        <i class="far fa-times-circle mr-2" aria-hidden="true"></i>
-                        <span>Remove from cart </span>
-                    </button>
-                    </div>
-                </div>
-                </li>
-            </ul>
-        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-3 col-sm-12 divcard m-2 justify-content-center" data-aos="flip-left" data-aos-duration="2000" 
+            *ngFor="let item of productlist">
+            <img class="d-block w-100 mb-5" [src]="item.Image">
+            <h5 style="text-align: left;color: #c79416">Product Name</h5>
+            <p style="text-align: left;color: black"><b>{{item.Title}}</b></p>
+            <h5 style="text-align: left;color: black">Price</h5>
+            <p style="text-align: left;color: #52b788"><b>Rs {{item.Price}}</b></p>
+            <button class="btnsubmit2 float-left" 
+            style="vertical-align:middle;" (click)="addToCartBtnClick(item)" [hidden]="item.IsAddedToCart">
+                <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+                <span>Add to cart </span>
+            </button>
+            <button class="btnsubmit3 float-left" 
+            style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)" [hidden]="!item.IsAddedToCart">
+                <i class="far fa-times-circle mr-2" aria-hidden="true"></i>
+                <span>Remove </span>
+            </button>
+            <button class="btnsubmitfavourite float-right" 
+            style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)">
+                <i class="fas fa-heart" aria-hidden="true"></i>
+            </button>
+            </div>
+        </div> 
         <div class="row mt-5 justify-content-center" [hidden]="showproducts">
             <div class="col-md-4 div3 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
                 <h2 style="margin-top: 5%;text-align: center;word-wrap:break-word;">Currently there are no Products</h2>

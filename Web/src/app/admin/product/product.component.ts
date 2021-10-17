@@ -8,6 +8,7 @@ import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/d
 import { Product } from 'src/app/models/product.model';
 import { LocalStorage } from 'src/app/util/localstorage.service';
 import { CategoryService } from '../category/category.service';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-product',
@@ -40,7 +41,7 @@ export class ProductComponent implements OnInit {
   @ViewChild('createnewproduct', {static: false}) createnewproduct: TemplateRef<any>
   
   constructor(private bsModalService :BsModalService, private productService: ProductService, private categoryService: CategoryService,
-    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService) { }
+    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
     this.GetProducts()
@@ -235,6 +236,13 @@ export class ProductComponent implements OnInit {
       reader.onload = (e) => { // called once readAsDataURL is completed
         this.image = (<FileReader>e.target).result
         this.showImage = true
+
+        this.imageCompress.compressFile(this.image, -1, 50, 50).then(
+          result => {
+            this.image = result;
+            console.warn('Size in bytes is now:', this.image.byteCount(result));
+          }
+        );
       }
       this.valueChanged = true
     }
