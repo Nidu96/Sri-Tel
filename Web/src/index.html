@@ -53,6 +53,7 @@ function scrollUp() {
 }
 
 function scrollDown() {
+    setTimeout(function(){reInitCount();},1000);
     if (scrollVal < document.body.scrollHeight)
         scrollVal += 300;
     //should detect for maximum scroll
@@ -80,14 +81,6 @@ function count($this) {
     }, 1);
   }
 }
-
-$(window).scroll(function (event) {
-    var scroll = $(window).scrollTop();
-      if(scroll == 0)
-         setTimeout(function(){reInitCount();},500);
-      
-         
-});
 </script>
 </head>
 <body>
