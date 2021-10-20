@@ -411,11 +411,4 @@ export class LandingComponent implements OnInit {
     // this.router.navigateByUrl('/payment')
   }
   //#endregion
-
-  //#region counter
-  Counter(){
-    var tempcounter
-    
-  }
-  //#endregion
 }
