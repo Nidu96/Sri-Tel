@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import * as AOS from 'aos';
 import { Router } from '@angular/router';
 import { CategoryService } from '../admin/category/category.service';
@@ -18,8 +18,8 @@ import { BannerService } from '../admin/banner/banner.service';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
+@HostListener('window:scroll', ['$event'])
 export class LandingComponent implements OnInit {
-
   public categorylist: Array<Category> = []
   public categorylisttoshow: Array<any> = []
   public categorylisttohidden: Array<Category> = []
@@ -34,6 +34,11 @@ export class LandingComponent implements OnInit {
   public newarrivalsproductlist: Array<any> = []
   public shownewarrivalsproducts: boolean = false;
 
+  public featuredbrand1: string
+  public featuredbrand2: string
+  public featuredbrand3: string
+  public showfeaturedproducts: boolean = false;
+
   public bannerlist: Array<any> = []
   public activeBanner: any;
 
@@ -41,6 +46,8 @@ export class LandingComponent implements OnInit {
   public view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   public events: Array<CalendarEvent>
+
+  public counter1: number
 
   constructor(private router: Router,private categoryService: CategoryService, 
     private productService: ProductService, private alertService: AlertService,
@@ -92,6 +99,7 @@ export class LandingComponent implements OnInit {
         this.showcategories = true
         this.GetBestSellerProducts()
         this.GetNewArrivalsProducts()
+        this.GetFeaturedProducts()
       }
 
     },
@@ -190,6 +198,26 @@ export class LandingComponent implements OnInit {
   }
 
 
+  GetFeaturedProducts(){
+    this.showfeaturedproducts = false
+    if(this.categorylist != undefined && this.categorylist != null){
+      var tempcat = this.categorylist.find( x=> x.Title  == "Featured Brands")
+      this.productService.getproductoncategory(tempcat).subscribe(data => {   
+        if(data != null && data != undefined && data.length != 0){
+          if(data.length >= 3){
+            this.featuredbrand1 = data[0].Image
+            this.featuredbrand2 = data[1].Image
+            this.featuredbrand3 = data[2].Image
+          }
+          this.showfeaturedproducts = true
+        }
+      },
+      error => { 
+      });
+    }
+  }
+
+
   GetBanners(){
     this.bannerService.getbanners().subscribe(data => {
       this.bannerlist = data
@@ -255,7 +283,6 @@ export class LandingComponent implements OnInit {
   }
   //#endregion
 
-
   //#region best sellers products
   AddBestSellersProduct(){
     if(this.bestsellersproductlist != null && this.bestsellersproductlist != undefined && this.bestsellersproductlist.length != 0){
@@ -288,7 +315,6 @@ export class LandingComponent implements OnInit {
     }
   }
   //#endregion
-
 
   //#region best sellers products
   AddNewArrivalsProducts(){
@@ -383,6 +409,13 @@ export class LandingComponent implements OnInit {
     localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(selectedProducts));
     this.productService.refreshshoppingcart();
     // this.router.navigateByUrl('/payment')
+  }
+  //#endregion
+
+  //#region counter
+  Counter(){
+    var tempcounter
+    
   }
   //#endregion
 }

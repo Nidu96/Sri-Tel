@@ -141,31 +141,34 @@ init();
       </div>
 </section> -->
 
-<section id="bgimage">
-    <div class="row justify-content-center background">
+<section id="bgimage1">
+    <div class="row justify-content-center background1">
       <p class="textstylewhite">A Total Solution Provider for all your Agricultural needs</p>
+      <!-- <ul class="justify-content-center">
+        <li class="col-md-2 col-sm-6 divcard m-5" >
+            <span><i class="fas fa-seedling fa-5x"></i></span>
+            <p class="textcenter">Description</p>
+        </li>
+        <li class="col-md-2 col-sm-6 divcard m-5">
+            <span><i class="fas fa-seedling fa-5x"></i></span>
+            <p class="textcenter">Description</p>
+        </li>
+        <li class="col-md-2 col-sm-6 divcard m-5">
+            <span><i class="fas fa-seedling fa-5x"></i></span>
+            <p class="textcenter">Description</p>
+        </li>
+        <li class="col-md-2 col-sm-6 divcard m-5">
+            <span><i class="fas fa-seedling fa-5x"></i></span>
+            <p class="textcenter">Description</p>
+        </li>
+    </ul> -->
     </div>
-    <div class="row justify-content-center">
-      <div class="col-md-2 col-sm-6 divcard m-5" data-aos="zoom-out-up" data-aos-duration="3000">
-          <span><i class="fas fa-seedling fa-5x"></i></span>
-          <p class="textcenter">Description</p>
-      </div>
-      <div class="col-md-2 col-sm-6 divcard m-5" data-aos="zoom-out-up" data-aos-duration="3000">
-          <span><i class="fas fa-seedling fa-5x"></i></span>
-          <p class="textcenter">Description</p>
-      </div>
-      <div class="col-md-2 col-sm-6 divcard m-5" data-aos="zoom-out-up" data-aos-duration="3000">
-          <span><i class="fas fa-seedling fa-5x"></i></span>
-          <p class="textcenter">Description</p>
-      </div>
-      <div class="col-md-2 col-sm-6 divcard m-5" data-aos="zoom-out-up" data-aos-duration="3000">
-          <span><i class="fas fa-seedling fa-5x"></i></span>
-          <p class="textcenter">Description</p>
-      </div>
-   </div>
 </section>
 
 <section id="bestsellers">
+    <div class="col-1 divnewcard">
+        <h3>Best</h3>
+    </div>
     <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Best Sellers</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
@@ -200,7 +203,71 @@ init();
    </div>
 </section>
 
+<section id="services" class="section-services">
+      <div class="row justify-content-center">
+          <div class="col-2 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon1" src="../../assets/images/services_grids/delivery-truck.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Island - wide</h3>
+                    <h5 style="color: grey;align-content: center">Delivery</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon2" src="../../assets/images/services_grids/best-price.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Reasonable</h3>
+                    <h5 style="color: grey;align-content: center">Prices</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon3" src="../../assets/images/services_grids/hand.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Easy</h3>
+                    <h5 style="color: grey;align-content: center">Payments</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon4" src="../../assets/images/services_grids/new-product.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Quality</h3>
+                    <h5 style="color: grey;align-content: center">Products</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservicecard m-3">
+            <ul class="list-inline" style="text-align: center">
+              <li>
+                  <img class="service-icon5" src="../../assets/images/services_grids/special-offers.png">
+              </li>
+              <li class="justify-content-center">
+                  <h3>Special</h3>
+                  <h5 style="color: grey;align-content: center">Offers</h5>
+              </li>
+            </ul>
+        </div>
+      </div>
+</section>
+
+
 <section id="newarrivals">
+    <div class="col-1 divnewcard">
+        <h3>New</h3>
+    </div>
     <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">New Arrivals</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
@@ -225,6 +292,27 @@ init();
         style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)">
             <i class="fas fa-heart" aria-hidden="true"></i>
         </button>
+        </div>
+    </div> 
+</section>
+
+<section class="featured-brands-section" id="featuredbrands">
+    <div class="col-1 divnewcard">
+        <h3>New</h3>
+    </div>
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Featured Brands</h1>
+    <hr data-aos="zoom-in" data-aos-duration="2000">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <img class="d-block w-100 mr-5 left-align" height="400px" [src]="featuredbrand1">
+        </div>
+        <div class="col-md-5">
+            <div class="row justify-content-center">
+              <img class="d-block w-100 mb-2 right-align" height="190px" [src]="featuredbrand2">
+            </div>
+            <div class="row justify-content-center">
+                <img class="d-block w-100 mt-3 right-align" height="190px" [src]="featuredbrand3">
+            </div>
         </div>
     </div> 
 </section>
@@ -259,6 +347,53 @@ init();
     </li>
 </ul>
 </section> -->
+
+<section class="bottom-section" id="bgimage2">
+    <div class="justify-content-center background2">
+        <div class="row justify-content-center" style="padding-top: 100px">
+            <div class="col-2">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon1" src="../../assets/images/services_grids/delivery-truck.png">
+                      <h1 class="value" style="color: #f8b202;font-weight: bold" id="count1" value="">500</h1>
+                      <h3 style="color: white">Quality</h3>
+                      <h3 style="color: white">Products</h3>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon1" src="../../assets/images/services_grids/delivery-truck.png">
+                      <h1 class="mt-3 mb-4" style="color: #f8b202;font-weight: bold">500+</h1>
+                      <h3 style="color: white">Agricultural</h3>
+                      <h3 style="color: white">Products</h3>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon1" src="../../assets/images/services_grids/delivery-truck.png">
+                      <h1 class="mt-3 mb-4" style="color: #f8b202;font-weight: bold">500+</h1>
+                      <h3 style="color: white">Quality</h3>
+                      <h3 style="color: white">Products</h3>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon1" src="../../assets/images/services_grids/delivery-truck.png">
+                      <h1 class="mt-3 mb-4" style="color: #f8b202;font-weight: bold">500+</h1>
+                      <h3 style="color: white">Quality</h3>
+                      <h3 style="color: white">Products</h3>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 </div>
 <footer>
     <div class="row justify-content-center mb-5">

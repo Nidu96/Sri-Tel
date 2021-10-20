@@ -62,7 +62,28 @@ html {
 	margin-left: 10%;
 	margin-right: 10%;
   }
+
+  .section-services {
+	margin-top: 4%;
+	margin-bottom: 4%;
+	margin-left: 0%;
+	margin-right: 0%;
+  }
+
+  .featured-brands-section {
+	margin-top: 4%;
+	margin-bottom: 4%;
+	margin-left: 20%;
+	margin-right: 20%;
+  }
   
+  .bottom-section {
+	margin-top: 4%;
+	margin-bottom: 4%;
+	margin-left: 2%;
+	margin-right: 2%;
+  }
+
   a {
 	color: #92badd;
 	display:inline-block;
@@ -1132,6 +1153,28 @@ html {
     justify-content: center;
 }
 
+.divservicecard {
+	vertical-align: middle;
+	justify-content: center;
+	border-radius: 8px;
+	background: #212942;
+	color: white;
+	padding: 10px;  
+	padding-bottom: 0px;
+	display: grid;
+}
+
+.divnewcard {
+	vertical-align: middle;
+	justify-content: center;
+	border-radius: 8px;
+	background: #212942;
+	padding: 0px;
+	padding-bottom: 0px;
+	color: white;
+	display: grid;
+}
+
 .divanglebutton {
 	border:2px solid rgb(216, 216, 216);
 	padding: 20px;
@@ -1238,7 +1281,7 @@ pre {
 	word-wrap:break-word;
 	text-align: left;
 	font-size: 16px;
-	background-color: #010330;
+	background-color: #13152e;
 	padding: 5px;
 }
 
@@ -1422,7 +1465,66 @@ button {
     padding: 5px;
 }
 
-.background{
-	background: linear-gradient(rgba(1, 7, 56, 0.808), rgba(2, 12, 97, 0.781)),url('assets/images/bgimage1.jpg');
+.background1{
+	// background: linear-gradient(rgba(1, 7, 56, 0.808), rgba(2, 12, 97, 0.781)),url('assets/images/bgimage1.jpg');
+
+	background: url('assets/images/total_solution_provider_section_BG.png');
 	height: 500px;
+}
+
+.background2{
+	// background: linear-gradient(rgba(1, 7, 56, 0.808), rgba(2, 12, 97, 0.781)),url('assets/images/bgimage1.jpg');
+
+	background: url('assets/images/bottom_section_BG.png');
+	height: 500px;
+}
+
+.layer1{
+	position: absolute;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.layer2{
+	position: relative;
+	z-index: 1;
+	padding-left: 10%;
+	padding-right: 10%;
+	height: 100%;
+	padding-top: 30%;
+}
+
+
+//image icons
+.pin{
+	vertical-align: .05em;
+	width:20px;
+	height:26px;
+}
+
+.service-icon1{
+	vertical-align: .07em;
+	width:50px;
+	height:40px;
+}
+
+.service-icon2{
+	vertical-align: .07em;
+	width:50px;
+	height:40px;
+}
+.service-icon3{
+	vertical-align: .07em;
+	width:30px;
+	height:40px;
+}
+.service-icon4{
+	vertical-align: .07em;
+	width:45px;
+	height:40px;
+}
+.service-icon5{
+	vertical-align: .07em;
+	width:45px;
+	height:40px;
 }
