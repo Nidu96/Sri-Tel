@@ -28,11 +28,12 @@ export class ProductsComponent implements OnInit {
   GetProducts(){
     this.showproducts = false
     this.productlist = []
+    
     this.productService.getproducts().subscribe(data => {
       this.productlist = data
       if(this.productlist != null && this.productlist != undefined && this.productlist.length != 0){
         this.showproducts = true
-        this.productlist.forEach(e => {e.IsAddedToCart = false;});
+        this.productlist = this.productService.refreshProductList(this.productlist)
       }
     },
     error => { 

@@ -1190,16 +1190,34 @@ html {
 	display: grid;
 }
 
+
 .divnewcard {
 	vertical-align: middle;
 	justify-content: center;
 	border-radius: 8px;
 	background: #212942;
 	padding: 0px;
+	padding-left: 30px;
+	padding-right: 30px;
 	padding-bottom: 0px;
+	padding-top: 2px;
+	font-size: 11px;
 	color: white;
 	display: grid;
 }
+
+@media screen and (min-width: 600px) {
+	.divnewcard {
+		vertical-align: middle;
+		justify-content: center;
+		border-radius: 8px;
+		background: #212942;
+		padding: 0px;
+		padding-bottom: 0px;
+		color: white;
+		display: grid;
+	}
+  }
 
 .divanglebutton {
 	border:2px solid rgb(216, 216, 216);
@@ -1534,42 +1552,67 @@ button {
 
 .service-icon1{
 	vertical-align: .07em;
-	width:50px;
-	height:40px;
+	width: 15px;
+	height: 12px;
 }
 
-.service-icon2{
-	vertical-align: .07em;
-	width:50px;
-	height:40px;
-}
+// @media screen and (min-width: 600px) {
+// 	.service-icon1{
+// 		vertical-align: .07em;
+// 		width:50px;
+// 		height:40px;
+// 	}
+//   }
+
+
 .service-icon3{
 	vertical-align: .07em;
 	width:30px;
 	height:40px;
 }
+
+// @media screen and (min-width: 600px) {
+// 	.service-icon3{
+// 		vertical-align: .07em;
+// 		width:30px;
+// 		height:40px;
+// 	}
+//   }
+
 .service-icon4{
 	vertical-align: .07em;
 	width:45px;
 	height:40px;
 }
-.service-icon5{
-	vertical-align: .07em;
-	width:45px;
-	height:40px;
-}
+
+// @media screen and (min-width: 600px) {
+// 	.service-icon4{
+// 		vertical-align: .07em;
+// 		width:45px;
+// 		height:40px;
+// 	}
+//   }
+
 .service-icon6{
 	vertical-align: .07em;
 	width:45px;
 	height:55px;
 }
 
+// @media screen and (min-width: 600px) {
+// 	.service-icon6{
+// 		vertical-align: .07em;
+// 		width:45px;
+// 		height:55px;
+// 	}
+//   }
+
 //search box
 form.search input[type=text] {
 	background-color: #f6f6f6;
 	border: none;
 	color: #0d0d0d;
-	padding: 4px 20px 5px;
+	padding: 2px 20px 4px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;

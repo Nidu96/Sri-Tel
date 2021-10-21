@@ -128,6 +128,7 @@ export class LandingComponent implements OnInit {
         }else{
           this.productlist = data
         }
+        this.productlist = this.productService.refreshProductList(this.productlist)
         this.showproducts = true
       }
     },
@@ -157,6 +158,7 @@ export class LandingComponent implements OnInit {
           }else{
             this.bestsellersproductlist = data
           }
+          this.bestsellersproductlist = this.productService.refreshProductList(this.bestsellersproductlist)
           this.showbestsellersproducts = true
         }
       },
@@ -188,6 +190,7 @@ export class LandingComponent implements OnInit {
           }else{
             this.newarrivalsproductlist = data
           }
+          this.newarrivalsproductlist = this.productService.refreshProductList(this.newarrivalsproductlist)
           this.shownewarrivalsproducts = true
         }
 

@@ -25,6 +25,21 @@ export class ProductService {
     return;
   }
 
+  refreshProductList(productlist){
+    var selectedProducts = JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART));
+    productlist.forEach(e => {
+      if(selectedProducts != null && selectedProducts != undefined && selectedProducts != []){
+        var tempproduct = selectedProducts.find( x=> x.Id  == e.Id)
+        if(tempproduct != undefined && tempproduct != null){
+          e.IsAddedToCart = tempproduct.IsAddedToCart
+        }else{
+          e.IsAddedToCart = false;
+        }
+      }
+    });
+    return productlist;
+  }
+  
   baseUrl = 'http://localhost:3000/product';
 
   saveproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveproduct`, product);}
