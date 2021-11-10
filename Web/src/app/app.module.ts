@@ -30,6 +30,7 @@ import { BannerComponent } from './admin/banner/banner.component';
 import { CartComponent } from './cart/cart.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxImageCompressService} from 'ngx-image-compress';
+import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {NgxImageCompressService} from 'ngx-image-compress';
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    DirectPayIpgModule.forRoot({size: 200,colour: 'gray'})
   ],
   entryComponents: [],
   providers: [BsDatepickerConfig,NgxImageCompressService],

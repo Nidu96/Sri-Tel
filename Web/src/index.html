@@ -47,7 +47,7 @@ function beforeScroll(e) {
 
 function scrollUp() {
     if (scrollVal > 0)
-        scrollVal -= 300;
+        scrollVal -= 200;
 
     this.scroll(0, scrollVal);
 }
@@ -55,7 +55,7 @@ function scrollUp() {
 function scrollDown() {
     setTimeout(function(){reInitCount();},1000);
     if (scrollVal < document.body.scrollHeight)
-        scrollVal += 300;
+        scrollVal += 200;
     //should detect for maximum scroll
     this.scroll(0, scrollVal);
 }
