@@ -188,7 +188,7 @@ init();
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
       <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
-        <a (click)="AddBestSellersProducts()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #ebebeb"></i></span></a>
+        <a (click)="AddBestSellersProduct()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #ebebeb"></i></span></a>
       </div>
       <div class="col-md-2 col-sm-12 divcard m-3 justify-content-center" data-aos="zoom-in-up" 
         *ngFor="let item of bestsellersproductlist" data-aos-duration="3000" [hidden]="item.Hidden">
@@ -213,7 +213,7 @@ init();
           </button>
       </div>
       <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
-        <a (click)="RemoveBestSellersProducts()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #ebebeb"></i></span></a>
+        <a (click)="RemoveBestSellersProduct()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #ebebeb"></i></span></a>
       </div>
    </div>
 </section>

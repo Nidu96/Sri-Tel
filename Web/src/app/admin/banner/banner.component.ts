@@ -214,5 +214,15 @@ export class BannerComponent implements OnInit {
       this.valueChanged = true
     }
   }
+
+  pagination(event){
+    if(this.bannercount < event){
+      var tempcount = Math.abs(event-1.5) * 10
+      if(event == 1) tempcount = 0
+      this.GetBanners(tempcount) 
+    } 
+    this.pbanners = event
+    this.bannercount = event
+  }
 }
 

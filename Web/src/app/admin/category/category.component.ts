@@ -27,6 +27,7 @@ export class CategoryComponent implements OnInit {
   public description: string;
   public datepublished: string;
   public fileToUpload;
+  public image;
   public icon;
   public showImage: boolean = false;
   public valueChanged: boolean = false;
