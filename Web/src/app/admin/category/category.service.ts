@@ -15,7 +15,8 @@ export class CategoryService {
 
   savecategory(category: Category): Observable<any> {return this.http.post<any>(`${this.baseUrl}/savecategory`, category);}
 
-  getcategories(): Observable<any> {return this.http.get<any>(`${this.baseUrl}/getcategories`);}
+  getcategories(startlimit: String,endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getcategories`,
+  JSON.stringify({start: startlimit,end: endlimit}));}
 
   getcategorydata(category: Category): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getcategorydata`, category);}
 

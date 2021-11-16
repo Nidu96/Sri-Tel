@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit {
   }
 
   GetUsers(){
-    this.userService.getusers().subscribe(data => {
+    this.userService.getusers("0","5").subscribe(data => {
       this.userlist = data
     },
     error => { 

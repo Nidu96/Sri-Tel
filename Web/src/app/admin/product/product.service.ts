@@ -44,7 +44,8 @@ export class ProductService {
 
   saveproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveproduct`, product);}
 
-  getproducts(): Observable<any> {return this.http.get<any>(`${this.baseUrl}/getproducts`);}
+  getproducts(startlimit: String, endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproducts`, 
+  JSON.stringify({start: startlimit,end: endlimit}));}
 
   getproductdata(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproductdata`, product);}
 

@@ -77,7 +77,7 @@ export class LandingComponent implements OnInit {
   //#region get data methods
   GetCategories(){
     this.showcategories = false
-    this.categoryService.getcategories().subscribe(data => {
+    this.categoryService.getcategories("0","100").subscribe(data => {
       this.categorylist = data
       this.categorylisttoshow = []    
       if(data != null && data != undefined && data.length != 0){
@@ -110,19 +110,19 @@ export class LandingComponent implements OnInit {
 
   GetProducts(){
     this.showproducts = false
-    this.productService.getproducts().subscribe(data => {
+    this.productService.getproducts("0","10").subscribe(data => {
       this.productlist = []    
       if(data != null && data != undefined && data.length != 0){
         if(data.length >= 5){
           var i
           for(i = 0; i < 4; i++){
             this.productlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-              Description: data[i].Description,
+              Description: data[i].Description, Price: data[i].Price,
               DatePublished: data[i].DatePublished, Hidden: false})
           }
           for(i = 4; i < data.length; i++){
             this.productlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-              Description: data[i].Description,
+              Description: data[i].Description, Price: data[i].Price,
               DatePublished: data[i].DatePublished, Hidden: true})
           }
         }else{
@@ -147,12 +147,12 @@ export class LandingComponent implements OnInit {
             var i
             for(i = 0; i < 4; i++){
               this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description,
+                Description: data[i].Description, Price: data[i].Price,
                 DatePublished: data[i].DatePublished, Hidden: false})
             }
             for(i = 4; i < data.length; i++){
               this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description,
+                Description: data[i].Description, Price: data[i].Price,
                 DatePublished: data[i].DatePublished, Hidden: true})
             }
           }else{
@@ -179,12 +179,12 @@ export class LandingComponent implements OnInit {
             var i
             for(i = 0; i < 4; i++){
               this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description,
+                Description: data[i].Description, Price: data[i].Price,
                 DatePublished: data[i].DatePublished, Hidden: false})
             }
             for(i = 4; i < data.length; i++){
               this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description,
+                Description: data[i].Description, Price: data[i].Price,
                 DatePublished: data[i].DatePublished, Hidden: true})
             }
           }else{
@@ -222,7 +222,7 @@ export class LandingComponent implements OnInit {
 
 
   GetBanners(){
-    this.bannerService.getbanners().subscribe(data => {
+    this.bannerService.getbanners("0","5").subscribe(data => {
       this.bannerlist = data
       if(data != null && data != undefined && data.length != 0 && data != ""){
         this.activeBanner = data[0]
@@ -393,6 +393,12 @@ export class LandingComponent implements OnInit {
       selectedProducts = JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART));
     }
     selectedProducts.push(item)
+    var tempproductarr = []
+    selectedProducts.forEach(e => {
+      tempproductarr.push({Id:e.Id,CategoryId:e.CategoryId,Title:e.Title,Image:e.Image,ImageFile:e.ImageFile,Price:e.Price,
+        Quantity:0,Description:e.Description,DatePublished:e.DatePublished})
+    });
+    selectedProducts = tempproductarr
     item.IsAddedToCart = true
     localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(selectedProducts));
     this.productService.refreshshoppingcart();

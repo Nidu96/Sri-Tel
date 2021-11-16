@@ -15,7 +15,8 @@ import { NgxImageCompressService } from 'ngx-image-compress';
   styleUrls: ['./banner.component.scss']
 })
 export class BannerComponent implements OnInit {
-  pbanners: number = 1;
+  public pbanners: number = 1;
+  public bannercount: number = 0;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public banner: Banner;
@@ -39,7 +40,8 @@ export class BannerComponent implements OnInit {
     private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
-    this.GetBanners()
+    this.bannerlist = []
+    this.GetBanners(0)
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
   }
 
@@ -77,7 +79,8 @@ export class BannerComponent implements OnInit {
       this.bannerService.savebanner(this.banner).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
-        this.GetBanners()
+        this.bannerlist = []
+        this.GetBanners(0)
         this.Initialize()
       },
       error => {
@@ -110,10 +113,14 @@ export class BannerComponent implements OnInit {
     this.Initialize()
   }
 
-  GetBanners(){
-    this.bannerService.getbanners().subscribe(data => {
-      this.bannerlist = data
-      
+  GetBanners(startlimit){
+    this.bannerService.getbanners(startlimit,"10").subscribe(data => {
+      data.forEach(element => {
+        var i = this.bannerlist.findIndex(x=> x.Id  === element.Id)
+        if(this.bannerlist.findIndex(x=> x.Id  === element.Id) == -1){
+          this.bannerlist.push(element)
+        }
+      });
     },
     error => { 
       this.alertService.clear()
@@ -175,7 +182,8 @@ export class BannerComponent implements OnInit {
       this.banner.Image = image
       this.bannerService.deletebanner(this.banner).subscribe(data => {
         this.alertService.success('Successfully deleted!')
-        this.GetBanners()
+        this.bannerlist = []
+        this.GetBanners(0)
       },
       error => {
         this.alertService.clear() 

@@ -15,7 +15,8 @@ import { NgxImageCompressService } from 'ngx-image-compress';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  pcategories: number = 1;
+  public pcategories: number = 1;
+  public categorycount: number = 0;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public category: Category;
@@ -39,7 +40,8 @@ export class CategoryComponent implements OnInit {
     private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
-    this.GetCategories()
+    this.categorylist = []
+    this.GetCategories(0)
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
   }
 
@@ -77,7 +79,8 @@ export class CategoryComponent implements OnInit {
       this.categoryService.savecategory(this.category).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
-        this.GetCategories()
+        this.categorylist = []
+        this.GetCategories(0)
         this.Initialize()
       },
       error => {
@@ -105,9 +108,14 @@ export class CategoryComponent implements OnInit {
     this.Initialize()
   }
 
-  GetCategories(){
-    this.categoryService.getcategories().subscribe(data => {
-      this.categorylist = data
+  GetCategories(startlimit){
+    this.categoryService.getcategories(startlimit,"10").subscribe(data => {
+      data.forEach(element => {
+        var i = this.categorylist.findIndex(x=> x.Id  === element.Id)
+        if(this.categorylist.findIndex(x=> x.Id  === element.Id) == -1){
+          this.categorylist.push(element)
+        }
+      });
     },
     error => { 
       this.alertService.clear()
@@ -169,7 +177,8 @@ export class CategoryComponent implements OnInit {
       this.category.Icon = icon
       this.categoryService.deletecategory(this.category).subscribe(data => {
         this.alertService.success('Successfully deleted!')
-        this.GetCategories()
+        this.categorylist = []
+        this.GetCategories(0)
       },
       error => {
         this.alertService.clear() 
@@ -199,6 +208,16 @@ export class CategoryComponent implements OnInit {
       }
       this.valueChanged = true
     }
+  }
+
+  pagination(event){
+    if(this.categorycount < event){
+      var tempcount = Math.abs(event-1.5) * 10
+      if(event == 1) tempcount = 0
+      this.GetCategories(tempcount) 
+    } 
+    this.pcategories = event
+    this.categorycount = event
   }
 }
 

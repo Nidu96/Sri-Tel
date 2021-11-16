@@ -1,0 +1,32 @@
+<app-sidebar></app-sidebar>
+
+<div class="maincontent">
+    <div class="main">
+      <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Order</h1>
+      
+      <!-- orders -->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Status</th>
+          <th scope="col">View</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of orderlist | paginate: { itemsPerPage: 5, currentPage: porders }; let i = index">
+          <td>{{item.Name}}</td>
+          <td>{{item.Username}}</td>
+          <td>{{item.Active}}</td>
+          <td><span id='clickableAwesomeFont' (click)="ViewUser(item.Id)"><i class="far fa-eye"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="EditUser(item.Id)"><i class="far fa-edit"></i></span></td>
+          <td><span id='clickableAwesomeFont' (click)="DeleteUser(item.Id)"><i class="fas fa-trash-alt" style="color:#a10606;"></i></span></td>
+        </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="porders = $event" class="float-right"></pagination-controls>
+    </div>
+</div>

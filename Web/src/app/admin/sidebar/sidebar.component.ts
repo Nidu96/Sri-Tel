@@ -27,6 +27,11 @@ export class SidebarComponent implements OnInit {
     document.getElementById("user").className = "active"; 
   }
 
+  Orders(){
+    this.router.navigateByUrl('order')
+    document.getElementById("order").className = "active"; 
+  }
+
   Category(){
     this.router.navigateByUrl('category')
     document.getElementById("category").className = "active"; 

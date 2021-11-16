@@ -18,7 +18,8 @@ export class UserService {
 
 	saveuser(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveuser`, user);}
 
-	getusers(): Observable<any> {return this.http.get<any>(`${this.baseUrl}/getusers`);}
+	getusers(startlimit: String, endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getusers`, 
+	JSON.stringify({start: startlimit,end: endlimit}));}
 
 	getuserdata(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getuserdata`, user);}
 

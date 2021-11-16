@@ -7,6 +7,10 @@ import { AlertService } from '../alert/alert.service';
 // import hmacSHA256 from 'crypto-js/hmac-sha512';
 // import Base64 from 'crypto-js/enc-base64';
 import * as CryptoJS from 'crypto-js';
+import { Product } from '../models/product.model';
+import { debug } from 'util';
+import { Order, OrderedProduct } from '../models/order.model';
+import { OrderService } from '../admin/order/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -15,18 +19,25 @@ import * as CryptoJS from 'crypto-js';
 })
 export class CartComponent implements OnInit {
 
-  public selectedProducts: Array<any>;
+  public order: Order;
+  public selectedProducts: Array<Product>;
   public emptyCart: boolean = true;
+  public showDirectPay: boolean = false;
+  public orderid: string;
   public name: string;
+  public recname: string;
+  public recphone: string;
   public phone: string;
   public address: string;
   public notes: string;
   public city: string;
+  public quantity: number;
+  public totalprice: number = 0;
   public signature: any;
   public dataString: any;
   public paymentRequest: any;
 
-  constructor(private productService: ProductService,private alertService: AlertService) { }
+  constructor(private productService: ProductService,private alertService: AlertService,private orderService: OrderService) { }
 
   ngOnInit() {
     AOS.init();
@@ -41,6 +52,11 @@ export class CartComponent implements OnInit {
       this.emptyCart = true;
     }else{
       this.emptyCart = false;
+      var price = 0
+      this.selectedProducts.forEach(e => {
+        price += (parseInt(e.Price) * e.Quantity)
+        this.totalprice = price
+      });
     }
   }
 
@@ -61,6 +77,7 @@ export class CartComponent implements OnInit {
     // this.router.navigateByUrl('/payment')
   }
 
+  //#region "validations"
   Validations(){
     this.alertService.clear()
     if(this.name == null || this.name == undefined || this.name == ""){
@@ -68,8 +85,18 @@ export class CartComponent implements OnInit {
       return false
     }
 
+    if(this.recname == null || this.recname == undefined || this.recname == ""){
+      this.alertService.error("Recipient's Name is required")
+      return false
+    }
+
     if(this.phone == null || this.phone == undefined || this.phone == ""){
       this.alertService.error('Phone is required')
+      return false
+    }
+
+    if(this.recphone == null || this.recphone == undefined || this.recphone == ""){
+      this.alertService.error("Recipient's phone is required")
       return false
     }
 
@@ -85,67 +112,120 @@ export class CartComponent implements OnInit {
     return true
   }
 
-  ContinueToPayment(){
-    var json = {
-      "merchant_id": "AA08654",
-      "amount": "5",
-      "type": 'ONE_TIME',
-      "order_id":  Math.floor(Math.random() * 999) + 1,
-      "currency": "LKR",
-      "return_url": "",
-      "response_url": "http://localhost:4200",
-      "first_name": "john",
-      "last_name": "doe",
-      "phone": "0757966404",
-      "email": "sihaninidu3@mail.com",
-      "description": 'Test Product',
-      "page_type": 'IN_APP',
+  validateNumbers(){
+    var regex = /^[0-9]*$/
+    if(!regex.test(this.phone)){
+      this.phone = ""
     }
-    this.dataString =  CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(json)));
-    this.signature = CryptoJS.HmacSHA256(this.dataString, "4b6ceb2bfb9b113598e43e35b4bf1bcb2912b99f0d1821a4176ab39f4660310f");
-  
-    this.paymentRequest = {
-      signature: this.signature,
-      dataString: this.dataString,
-      stage: 'DEV'
-    };
+    if(!regex.test(this.recphone)){
+      this.recphone = ""
+    }
+  }
 
-    // this.productService.pay(directpay).subscribe(data => {
-    //   this.alertService.success('Successfully saved!')
-    // },
-    // error => {
-    //   this.alertService.clear()
-    //   this.alertService.error('Error!')
-    // });
+  validateQuantity(event,id){
+    this.quantity = event.target.value
+    var regex = /^[0-9]*$/
+    if(!regex.test(this.quantity.toString())){
+      this.quantity = 0
+      return
+    }else{
+      this.selectedProducts.find( x=> x.Id  == id).Quantity = parseInt(this.quantity.toString())
+      localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(this.selectedProducts));
+      var price = 0
+      this.selectedProducts.forEach(element => {
+        price += (parseInt(element.Price) * element.Quantity)
+        this.totalprice = price
+      });
+    }
+  }
+//#region 
 
+  ContinueToPayment(){
+    if(this.Validations()){
+      let email = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)).Username;
+      if(this.selectedProducts != null && this.selectedProducts != undefined && this.selectedProducts.length != 0){
+        let description = ""
+        this.orderid = (Math.floor(Math.random() * 999) + 1).toString()
+        description = "Order ID: " + this.orderid.toString() +"    "
+        this.selectedProducts.forEach(element => {
+          description = description + 
+          "Product Name: " + element.Title + " "
+          "Unit Price: " + element.Price + " "
+          "Quantity: " + element.Quantity + " "
+        });
+        description = description + "   Total Price: " + this.totalprice
+        var json = {
+          "merchant_id": "AA08654",
+          "amount": this.totalprice,
+          "type": 'ONE_TIME',
+          "order_id": this.orderid.toString(),
+          "currency": "LKR",
+          "return_url": "",
+          "response_url": "",
+          "first_name": this.name,
+          "last_name": "",
+          "phone": this.phone,
+          "email": email,
+          "description": description,
+          "page_type": 'IN_APP',
+        }
+        this.dataString =  CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(json)));
+        this.signature = CryptoJS.HmacSHA256(this.dataString, "4b6ceb2bfb9b113598e43e35b4bf1bcb2912b99f0d1821a4176ab39f4660310f");
+      
+        this.paymentRequest = {
+          signature: this.signature,
+          dataString: this.dataString,
+          stage: 'DEV'
+        };
+        this.showDirectPay = true
+      }
+    }
+    
   }
 
 
-  // paymentRequest = {
-  //     signature: 'rV0raXUIt+lFhxrUUGW98UipaJNaRw7uWq23/wHbYMQMQ56lbuQDdSGPlHos6jY0hC8jcMXfcH4SH87qeo0Bqw==',
-  //     dataString: {
-  //       merchantId: 'AA08654',
-  //       amount: "10.00",
-  //       refCode: "DP12345",
-  //       currency: 'LKR',
-  //       type: 'ONE_TIME_PAYMENT',
-  //       customerEmail: 'sihaninidu3@mail.com',
-  //       customerMobile: '+94757966404',
-  //       description: 'test products',
-  //       apiKey: 'b43d69f3e70b2b3b5e765bf17b8b9553025d15dfe69ea7e9818da2df59ea3405'
-  //     },
-  //     stage: 'DEV'
-  // };
-
   public onSuccess(param: any): void {
-    debugger
     console.log('client-onSuccess',param);
+    this.saveOrder()
     alert(JSON.stringify(param))
   }
 
   public onError(param: any): void {
-    debugger
     console.log('client-onError',param);
     alert(JSON.stringify(param))
   }
+
+//#region "order"
+  saveOrder(){
+    this.order = new Order();
+    this.order.Id = "";
+    this.order.IdForCustomer = this.orderid;
+    this.order.UserEmail = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)).Username;
+    this.order.Phone = this.phone;
+    this.order.RecepientName = this.recname;
+    this.order.RecepientPhone = this.recphone;
+    this.order.Status = "Pending";
+    this.order.DeliveryNote = this.notes;
+    this.order.City = this.city;
+    this.order.DateofPayment = new Date();
+    let OrderedProducts = new Array<OrderedProduct>()
+    this.selectedProducts.forEach(element => {
+      let orderedproduct = new OrderedProduct()
+      orderedproduct.Id = ""
+      orderedproduct.OrderId = this.orderid
+      orderedproduct.ProductID = element.Id
+      orderedproduct.Quantity = element.Quantity.toString()
+      OrderedProducts.push(orderedproduct)
+    });
+
+    this.order.OrderedProducts = []
+    this.order.OrderedProducts = OrderedProducts
+    this.orderService.saveorder(this.order).subscribe(data => {
+    },
+    error => {
+      this.alertService.clear() 
+      this.alertService.error('Error!')
+    });
+  }
+//#endregion
 }

@@ -111,9 +111,10 @@ app.post("/user/checkuserexist", (req, res, next) => {
 });
 
 
-app.get("/user/getusers", (req, res, next) => {
+app.post("/user/getusers", (req, res, next) => {
   let users = []
-  con.query('SELECT * FROM systemuser', (err,rows) => {
+  const limit = JSON.parse(req.body);
+  con.query('SELECT * FROM systemuser LIMIT ?,?', [parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
     if(err) throw err;
     res.json(rows);
     var count = rows.length;
@@ -203,8 +204,9 @@ app.post("/banner/savebanner", (req, res, next) => {
 
 });
 
-app.get("/banner/getbanners", (req, res, next) => {
-  con.query('SELECT * FROM banner ORDER BY DatePublished DESC', (err,rows) => {
+app.post("/banner/getbanners", (req, res, next) => {
+  const limit = JSON.parse(req.body);
+  con.query('SELECT * FROM banner ORDER BY DatePublished DESC LIMIT ?,?', [parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -252,8 +254,9 @@ app.post("/category/savecategory", (req, res, next) => {
 
 });
 
-app.get("/category/getcategories", (req, res, next) => {
-  con.query('SELECT * FROM category ORDER BY DatePublished DESC', (err,rows) => {
+app.post("/category/getcategories", (req, res, next) => {
+  const limit = JSON.parse(req.body);
+  con.query('SELECT * FROM category ORDER BY DatePublished DESC LIMIT ?,?', [parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -301,8 +304,9 @@ app.post("/product/saveproduct", (req, res, next) => {
 
 });
 
-app.get("/product/getproducts", (req, res, next) => {
-  con.query('SELECT * FROM product ORDER BY DatePublished DESC', (err,rows) => {
+app.post("/product/getproducts", (req, res, next) => {
+  const limit = JSON.parse(req.body);
+  con.query('SELECT * FROM product ORDER BY DatePublished DESC LIMIT ?,?', [parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -339,6 +343,67 @@ app.post("/product/deleteproduct", (req, res, next) => {
 });
 //#endregion
 
+//#region orders
+app.post("/order/saveorder", (req, res, next) => {
+  const order = req.body;
+  console.log(order)
+  if(order.Id == undefined || order.Id == null || order.Id == ""){
+    order.Id = Math.random().toString(7).slice(2);
+    con.query('INSERT INTO productorder(Id,IdForCustomer,UserEmail,DeliveryNote,Phone,RecepientName,RecepientPhone,Status,DateofPayment,City) VALUES (?,?,?,?,?,?,?,?,?,?)', 
+    [order.Id,order.IdForCustomer,order.UserEmail,order.DeliveryNote,order.Phone,order.RecepientName,order.RecepientPhone,order.Status,order.DateofPayment,order.City], (err, row) => {
+      if(err) 
+      {
+        console.log(err)
+        throw err;
+      }
+      res.json("")
+    });
+    order.OrderedProducts.forEach(element => {
+      element.Id = Math.random().toString(7).slice(2);
+      con.query('INSERT INTO orderedproduct SET ?', element, (err, row) => {
+        if(err) throw err;
+        res.json("")
+      });
+    });
+  }else{
+    con.query('UPDATE order SET status = ? WHERE id = ?',[order.Status,order.Id], (err, row) => {
+      if(err) throw err;
+      res.json("")
+    });
+  }
+
+});
+
+app.post("/order/getorders", (req, res, next) => {
+  const limit = JSON.parse(req.body);
+  con.query('SELECT * FROM productorder ORDER BY DateOfPayment DESC LIMIT ?,?', [parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+app.post("/order/getorderdata", (req, res, next) => {
+  const order = req.body;
+  con.query('SELECT * FROM productorder WHERE Id = ?', order.Id.toString(), (err, rows) => {
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+app.post("/order/deleteorder", (req, res, next) => {
+  const order = req.body;
+  con.query('SELECT * FROM productorder WHERE Id = ?', order.Id.toString(), function(err, rows, fields) {
+    if(err) throw err;
+    var count = rows.length;
+    if (count) {
+      con.query('DELETE FROM productorder WHERE Id = ?', order.Id.toString(), function(err, row, fields) {
+        if(err) throw err;
+        res.json("");
+      });
+    } 
+  });
+});
+//#endregion
 app.listen(3000, () => {
   console.log('Server started!')
 });

@@ -12,6 +12,7 @@ import { ProductComponent } from './admin/product/product.component';
 import { PaymentComponent } from './payment/payment.component';
 import { BannerComponent } from './admin/banner/banner.component';
 import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './admin/order/order.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
 
   //admin
   { path: 'dashboard', component: DashboardComponent, data: { allowed: false } },
+  { path: 'order', component: OrderComponent, data: { allowed: false } },
   { path: 'category', component: CategoryComponent, data: { allowed: false } },
   { path: 'product', component: ProductComponent, data: { allowed: false } },
   { path: 'order', component: ProductComponent, data: { allowed: false } },

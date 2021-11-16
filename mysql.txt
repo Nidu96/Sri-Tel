@@ -37,9 +37,22 @@ CREATE TABLE `agrodb`.`product`(
 PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
 
 
-CREATE TABLE `agrodb`.`order`(
+CREATE TABLE `agrodb`.`productorder`(
 `Id` VARCHAR(100) NOT NULL , 
+`IdForCustomer` VARCHAR(100) NOT NULL , 
 `UserEmail` VARCHAR(100) NOT NULL , 
-`ProductId` VARCHAR(100) NOT NULL ,  
+`DeliveryNote` VARCHAR(250) NOT NULL ,  
+`Phone` VARCHAR(250) NOT NULL , 
+`RecepientName` VARCHAR(250) NOT NULL , 
+`RecepientPhone` VARCHAR(250) NOT NULL , 
+`Status` VARCHAR(250) NOT NULL , 
+`City` VARCHAR(100) NOT NULL ,
 `DateOfPayment` DATETIME NULL DEFAULT NULL , 
+PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
+
+CREATE TABLE `agrodb`.`orderedproduct`(
+`Id` VARCHAR(100) NOT NULL , 
+`OrderId` VARCHAR(100) NOT NULL , 
+`Quantity` VARCHAR(100) NOT NULL , 
+`ProductID` VARCHAR(250) NOT NULL ,
 PRIMARY KEY (`Id`)) ENGINE = InnoDB; 

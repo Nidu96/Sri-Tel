@@ -10,10 +10,13 @@
           <div class="col col-1" style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></div>
           <div class="col col-2">{{item.Title}}</div>
           <div class="col col-3">{{item.Price}}</div>
-          <div class="col col-4" >
+          <div class="col col-4"><input type="number" id="quantity" class="form-control" style="text-align: right" value="{{item.Quantity}}"
+            (keyup)="validateQuantity($event,item.Id)"></div> 
+          <div class="col col-5" >
               <span style="float:right" id='clickableAwesomeFont' (click)="removeFromCartBtnClick(item)"><i class="far fa-times-circle" style="color:#a10606;"></i></span>
           </div>
         </li>
+        
     </ul>  
     <div class="row mt-5 justify-content-center" [hidden]="!emptyCart">
         <h2 style="margin-top: 5%;text-align: center;word-wrap:break-word;">No products in the cart</h2>
@@ -22,49 +25,64 @@
     <div class="col-md-4 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
     <div class="row justify-content-center div3">
             <form>
-            <div class="form-group">
-                <label for="name">Recipient's Name</label>
+              <h1>Total: Rs {{totalprice}}/-</h1>
+              <div class="form-group" [hidden]="showDirectPay">
+                <label for="name">Name</label>
                 <div class="input-group">
                 <input type="text" id="name" class="form-control" style="text-align: left" placeholder="name" name="name" 
                 [(ngModel)]="name">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="phone">Recipient's Phone</label>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                <label for="name">Phone</label>
                 <div class="input-group">
-                    <input type="text" id="phone" class="form-control" style="text-align: left" placeholder="phone" name="phone"
-                    [(ngModel)]="phone">
+                <input type="text" id="phone" class="form-control" style="text-align: left" placeholder="phone" name="phone" 
+                [(ngModel)]="phone" (keyup)="validateNumbers()">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="address">Delivery Address</label>
-                <div class="input-group">
-                  <textarea id="address" class="form-control" style="text-align: left" placeholder="address" name="address"
-                  [(ngModel)]="address" rows="5"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="notes">Delivery Notes</label>
-                <div class="input-group">
-                  <textarea id="notes" class="form-control" style="text-align: left" placeholder="notes" name="notes"
-                  [(ngModel)]="notes" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="city">Delivery City</label>
-                <div class="input-group">
-                    <input type="text" id="city" class="form-control" style="text-align: left" placeholder="city" name="city"
-                    [(ngModel)]="city">
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-outline-dark" (click)="ContinueToPayment()">Continue</button>
-            </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                  <label for="name">Recipient's Name</label>
+                  <div class="input-group">
+                  <input type="text" id="recname" class="form-control" style="text-align: left" placeholder="recipient's name" name="recname" 
+                  [(ngModel)]="recname">
+                  </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                  <label for="phone">Recipient's Phone</label>
+                  <div class="input-group">
+                      <input type="text" id="recphone" class="form-control" style="text-align: left" placeholder="recipient's phone" name="recphone"
+                      [(ngModel)]="recphone" (keyup)="validateNumbers()">
+                  </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                  <label for="address">Delivery Address</label>
+                  <div class="input-group">
+                    <textarea id="address" class="form-control" style="text-align: left" placeholder="address" name="address"
+                    [(ngModel)]="address" rows="5"></textarea>
+                  </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                  <label for="notes">Delivery Notes</label>
+                  <div class="input-group">
+                    <textarea id="notes" class="form-control" style="text-align: left" placeholder="notes" name="notes"
+                    [(ngModel)]="notes" rows="3"></textarea>
+                  </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                  <label for="city">Delivery City</label>
+                  <div class="input-group">
+                      <input type="text" id="city" class="form-control" style="text-align: left" placeholder="city" name="city"
+                      [(ngModel)]="city">
+                  </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                  <button type="button" class="btn btn-outline-dark" (click)="ContinueToPayment()">Continue</button>
+              </div>
             </form>
 
-<div>
-  <direct-pay-ipg [config]="{  size: 150, type: 'round',colour: 'white'}" [PaymentRequest]="paymentRequest" (onSuccess)="onSuccess($event)" (onError)="onError($event)"></direct-pay-ipg>
-</div>
+          <div [hidden]="!showDirectPay">
+            <direct-pay-ipg [config]="{  size: 150, type: 'round',colour: 'white'}" [PaymentRequest]="paymentRequest" (onSuccess)="onSuccess($event)" (onError)="onError($event)"></direct-pay-ipg>
+          </div>
 
     </div>
     </div>

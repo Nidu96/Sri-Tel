@@ -40,18 +40,7 @@ export class LoginComponent implements OnInit {
 			this.loginService.authenticate(this.credentials).subscribe(data => {
 				this.alertService.clear()
 				this.user = new SystemUser();
-				this.user = data[0]
-				
-				this.user.Id = data[0].Id;
-				this.user.Name = data[0].Name;
-				this.user.Username = data[0].Username;
-				if(data.password != null){
-					this.user.Password = data[0].Password;
-				}
-				this.user.Active = data[0].Active;
-				this.user.UserRole = data[0].UserRole;
-
-				if(data == null || data == undefined || data == ""){
+				if(data[0] == null || data[0] == undefined || data[0] == ""){
 					this.alertService.error('Invalid username or password')
 				}else if(data.password == "invalid"){
 					this.alertService.error('You have only ' + (3-this.loginattempts) + ' attempts left')
@@ -61,6 +50,16 @@ export class LoginComponent implements OnInit {
 				}else if(data.active == "deactive"){
 					this.alertService.error('This account is deactivated. please contact the admin to activate')
 				}else{
+					this.user = data[0]
+				
+					this.user.Id = data[0].Id;
+					this.user.Name = data[0].Name;
+					this.user.Username = data[0].Username;
+					if(data.password != null){
+						this.user.Password = data[0].Password;
+					}
+					this.user.Active = data[0].Active;
+					this.user.UserRole = data[0].UserRole;
 					if(this.user.UserRole == "admin"){
 						this.router.navigateByUrl('dashboard')
 					}else{

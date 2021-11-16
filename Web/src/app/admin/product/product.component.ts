@@ -16,10 +16,11 @@ import { NgxImageCompressService } from 'ngx-image-compress';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-  pproducts: number = 1;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public product: Product;
+  public pproducts: number = 1;
+  public productcount: number = 0;
 
   //form fields
   public id: string;
@@ -44,7 +45,8 @@ export class ProductComponent implements OnInit {
     private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
-    this.GetProducts()
+    this.productlist = []
+    this.GetProducts(0)
     this.GetCategories()
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
   }
@@ -52,6 +54,7 @@ export class ProductComponent implements OnInit {
   Initialize(){
     this.id = "";
     this.title = "";
+    this.price = "";
     this.description = "";
     this.category = "";
     this.categoryid = "";
@@ -87,7 +90,8 @@ export class ProductComponent implements OnInit {
       this.productService.saveproduct(this.product).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
-        this.GetProducts()
+        this.productlist = []
+        this.GetProducts(0)
         this.GetCategories()
         this.Initialize()
       },
@@ -131,14 +135,26 @@ export class ProductComponent implements OnInit {
     return true
   }
 
+  validateNumbers(){
+    var regex = /^[0-9]*$/
+    if(!regex.test(this.price)){
+      this.price = ""
+    }
+  }
+
   CloseModal(){
     this.ModalRef.hide();
     this.Initialize()
   }
 
-  GetProducts(){
-    this.productService.getproducts().subscribe(data => {
-      this.productlist = data
+  GetProducts(startlimit){
+    this.productService.getproducts(startlimit.toString(),"10").subscribe(data => {
+      data.forEach(element => {
+        var i = this.productlist.findIndex(x=> x.Id  === element.Id)
+        if(this.productlist.findIndex(x=> x.Id  === element.Id) == -1){
+          this.productlist.push(element)
+        }
+      });
     },
     error => { 
       this.alertService.clear()
@@ -147,7 +163,7 @@ export class ProductComponent implements OnInit {
   }
 
   GetCategories(){
-    this.categoryService.getcategories().subscribe(data => {
+    this.categoryService.getcategories("0","100").subscribe(data => {
       this.categorylist = data
     },
     error => { 
@@ -216,7 +232,8 @@ export class ProductComponent implements OnInit {
       this.product.Image = image
       this.productService.deleteproduct(this.product).subscribe(data => {
         this.alertService.success('Successfully deleted!')
-        this.GetProducts()
+        this.productlist = []
+        this.GetProducts(0)
       },
       error => {
         this.alertService.clear() 
@@ -246,6 +263,16 @@ export class ProductComponent implements OnInit {
       }
       this.valueChanged = true
     }
+  }
+
+  pagination(event){
+    if(this.productcount < event){
+      var tempcount = Math.abs(event-1.5) * 10
+      if(event == 1) tempcount = 0
+      this.GetProducts(tempcount) 
+    } 
+    this.pproducts = event
+    this.productcount = event
   }
 }
 

@@ -16,7 +16,8 @@ export class BannerService {
 
   savebanner(banner: Banner): Observable<any> {return this.http.post<any>(`${this.baseUrl}/savebanner`, banner);}
 
-  getbanners(): Observable<any> {return this.http.get<any>(`${this.baseUrl}/getbanners`);}
+  getbanners(startlimit: String,endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getbanners`, 
+  JSON.stringify({start: startlimit,end: endlimit}));}
 
   getbannerdata(banner: Banner): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getbannerdata`, banner);}
 

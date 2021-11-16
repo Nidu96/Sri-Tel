@@ -31,6 +31,7 @@ import { CartComponent } from './cart/cart.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
+import { OrderComponent } from './admin/order/order.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
     ProductComponent,
     PaymentComponent,
     BannerComponent,
-    CartComponent
+    CartComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
