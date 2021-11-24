@@ -28,6 +28,7 @@ export class ProductComponent implements OnInit {
   public description: string;
   public datepublished: string;
   public price: string;
+  public weight: number;
   public category: string;
   public categoryid: string;
   public fileToUpload;
@@ -55,6 +56,7 @@ export class ProductComponent implements OnInit {
     this.id = "";
     this.title = "";
     this.price = "";
+    this.weight = 0;
     this.description = "";
     this.category = "";
     this.categoryid = "";
@@ -83,7 +85,8 @@ export class ProductComponent implements OnInit {
       }
       this.product.Title = this.title;
       this.product.Image = this.image;
-      this.product.Price = this.price;
+      this.product.Price = parseFloat(this.price).toFixed(2).toString();
+      this.product.Weight = this.weight.toString();
       this.product.CategoryId = this.categoryid;
       this.product.Description = this.description;
       this.product.DatePublished = new Date(this.datepublished);
@@ -123,6 +126,11 @@ export class ProductComponent implements OnInit {
       return false
     }
 
+    if(this.weight == undefined || this.weight == 0 || this.weight == null){
+      this.alertService.error('Weight is required')
+      return false
+    }
+
     if(this.categoryid == undefined || this.categoryid == "" || this.categoryid == null){
       this.alertService.error('Category is required')
       return false
@@ -135,10 +143,18 @@ export class ProductComponent implements OnInit {
     return true
   }
 
-  validateNumbers(){
+  validatePrice(){
     var regex = /^[0-9]*$/
     if(!regex.test(this.price)){
       this.price = ""
+    }
+  }
+
+
+  validateWeight(){
+    var regex = /^[0-9]*$/
+    if(!regex.test(this.weight.toString())){
+      this.weight = 0
     }
   }
 
@@ -182,7 +198,8 @@ export class ProductComponent implements OnInit {
       this.id = data[0].Id;
       this.title = data[0].Title;
       this.image = data[0].Image;
-      this.price = data[0].Price;
+      this.price = data[0].Price.toFixed(2).toString();
+      this.weight = data[0].Weight;
       this.categoryid = data[0].CategoryId;
       this.category = this.categorylist.find( x=> x.Id  == this.categoryid).Title
       this.description = data[0].Description;
@@ -208,7 +225,8 @@ export class ProductComponent implements OnInit {
       this.id = data[0].Id;
       this.title = data[0].Title;
       this.image = data[0].Image;
-      this.price = data[0].Price;
+      this.price = data[0].Price.toFixed(2).toString();
+      this.weight = data[0].Weight;
       this.categoryid = data[0].CategoryId;
       this.category = this.categorylist.find( x=> x.Id  == this.categoryid).Title
       this.description = data[0].Description;

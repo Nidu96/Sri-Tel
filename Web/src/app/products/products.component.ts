@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
     if(this.productlist == undefined){
       this.productlist = []
     }
-    this.productService.getproducts(startlimit.toString(),"10").subscribe(data => {
+    this.productService.getproducts(startlimit.toString(),"15").subscribe(data => {
       data.forEach(element => {
         var i = this.productlist.findIndex(x=> x.Id  === element.Id)
         if(this.productlist.findIndex(x=> x.Id  === element.Id) == -1){
@@ -61,7 +61,7 @@ export class ProductsComponent implements OnInit {
     var tempproductarr = []
     selectedProducts.forEach(e => {
       tempproductarr.push({Id:e.Id,CategoryId:e.CategoryId,Title:e.Title,Image:e.Image,ImageFile:e.ImageFile,Price:e.Price,
-        Quantity:0,Description:e.Description,DatePublished:e.DatePublished})
+        TotalPrice:e.Price,Weight:e.Weight,TotalWeight:e.Weight,Quantity:1,Description:e.Description,DatePublished:e.DatePublished})
     });
     selectedProducts = tempproductarr
     item.IsAddedToCart = true
@@ -87,7 +87,7 @@ export class ProductsComponent implements OnInit {
 
   pagination(event){
     if(this.productcount < event){
-      var tempcount = Math.abs(event-1.5) * 10
+      var tempcount = Math.abs(event-1.5) * 15
       if(event == 1) tempcount = 0
       this.GetProducts(tempcount) 
     } 

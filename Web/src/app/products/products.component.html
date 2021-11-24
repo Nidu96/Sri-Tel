@@ -4,18 +4,18 @@
 <div class="row" style="background-color: white">
 <div class="col-1"></div>
 <div class="col-10">
-<section>
+<section class="section-custom">
     <div>
         <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Products</h1>
         <hr data-aos="zoom-in" data-aos-duration="2000">
         <div class="row justify-content-center">
-            <div class="col-md-3 col-sm-12 divcard m-2 justify-content-center" data-aos="flip-left" data-aos-duration="2000" 
-            *ngFor="let item of productlist | paginate: { itemsPerPage: 6, currentPage: pproducts }; let i = index">
+            <div class="col-md-2 col-sm-12 divcard m-4 justify-content-center" data-aos="flip-left" data-aos-duration="2000" 
+            *ngFor="let item of productlist | paginate: { itemsPerPage: 10, currentPage: pproducts }; let i = index">
             <img class="d-block w-100 mb-5" [src]="item.Image">
             <h5 style="text-align: left;color: #c79416">Product Name</h5>
             <p style="text-align: left;color: black"><b>{{item.Title}}</b></p>
             <h5 style="text-align: left;color: black">Price</h5>
-            <p style="text-align: left;color: #52b788"><b>Rs {{item.Price}}</b></p>
+            <p style="text-align: left;color: #52b788"><b>Rs {{item.Price| number:'.2-2'}}</b></p>
             <button class="btnsubmit2 float-left" 
             style="vertical-align:middle;" (click)="addToCartBtnClick(item)" [hidden]="item.IsAddedToCart">
                 <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>

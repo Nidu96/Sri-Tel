@@ -117,12 +117,12 @@ export class LandingComponent implements OnInit {
           var i
           for(i = 0; i < 4; i++){
             this.productlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-              Description: data[i].Description, Price: data[i].Price,
+              Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
               DatePublished: data[i].DatePublished, Hidden: false})
           }
           for(i = 4; i < data.length; i++){
             this.productlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-              Description: data[i].Description, Price: data[i].Price,
+              Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
               DatePublished: data[i].DatePublished, Hidden: true})
           }
         }else{
@@ -147,12 +147,12 @@ export class LandingComponent implements OnInit {
             var i
             for(i = 0; i < 4; i++){
               this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price,
+                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
                 DatePublished: data[i].DatePublished, Hidden: false})
             }
             for(i = 4; i < data.length; i++){
               this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price,
+                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
                 DatePublished: data[i].DatePublished, Hidden: true})
             }
           }else{
@@ -179,12 +179,12 @@ export class LandingComponent implements OnInit {
             var i
             for(i = 0; i < 4; i++){
               this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price,
+                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
                 DatePublished: data[i].DatePublished, Hidden: false})
             }
             for(i = 4; i < data.length; i++){
               this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price,
+                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
                 DatePublished: data[i].DatePublished, Hidden: true})
             }
           }else{
@@ -396,7 +396,7 @@ export class LandingComponent implements OnInit {
     var tempproductarr = []
     selectedProducts.forEach(e => {
       tempproductarr.push({Id:e.Id,CategoryId:e.CategoryId,Title:e.Title,Image:e.Image,ImageFile:e.ImageFile,Price:e.Price,
-        Quantity:0,Description:e.Description,DatePublished:e.DatePublished})
+        TotalPrice:e.Price,Weight:e.Weight,TotalWeight:e.Weight,Quantity:1,Description:e.Description,DatePublished:e.DatePublished})
     });
     selectedProducts = tempproductarr
     item.IsAddedToCart = true

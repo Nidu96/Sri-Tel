@@ -1,11 +1,10 @@
 <app-header></app-header>
-<div class="mt-5" height="100%" style="background-color: white">
-<section>
+<div class="mt-5" height="100%" style="background-color: white;padding-top: 90px;">
+<section class="section-custom">
   <div class="row justify-content-center mt-5 pt-5">
-    <h1 class="pt-5 pb-4" data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Checkout</h1>
-    <hr data-aos="zoom-in" data-aos-duration="2000">
-    <div class="col-md-8 div3 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
-    <ul class="responsive-table" [hidden]="emptyCart">
+    <div class="col-md-7 col-sm-12 m-5" data-aos="zoom-out-up" data-aos-duration="3000">
+      <h1 class="pt-5 pb-4" data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;font-weight: bold">Shopping Cart.</h1>
+    <!-- <ul class="responsive-table" [hidden]="emptyCart">
         <li class="table-row" *ngFor="let item of selectedProducts">
           <div class="col col-1" style="width:100px;height:100px"><img [src]="item.Image" style="width:inherit; height: inherit;align-content: center;"></div>
           <div class="col col-2">{{item.Title}}</div>
@@ -17,30 +16,92 @@
           </div>
         </li>
         
-    </ul>  
-    <div class="row mt-5 justify-content-center" [hidden]="!emptyCart">
-        <h2 style="margin-top: 5%;text-align: center;word-wrap:break-word;">No products in the cart</h2>
-    </div>  
+    </ul>   -->
+      <table class="custom">
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Total Weight</th>
+          <th>Total Price</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let item of selectedProducts">
+          <td>
+            <div class="row">
+              <div class="col-md-4">
+                <img [src]="item.Image" style="width:100px;height:100px;align-content: center;">
+              </div>
+              <div class="col-md-8">
+                {{item.Title}}
+              </div>
+            </div>
+          </td>
+          <td>
+            <!-- <input type="number" id="quantity" class="form-control" style="text-align: right" value="{{item.Quantity}}"
+            (keyup)="validateQuantity($event,item.Id)"> -->
+            <div class="quantity buttons_added">
+                <input type="button" value="-" class="minus" (click)="minusClick(item.Id)">
+                <input type="number" step="1" min="1" max="" disabled
+                name="quantity" value="{{item.Quantity}}" title="Qty" class="input-text qty text" size="4" pattern="" 
+                inputmode="">
+                <input type="button" value="+" class="plus" (click)="plusClick(item.Id)">
+            </div>
+          </td>
+          <td><b>{{item.TotalWeight}}g</b></td>
+          <td><b>Rs.{{item.TotalPrice| number:'.2-2'}}</b></td>
+          <td><span style="float:left" id='clickableAwesomeFont' (click)="removeFromCartBtnClick(item)"><i class="fas fa-trash-alt" style="color:#afafaf;"></i></span></td>
+        </tr>
+      </table>
+      <div class="row mt-5 justify-content-center" [hidden]="!emptyCart">
+          <h2 style="margin-top: 5%;text-align: center;word-wrap:break-word;">No products in the cart</h2>
+      </div>  
     </div>
-    <div class="col-md-4 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
-    <div class="row justify-content-center div3">
+    <!-- <div class="col-md-1 col-sm-12"></div> -->
+    <div class="col-md-4 col-sm-12 m-5" data-aos="zoom-out-up" data-aos-duration="3000">
+      <div class="row justify-content-center div3">
             <form>
-              <h1>Total: Rs {{totalprice}}/-</h1>
+              <div class="row">
+                <h1 class="pt-5 pb-4" data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;font-weight: bold">
+                Order Details.</h1>
+                <label for="name" class="float-right" style="color: gray" (click)="showDirectPay = false" 
+                [hidden]="showDirectPay" >Back</label>
+              </div>
+              <hr/>
               <div class="form-group" [hidden]="showDirectPay">
-                <label for="name">Name</label>
+                <label for="name"><i class="fas fa-user mr-3"></i>Customer Name</label>
+                <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i> 
                 <div class="input-group">
                 <input type="text" id="name" class="form-control" style="text-align: left" placeholder="name" name="name" 
                 [(ngModel)]="name">
                 </div>
               </div>
               <div class="form-group" [hidden]="showDirectPay">
-                <label for="name">Phone</label>
+                <label for="name"><i class="fas fa-phone-alt mr-3"></i>Phone</label>
+                <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
                 <div class="input-group">
                 <input type="text" id="phone" class="form-control" style="text-align: left" placeholder="phone" name="phone" 
                 [(ngModel)]="phone" (keyup)="validateNumbers()">
                 </div>
               </div>
               <div class="form-group" [hidden]="showDirectPay">
+                <label for="name"><i class="fas fa-envelope mr-3"></i>Email</label>
+                <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
+                <div class="input-group">
+                <input type="text" id="email" class="form-control" style="text-align: left" placeholder="email" name="email" 
+                [(ngModel)]="email">
+                </div>
+              </div>
+              <div class="form-group" [hidden]="showDirectPay">
+                <div class="input-group">
+                    <input type="radio" class="ml-0 mb-5 mt-4" [(ngModel)]="delivery" id="storepickup" name="delivery" 
+                    (click)="isDelivery(0)" value="0">
+                    <label for="storepickup" class="mb-5 mt-4 mr-5">Store Pickup</label><br>
+                    <input type="radio" class="mb-5 mt-4" [(ngModel)]="delivery" id="delivery" name="delivery" 
+                    (click)="isDelivery(1)" value="1">
+                    <label for="delivery" class="mb-5 mt-4">Delivery</label><br>
+                </div>
+              </div>
+              <!-- <div class="form-group" [hidden]="showDirectPay">
                   <label for="name">Recipient's Name</label>
                   <div class="input-group">
                   <input type="text" id="recname" class="form-control" style="text-align: left" placeholder="recipient's name" name="recname" 
@@ -53,38 +114,75 @@
                       <input type="text" id="recphone" class="form-control" style="text-align: left" placeholder="recipient's phone" name="recphone"
                       [(ngModel)]="recphone" (keyup)="validateNumbers()">
                   </div>
+              </div> -->
+              <div *ngIf="delivery == 1">
+              <div class="form-group" [hidden]="showDirectPay">
+                <label for="city"><i class="fas fa-map-marker-alt mr-3"></i>Delivery City</label>
+                <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
+                <div class="input-group">
+                    <input type="text" id="city" class="form-control" style="text-align: left" placeholder="city" name="city"
+                    [(ngModel)]="city">
+                </div>
               </div>
               <div class="form-group" [hidden]="showDirectPay">
-                  <label for="address">Delivery Address</label>
+                  <label for="address"><i class="fas fa-location-arrow mr-3"></i>Delivery Address</label>
+                  <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
                   <div class="input-group">
                     <textarea id="address" class="form-control" style="text-align: left" placeholder="address" name="address"
                     [(ngModel)]="address" rows="5"></textarea>
                   </div>
               </div>
               <div class="form-group" [hidden]="showDirectPay">
-                  <label for="notes">Delivery Notes</label>
+                  <label for="notes"><i class="fas fa-clipboard mr-3"></i>Delivery Notes</label>
                   <div class="input-group">
                     <textarea id="notes" class="form-control" style="text-align: left" placeholder="notes" name="notes"
                     [(ngModel)]="notes" rows="3"></textarea>
                   </div>
               </div>
-              <div class="form-group" [hidden]="showDirectPay">
-                  <label for="city">Delivery City</label>
-                  <div class="input-group">
-                      <input type="text" id="city" class="form-control" style="text-align: left" placeholder="city" name="city"
-                      [(ngModel)]="city">
-                  </div>
               </div>
-              <div class="form-group" [hidden]="showDirectPay">
-                  <button type="button" class="btn btn-outline-dark" (click)="ContinueToPayment()">Continue</button>
+              <div class="form-group m-5">
+                <h4 class="custom-h4 mb-3">Order Summary</h4>
+                <div class="row">
+                  <div class="col-6">
+                      <label class="custom-label" style="color: gray;">Subtotal ({{noofitems}} items)</label>
+                  </div>
+                  <div class="col-6">
+                      <label class="float-right custom-label">Rs.{{subtotal| number:'.2-2'}}</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                      <label class="custom-label" style="color: gray;">Delivery Fee</label>
+                  </div>
+                  <div class="col-6">
+                      <label class="float-right custom-label">Rs.{{deliveryfee| number:'.2-2'}}</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                      <label class="total-label">Total</label>
+                  </div>
+                  <div class="col-6">
+                      <label class="float-right total-custom-label" style="color: #f89602">Rs.{{totalprice| number:'.2-2'}}</label>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="delivery == 1">
+                <div class="row justify-content-center" [hidden]="showDirectPay">
+                  <button type="button" style="padding: 8px;width: 40%;font-size: 16px" class="btnsubmit2" (click)="ContinueToPayment()">Proceed to pay</button>
+                </div>
+              </div>
+              <div *ngIf="delivery == 0">
+                <div class="row justify-content-center" [hidden]="showDirectPay">
+                  <button type="button" style="padding: 8px;width: 40%;font-size: 16px" class="btnsubmit2" (click)="saveOrder()">Submit Order</button>
+                </div>
               </div>
             </form>
-
-          <div [hidden]="!showDirectPay">
-            <direct-pay-ipg [config]="{  size: 150, type: 'round',colour: 'white'}" [PaymentRequest]="paymentRequest" (onSuccess)="onSuccess($event)" (onError)="onError($event)"></direct-pay-ipg>
-          </div>
-
-    </div>
+            
+            <div [hidden]="!showDirectPay">
+              <direct-pay-ipg [config]="{  size: 150, type: 'round',colour: 'white'}" [PaymentRequest]="paymentRequest" (onSuccess)="onSuccess($event)" (onError)="onError($event)"></direct-pay-ipg>
+            </div>
+      </div>
     </div>
   </div>
 </section>

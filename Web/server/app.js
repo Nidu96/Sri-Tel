@@ -295,8 +295,8 @@ app.post("/product/saveproduct", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE product SET categoryid = ?, title = ?,image = ?,price = ?, description = ?, datepublished = ? Where id = ?',
-    [product.CategoryId,product.Title,product.Image,product.Price,product.Description, product.DatePublished,product.Id], (err, row) => {
+    con.query('UPDATE product SET categoryid = ?, title = ?,image = ?,price = ?, weight = ?,description = ?, datepublished = ? Where id = ?',
+    [product.CategoryId,product.Title,product.Image,parseFloat(product.Price),parseInt(product.Weight),product.Description, product.DatePublished,product.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });

@@ -6,6 +6,9 @@ export class Product {
         public Image?: string,
         public ImageFile?: string,
         public Price?: string,
+        public TotalPrice?: string,
+        public Weight?: string,
+        public TotalWeight?: string,
         public Quantity?: number,
         public Description?: string,
         public DatePublished?: Date
