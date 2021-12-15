@@ -31,6 +31,22 @@ html {
 	-o-background-size: cover;
 	font-size: 16px;
   }
+
+  .products-body {
+	margin: 0 !important;
+	padding : 0px !important;
+	font-family: 'Segoe UI';
+	height: 100vh;
+	background-repeat: no-repeat;
+	background-size:contain;
+	background-position:center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	font-size: 16px;
+	padding-top: 400px !important;
+  }
   * {
     box-sizing: border-box;
   }
@@ -151,7 +167,7 @@ html {
 	margin-right: 1%;
   }
 
-  .featured-brands-section {
+  .organic-products-section {
 	margin-top: 4%;
 	margin-bottom: 4%;
 	margin-left: 20%;
@@ -1312,6 +1328,15 @@ html {
   	text-align: center;
 }
 
+.divcardcategorieslist {
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-bottom: 20px;
+	align-content: center;
+  	box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+  	text-align: center;
+}
+
 .divcategorycard {
 	padding: 10px;
 	align-content: center;
@@ -2010,23 +2035,23 @@ form.search input[type=text] {
 	padding-bottom: 7px;
   }
 
-.featuredbrand1{
+.organicproduct1{
 	height: 130px;
 }
 
 @media screen and (min-width: 600px) {
-	.featuredbrand1 {
+	.organicproduct1 {
 		height: 480px;
 	}
 }
 
 
-.featuredbrand2{
+.organicproduct2{
 	height: 60px;
 }
 
 @media screen and (min-width: 600px) {
-	.featuredbrand2 {
+	.organicproduct2 {
 		height: 235px;
 	}
 }
@@ -2094,4 +2119,71 @@ form.search input[type=text] {
 
 	input[type=number] {
 		-moz-appearance:textfield;
+	}
+
+	.ngx-pagination .current {
+		background: #030749;
+	}
+	// .ngx-pagination .disabled {
+	// 	background: #203f53;
+	// }
+
+
+	.footertext {
+		font-size: 8px;
+		color:white;
+	}
+
+	@media screen and (min-width: 600px) {
+		.footertext {
+			font-size: 16px;
+			color:white;
+		}
+	}
+
+	.footertextheader {
+		font-size: 10px;
+		color:#f8c67c;
+	}
+
+	@media screen and (min-width: 600px) {
+		.footertextheader {
+			font-size: 18px;
+			color:#f8c67c;
+		}
+	}
+
+	.footertextaddress {
+		font-size: 9px;
+		color: gray;
+	}
+
+	@media screen and (min-width: 600px) {
+		.footertextaddress {
+			font-size: 14px;
+			color: gray;
+		}
+	}
+
+
+	.footercols {
+		margin: .25rem !important;
+	}
+
+	@media screen and (min-width: 600px) {
+		.footercols {
+			margin: 3rem !important;
+		}
+	}
+
+
+	.footercols2 {
+		margin: .25rem !important;
+	}
+
+	@media screen and (min-width: 600px) {
+		.footercols2 {
+			margin: 1.5rem !important;
+			margin-top: 3rem !important;
+		}
 	}

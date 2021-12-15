@@ -34,10 +34,10 @@ export class LandingComponent implements OnInit {
   public newarrivalsproductlist: Array<any> = []
   public shownewarrivalsproducts: boolean = false;
 
-  public featuredbrand1: string
-  public featuredbrand2: string
-  public featuredbrand3: string
-  public showfeaturedproducts: boolean = false;
+  public organicproduct1: string
+  public organicproduct2: string
+  public organicproduct3: string
+  public showorganicproducts: boolean = false;
 
   public bannerlist: Array<any> = []
   public activeBanner: any;
@@ -99,7 +99,7 @@ export class LandingComponent implements OnInit {
         this.showcategories = true
         this.GetBestSellerProducts()
         this.GetNewArrivalsProducts()
-        this.GetFeaturedProducts()
+        this.GetOrganicProducts()
       }
 
     },
@@ -136,34 +136,65 @@ export class LandingComponent implements OnInit {
     });
   }
 
+
+  GetProductsByCategory(category){
+    this.showproducts = false
+    this.productService.getproductoncategory(category).subscribe(data => {
+      this.productlist = []    
+      if(data != null && data != undefined && data.length != 0){
+        if(data.length >= 5){
+          var i
+          for(i = 0; i < 4; i++){
+            this.productlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+              Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
+              DatePublished: data[i].DatePublished, Hidden: false})
+          }
+          for(i = 4; i < data.length; i++){
+            this.productlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+              Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
+              DatePublished: data[i].DatePublished, Hidden: true})
+          }
+        }else{
+          this.productlist = data
+        }
+        this.productlist = this.productService.refreshProductList(this.productlist)
+        this.showproducts = true
+      }
+    },
+    error => { 
+    });
+  }
+
   GetBestSellerProducts(){
     this.showbestsellersproducts = false
     if(this.categorylist != undefined && this.categorylist != null){
       var tempcat = this.categorylist.find( x=> x.Title  == "Best Sellers")
-      this.productService.getproductoncategory(tempcat).subscribe(data => {
-        this.bestsellersproductlist = []     
-        if(data != null && data != undefined && data.length != 0){
-          if(data.length >= 5){
-            var i
-            for(i = 0; i < 4; i++){
-              this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
-                DatePublished: data[i].DatePublished, Hidden: false})
+      if(tempcat != null && tempcat != undefined && tempcat != ""){
+        this.productService.getproductoncategory(tempcat).subscribe(data => {
+          this.bestsellersproductlist = []     
+          if(data != null && data != undefined && data.length != 0){
+            if(data.length >= 5){
+              var i
+              for(i = 0; i < 4; i++){
+                this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+                  Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
+                  DatePublished: data[i].DatePublished, Hidden: false})
+              }
+              for(i = 4; i < data.length; i++){
+                this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+                  Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
+                  DatePublished: data[i].DatePublished, Hidden: true})
+              }
+            }else{
+              this.bestsellersproductlist = data
             }
-            for(i = 4; i < data.length; i++){
-              this.bestsellersproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
-                DatePublished: data[i].DatePublished, Hidden: true})
-            }
-          }else{
-            this.bestsellersproductlist = data
+            this.bestsellersproductlist = this.productService.refreshProductList(this.bestsellersproductlist)
+            this.showbestsellersproducts = true
           }
-          this.bestsellersproductlist = this.productService.refreshProductList(this.bestsellersproductlist)
-          this.showbestsellersproducts = true
-        }
-      },
-      error => { 
-      });
+        },
+        error => { 
+        });
+      }
     }
   }
 
@@ -172,51 +203,55 @@ export class LandingComponent implements OnInit {
     this.shownewarrivalsproducts = false
     if(this.categorylist != undefined && this.categorylist != null){
       var tempcat = this.categorylist.find( x=> x.Title  == "New Arrivals")
-      this.productService.getproductoncategory(tempcat).subscribe(data => {
-        this.newarrivalsproductlist = []     
-        if(data != null && data != undefined && data.length != 0){
-          if(data.length >= 5){
-            var i
-            for(i = 0; i < 4; i++){
-              this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
-                DatePublished: data[i].DatePublished, Hidden: false})
+      if(tempcat != null && tempcat != undefined && tempcat != ""){
+        this.productService.getproductoncategory(tempcat).subscribe(data => {
+          this.newarrivalsproductlist = []     
+          if(data != null && data != undefined && data.length != 0){
+            if(data.length >= 5){
+              var i
+              for(i = 0; i < 4; i++){
+                this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+                  Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
+                  DatePublished: data[i].DatePublished, Hidden: false})
+              }
+              for(i = 4; i < data.length; i++){
+                this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
+                  Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
+                  DatePublished: data[i].DatePublished, Hidden: true})
+              }
+            }else{
+              this.newarrivalsproductlist = data
             }
-            for(i = 4; i < data.length; i++){
-              this.newarrivalsproductlist.push({Id: data[i].Id,Title: data[i].Title,Image: data[i].Image,ImageFile: data[i].ImageFile,
-                Description: data[i].Description, Price: data[i].Price.toFixed(2).toString(),
-                DatePublished: data[i].DatePublished, Hidden: true})
-            }
-          }else{
-            this.newarrivalsproductlist = data
+            this.newarrivalsproductlist = this.productService.refreshProductList(this.newarrivalsproductlist)
+            this.shownewarrivalsproducts = true
           }
-          this.newarrivalsproductlist = this.productService.refreshProductList(this.newarrivalsproductlist)
-          this.shownewarrivalsproducts = true
-        }
 
-      },
-      error => { 
-      });
+        },
+        error => { 
+        });
+      }
     }
   }
 
 
-  GetFeaturedProducts(){
-    this.showfeaturedproducts = false
+  GetOrganicProducts(){
+    this.showorganicproducts = false
     if(this.categorylist != undefined && this.categorylist != null){
-      var tempcat = this.categorylist.find( x=> x.Title  == "Featured Brands")
-      this.productService.getproductoncategory(tempcat).subscribe(data => {   
-        if(data != null && data != undefined && data.length != 0){
-          if(data.length >= 3){
-            this.featuredbrand1 = data[0].Image
-            this.featuredbrand2 = data[1].Image
-            this.featuredbrand3 = data[2].Image
+      var tempcat = this.categorylist.find( x=> x.Title  == "Organic Products")
+      if(tempcat != null && tempcat != undefined && tempcat != ""){
+        this.productService.getproductoncategory(tempcat).subscribe(data => {   
+          if(data != null && data != undefined && data.length != 0){
+            if(data.length >= 3){
+              this.organicproduct1 = data[0].Image
+              this.organicproduct2 = data[1].Image
+              this.organicproduct3 = data[2].Image
+            }
+            this.showorganicproducts = true
           }
-          this.showfeaturedproducts = true
-        }
-      },
-      error => { 
-      });
+        },
+        error => { 
+        });
+      }
     }
   }
 

@@ -216,7 +216,7 @@ export class CartComponent implements OnInit {
           "page_type": 'IN_APP',
         }
         this.dataString =  CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(json)));
-        this.signature = CryptoJS.HmacSHA256(this.dataString, "4b6ceb2bfb9b113598e43e35b4bf1bcb2912b99f0d1821a4176ab39f4660310f");
+        this.signature = CryptoJS.HmacSHA256(this.dataString, "2fedba4a6adb86c990cded02e56cf460c07e4275f7bb0f80f1545ecb87f416a8");
       
         this.paymentRequest = {
           signature: this.signature,

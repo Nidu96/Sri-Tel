@@ -51,6 +51,10 @@ export class ProductService {
 
   getproductoncategory(category: Category): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproductoncategory`, category);}
 
+  getproductscount(category: Category): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproductscount`, category);}
+
+  getallproductscount(): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getallproductscount`, null);}
+
   deleteproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/deleteproduct`, product);}
 
   pay(directpay: any): Observable<any> {return this.http.post<any>(`https://testpay.directpay.lk/`, directpay);}

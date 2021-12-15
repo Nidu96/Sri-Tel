@@ -133,7 +133,7 @@ export class CategoryComponent implements OnInit {
 
       this.id = data[0].Id;
       this.title = data[0].Title;
-      this.icon = data[0].Image;
+      this.icon = data[0].Icon;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -156,7 +156,7 @@ export class CategoryComponent implements OnInit {
 
       this.id = data[0].Id;
       this.title = data[0].Title;
-      this.icon = data[0].Image;
+      this.icon = data[0].Icon;
       this.description = data[0].Description;
       this.datepublished = data[0].DatePublished.toString();
       this.showImage = true
@@ -177,7 +177,11 @@ export class CategoryComponent implements OnInit {
       this.category.Id = id
       this.category.Icon = icon
       this.categoryService.deletecategory(this.category).subscribe(data => {
-        this.alertService.success('Successfully deleted!')
+        if(data == "Cannot delete"){
+          this.alertService.error('Cannot delete, there are products under this category')
+        }else{
+          this.alertService.success('Successfully deleted!')
+        }
         this.categorylist = []
         this.GetCategories(0)
       },

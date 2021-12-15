@@ -88,7 +88,7 @@ app.post("/user/saveuser", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE systemuser SET name = ?, username = ?, password = ?, active = ?, userrole = ? Where id = ?',
+    con.query('UPDATE systemuser SET Name = ?, Username = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
     [user.Name,user.Username, user.Password,user.Active,user.UserRole,user.Id], (err, row) => {
       if(err) throw err;
       res.json("")
@@ -195,7 +195,7 @@ app.post("/banner/savebanner", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE banner SET title = ?,image = ?, description = ?, datepublished = ? Where id = ?',
+    con.query('UPDATE banner SET Title = ?,Image = ?, Description = ?, DatePublished = ? Where Id = ?',
     [banner.Title,banner.Image,banner.Description, banner.DatePublished,banner.Id], (err, row) => {
       if(err) throw err;
       res.json("")
@@ -245,7 +245,7 @@ app.post("/category/savecategory", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE category SET title = ?, icon = ?,description = ?, datepublished = ? Where id = ?',
+    con.query('UPDATE category SET Title = ?, Icon = ?,Description = ?, DatePublished = ? Where Id = ?',
     [category.Title,category.Icon,category.Description,category.DatePublished,category.Id], (err, row) => {
       if(err) throw err;
       res.json("")
@@ -276,9 +276,17 @@ app.post("/category/deletecategory", (req, res, next) => {
     if(err) throw err;
     var count = rows.length;
     if (count) {
-      con.query('DELETE FROM category WHERE Id = ?', category.Id.toString(), function(err, row, fields) {
+      con.query('SELECT * FROM product WHERE CategoryId = ?', category.Id.toString(), function(err, rows, fields) {
         if(err) throw err;
-        res.json("");
+        var productcount = rows.length;
+        if (productcount == 0) {
+          con.query('DELETE FROM category WHERE Id = ?', category.Id.toString(), function(err, row, fields) {
+            if(err) throw err;
+            res.json("");
+          });
+        }else{
+          res.json("Cannot delete");
+        }
       });
     } 
   });
@@ -295,7 +303,7 @@ app.post("/product/saveproduct", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE product SET categoryid = ?, title = ?,image = ?,price = ?, weight = ?,description = ?, datepublished = ? Where id = ?',
+    con.query('UPDATE product SET CategoryId = ?, Title = ?,Image = ?,Price = ?, Weight = ?,Description = ?, DatePublished = ? Where Id = ?',
     [product.CategoryId,product.Title,product.Image,parseFloat(product.Price),parseInt(product.Weight),product.Description, product.DatePublished,product.Id], (err, row) => {
       if(err) throw err;
       res.json("")
@@ -315,6 +323,30 @@ app.post("/product/getproducts", (req, res, next) => {
 app.post("/product/getproductoncategory", (req, res, next) => {
   const category = req.body;
   con.query('SELECT * FROM product WHERE CategoryId = ? ORDER BY DatePublished DESC', category.Id, (err,rows) => {
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+app.post("/product/searchproducts", (req, res, next) => {
+  const limit = JSON.parse(req.body);
+  con.query('SELECT * FROM product WHERE Title LIKE ? ORDER BY DatePublished DESC LIMIT ?,?', ['%' + limit.searchkey + '%',parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+app.post("/product/getproductscount", (req, res, next) => {
+  const category = req.body;
+  console.log(category.Id )
+  con.query('SELECT COUNT(Id) AS ProductCount FROM product WHERE CategoryId = ? GROUP BY CategoryId', category.Id, (err,rows) => {
+    if(err) throw err;
+    res.json(rows);
+  });
+});
+
+app.post("/product/getallproductscount", (req, res, next) => {
+  con.query('SELECT COUNT(Id) AS ProductCount FROM product', (err,rows) => {
     if(err) throw err;
     res.json(rows);
   });
@@ -366,7 +398,7 @@ app.post("/order/saveorder", (req, res, next) => {
       });
     });
   }else{
-    con.query('UPDATE order SET status = ? WHERE id = ?',[order.Status,order.Id], (err, row) => {
+    con.query('UPDATE order SET Status = ? WHERE Id = ?',[order.Status,order.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });

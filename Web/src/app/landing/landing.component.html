@@ -52,13 +52,24 @@ init();
         <a (click)="AddCategory()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #ebebeb"></i></span></a>
       </div> -->
       <div class="col-md-2 col-sm-3 divcategorycard m-5 justify-content-center" data-aos="zoom-in-up" 
-      *ngFor="let item of categorylist" data-aos-duration="3000" [hidden]="item.Hidden">
+        (click)="GetProducts()">
+        <div class="row">
+          <div class="col-3">
+            <!-- <img [src]="item.Icon" 
+            style="width:50px; height: 50px;align-content: center;object-fit: cover;border-radius: 50%;"> -->
+          </div>
+          <h3 class="col-7 mt-2">All</h3>
+          <span class="col-2 mt-2"><i class="fas fa-angle-right"></i></span>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3 divcategorycard m-5 justify-content-center" data-aos="zoom-in-up" 
+      *ngFor="let item of categorylist" data-aos-duration="3000" [hidden]="item.Hidden" (click)="GetProductsByCategory(item)">
         <div class="row">
           <!-- <img class="d-block col-3" width="50%" [src]="item.Icon"> -->
 
           <div class="col-3">
             <img [src]="item.Icon" 
-            style="width:30px; height: 30px;align-content: center;object-fit: cover;border-radius: 50%;">
+            style="width:50px; height: 50px;align-content: center;object-fit: cover;border-radius: 50%;">
           </div>
           <h3 class="col-7 mt-2">{{item.Title}}</h3>
           <span class="col-2 mt-2"><i class="fas fa-angle-right"></i></span>
@@ -311,22 +322,22 @@ init();
     </div> 
 </section>
 
-<section class="featured-brands-section" id="featuredbrands">
+<section class="organic-products-section" id="organicproducts">
     <div class="col-1 divnewcard">
         <h3>New</h3>
     </div>
-    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Featured Brands</h1>
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Orgaic Products</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="row justify-content-center">
         <div class="col-6">
-            <img class="d-block w-100 mr-5 left-align featuredbrand1" [src]="featuredbrand1">
+            <img class="d-block w-100 mr-5 left-align organicproduct1" [src]="organicproduct1">
         </div>
         <div class="col-5">
             <div class="row justify-content-center">
-              <img class="d-block w-100 mb-2 right-align featuredbrand2" [src]="featuredbrand2">
+              <img class="d-block w-100 mb-2 right-align organicproduct2" [src]="organicproduct2">
             </div>
             <div class="row justify-content-center">
-                <img class="d-block w-100 mt-3 right-align featuredbrand2" [src]="featuredbrand3">
+                <img class="d-block w-100 mt-3 right-align organicproduct2" [src]="organicproduct3">
             </div>
         </div>
     </div> 
@@ -433,33 +444,38 @@ init();
     </div> -->
     <div class="row justify-content-center footer-row2">
         <div class="col-12 footer-box2">
-            <div class="row pt-5">
-                <div class="col-2 justify-content-center">  
+            <div class="row pt-5 justify-content-center">
+                <div class="col-2 footercols mt-2 pr-5 justify-content-center">  
                     <a href="/"><img src="../../assets/images/agrolinklogo.png" class="logo"></a>
-                    <p class="pt-2" style="color:white;">Agrolinks Company</p>
-                    <p class="pt-5">No 571, Highlevel Road, Delkanda, Nugegoda</p>
+                    <p class="pt-2 footertext">Agrolinks Company</p>
+                    <p class="pt-3 footertextaddress">No 571, Highlevel Road, Delkanda, Nugegoda</p>
                 </div>
-                <div class="col-2">  
-                    <p style="color:#f8c67c;">Main</p>
-                    <p class="pt-2">Home</p>
-                    <p class="">About Us</p>
-                    <p class="">Contact Us</p>
+                <div class="col-md-1 col-2 footercols mt-5" style="text-align: left">  
+                    <p class="footertextheader">Main</p>
+                    <p class="pt-2 footertext">Home</p>
+                    <p class="footertext">About Us</p>
+                    <p class="footertext">Contact Us</p>
                 </div>
-                <div class="col-2">  
-                    <p style="color:#f8c67c;">More</p>
-                    <p class="pt-2">Home</p>
-                    <p class="">About Us</p>
-                    <p class="">Contact Us</p>
+                <div class="col-md-1 col-2 footercols mt-5" style="text-align: left">  
+                    <p class="footertextheader">More</p>
+                    <p class="pt-2 footertext">Home</p>
+                    <p class="footertext">About Us</p>
+                    <p class="footertext">Contact Us</p>
                 </div>
-                <div class="col-2">  
-                    <p style="color:#f8c67c;">Category</p>
-                    <p class="pt-2">Home</p>
-                    <p class="">About Us</p>
-                    <p class="">Contact Us</p>
+                <div class="col-md-1 col-2 footercols mt-5" style="text-align: left">  
+                    <p class="footertextheader">Category</p>
+                    <p class="pt-2 footertext">Home</p>
+                    <p class="footertext">About Us</p>
+                    <p class="footertext">Contact Us</p>
                 </div>
-                <div class="col-2">  
-                    <p class="pt-2" style="color:#f8c67c;">Agrolinks Company</p>
-                    <p class="pt-5">No 571, Highlevel Road, Delkanda, Nugegoda</p>
+                <div class="col-3 footercols2 mr-3 mt-5" style="text-align: right">  
+                    <p class="footertext"><i class="fas fa-mobile-alt" style="color: #f8c67c" aria-hidden="true"></i>  + 94 77 123 4567</p>
+                    <p class="pt-2 footertext"><i class="fas fa-envelope" style="color: #f8c67c" aria-hidden="true"></i>  data.landmarkseeds@gmail.com</p>
+                    <p class="pt-2 footertext">follow us on:</p>
+                    <a href="/" class="p-2"><img class="socialmedia1" src="../../assets/images/navbar_and_banner_section/facebook1.png"></a>
+                    <a href="/" class="p-2"><img class="socialmedia2" src="../../assets/images/navbar_and_banner_section/instagram1.png"></a>
+                    <a href="/" class="p-2"><img class="socialmedia2" src="../../assets/images/navbar_and_banner_section/twitter1.png"></a>
+
                 </div>
             </div>
         </div>

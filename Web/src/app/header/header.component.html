@@ -41,18 +41,18 @@
             </ul>
         </div> 
     </div>
-    <!-- <div class="float-left left-bar">
+    <div class="float-left left-bar">
         <div>
             <ul class="list-inline">
                 <li id="memberLinkPanRegister">
                     <form class="search" style="max-width:800px">
-                    <input type="text" placeholder="Search.." name="search2">
-                    <button type="submit"><i class="fa fa-search"></i></button>
+                    <input type="text" placeholder="Search.." name="search" [(ngModel)]="search">
+                    <button type="button" (click)="SearchProduct()"><i class="fa fa-search"></i></button>
                     </form>
                 </li>
             </ul>
         </div> 
-    </div> -->
+    </div>
     <div class="right_bar">
         <div class="navbar-address2">
             <ul class="list-inline navbar_address-tab">
