@@ -14,7 +14,7 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'http://localhost:3000/order';
+  baseUrl = 'http://137.184.93.255:3000/order';
 
   saveorder(order: Order): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveorder`, order);}
 

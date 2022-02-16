@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class CategoryService {
 
   constructor(private http: HttpClient) { }
-  baseUrl = 'http://localhost:3000/category';
+  baseUrl = 'http://137.184.93.255:3000/category';
 
   savecategory(category: Category): Observable<any> {return this.http.post<any>(`${this.baseUrl}/savecategory`, category);}
 
