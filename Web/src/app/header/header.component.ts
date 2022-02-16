@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
 
   public loggedinuser: SystemUser;
   public name: string;
+  public search: string;
   public selectedProducts: string;
   public userLoggedIn: boolean = false;
   public isAdmin: boolean = false;

@@ -115,7 +115,7 @@
                       [(ngModel)]="recphone" (keyup)="validateNumbers()">
                   </div>
               </div> -->
-              <div *ngIf="delivery == 1">
+              <div *ngIf="delivery == '1'">
               <div class="form-group" [hidden]="showDirectPay">
                 <label for="city"><i class="fas fa-map-marker-alt mr-3"></i>Delivery City</label>
                 <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
@@ -167,12 +167,12 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="delivery == 1">
+              <div *ngIf="delivery == '1'">
                 <div class="row justify-content-center" [hidden]="showDirectPay">
                   <button type="button" style="padding: 8px;width: 40%;font-size: 16px" class="btnsubmit2" (click)="ContinueToPayment()">Proceed to pay</button>
                 </div>
               </div>
-              <div *ngIf="delivery == 0">
+              <div *ngIf="delivery == '0'">
                 <div class="row justify-content-center" [hidden]="showDirectPay">
                   <button type="button" style="padding: 8px;width: 40%;font-size: 16px" class="btnsubmit2" (click)="saveOrder()">Submit Order</button>
                 </div>
