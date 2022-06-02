@@ -40,7 +40,7 @@ export class ProductService {
     return productlist;
   }
   
-  baseUrl = 'http://137.184.93.255:3000/product';
+  baseUrl = 'https://agrolinks.lk:3000/product';
 
   saveproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveproduct`, product);}
 

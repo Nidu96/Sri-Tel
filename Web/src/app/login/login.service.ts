@@ -12,7 +12,7 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'http://137.184.93.255:3000/auth';
+  baseUrl = 'https://agrolinks.lk:3000/auth';
 
   authenticate(credentials: Credentials): Observable<any> {return this.http.post<any>(`${this.baseUrl}/authenticate`, credentials);}
 }

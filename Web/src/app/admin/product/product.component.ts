@@ -26,7 +26,7 @@ export class ProductComponent implements OnInit {
   public id: string;
   public title: string;
   public description: string;
-  public datepublished: string;
+  public datepublished: Date;
   public price: string;
   public weight: number;
   public category: string;
@@ -62,7 +62,7 @@ export class ProductComponent implements OnInit {
     this.categoryid = "";
     this.image = "";
     this.showImage = false;
-    this.datepublished = new Date().toDateString();
+    this.datepublished = new Date();
     this.savebtnactive = true
   }
 
@@ -89,7 +89,12 @@ export class ProductComponent implements OnInit {
       this.product.Weight = this.weight.toString();
       this.product.CategoryId = this.categoryid;
       this.product.Description = this.description;
-      this.product.DatePublished = new Date(this.datepublished);
+      let year = new Date(this.datepublished).getFullYear();
+      let month = new Date(this.datepublished).getMonth()+1;
+      let date = new Date(this.datepublished).getDate();
+      let tempdate = year+"-"+month+"-"+date;
+      this.product.DatePublished = tempdate;
+
       this.productService.saveproduct(this.product).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
@@ -203,7 +208,7 @@ export class ProductComponent implements OnInit {
       this.categoryid = data[0].CategoryId;
       this.category = this.categorylist.find( x=> x.Id  == this.categoryid).Title
       this.description = data[0].Description;
-      this.datepublished = data[0].DatePublished.toString();
+      this.datepublished = new Date(data[0].DatePublished);
       this.showImage = true
       
       this.ModalRef = this.bsModalService.show(this.createnewproduct)
@@ -230,7 +235,7 @@ export class ProductComponent implements OnInit {
       this.categoryid = data[0].CategoryId;
       this.category = this.categorylist.find( x=> x.Id  == this.categoryid).Title
       this.description = data[0].Description;
-      this.datepublished = data[0].DatePublished.toString();
+      this.datepublished = new Date(data[0].DatePublished);
       this.showImage = true
 
       this.ModalRef = this.bsModalService.show(this.createnewproduct)

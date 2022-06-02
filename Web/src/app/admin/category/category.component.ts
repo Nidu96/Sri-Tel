@@ -25,7 +25,7 @@ export class CategoryComponent implements OnInit {
   public id: string;
   public title: string;
   public description: string;
-  public datepublished: string;
+  public datepublished: Date;
   public fileToUpload;
   public image;
   public icon;
@@ -52,7 +52,7 @@ export class CategoryComponent implements OnInit {
     this.icon = "";
     this.description = "";
     this.showImage = false;
-    this.datepublished = new Date().toDateString();
+    this.datepublished = new Date();
     this.savebtnactive = true
   }
 
@@ -76,7 +76,12 @@ export class CategoryComponent implements OnInit {
       this.category.Title = this.title;
       this.category.Icon = this.icon;
       this.category.Description = this.description;
-      this.category.DatePublished = new Date(this.datepublished);
+      let year = new Date(this.datepublished).getFullYear();
+      let month = new Date(this.datepublished).getMonth()+1;
+      let date = new Date(this.datepublished).getDate();
+      let tempdate = year+"-"+month+"-"+date;
+      this.category.DatePublished = tempdate;
+
       this.categoryService.savecategory(this.category).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
@@ -135,7 +140,7 @@ export class CategoryComponent implements OnInit {
       this.title = data[0].Title;
       this.icon = data[0].Icon;
       this.description = data[0].Description;
-      this.datepublished = data[0].DatePublished.toString();
+      this.datepublished = new Date(data[0].DatePublished);
       this.showImage = true
       
       this.ModalRef = this.bsModalService.show(this.createnewcategory)
@@ -158,7 +163,7 @@ export class CategoryComponent implements OnInit {
       this.title = data[0].Title;
       this.icon = data[0].Icon;
       this.description = data[0].Description;
-      this.datepublished = data[0].DatePublished.toString();
+      this.datepublished = new Date(data[0].DatePublished);
       this.showImage = true
 
       this.ModalRef = this.bsModalService.show(this.createnewcategory)

@@ -25,7 +25,7 @@ export class BannerComponent implements OnInit {
   public id: string;
   public title: string;
   public description: string;
-  public datepublished: string;
+  public datepublished: Date;
   public fileToUpload;
   public image;
   public showImage: boolean = false;
@@ -51,7 +51,7 @@ export class BannerComponent implements OnInit {
     this.description = "";
     this.image = "";
     this.showImage = false;
-    this.datepublished = new Date().toDateString();
+    this.datepublished = new Date();
     this.savebtnactive = true
   }
 
@@ -75,7 +75,12 @@ export class BannerComponent implements OnInit {
       this.banner.Title = this.title;
       this.banner.Image = this.image;
       this.banner.Description = this.description;
-      this.banner.DatePublished = new Date(this.datepublished);
+      let year = new Date(this.datepublished).getFullYear();
+      let month = new Date(this.datepublished).getMonth()+1;
+      let date = new Date(this.datepublished).getDate();
+      let tempdate = year+"-"+month+"-"+date;
+      this.banner.DatePublished = tempdate;
+      
       this.bannerService.savebanner(this.banner).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
@@ -139,7 +144,7 @@ export class BannerComponent implements OnInit {
       this.title = data[0].Title;
       this.image = data[0].Image;
       this.description = data[0].Description;
-      this.datepublished = data[0].DatePublished.toString();
+      this.datepublished = new Date(data[0].DatePublished);
       this.showImage = true
       
       this.ModalRef = this.bsModalService.show(this.createnewbanner)
@@ -162,7 +167,7 @@ export class BannerComponent implements OnInit {
       this.title = data[0].Title;
       this.image = data[0].Image;
       this.description = data[0].Description;
-      this.datepublished = data[0].DatePublished.toString();
+      this.datepublished = new Date(data[0].DatePublished);
       this.showImage = true
 
       this.ModalRef = this.bsModalService.show(this.createnewbanner)

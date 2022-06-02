@@ -1,0 +1,485 @@
+<app-header></app-header>
+<script>
+const gra = function(min, max) {
+  return Math.random() * (max - min) + min;
+};
+const init = function() {
+  let items = document.querySelectorAll("li");
+  for (let i = 0; i < items.length; i++) {
+    items[i].style.minHeight = gra(120, 205) + "vh";
+    items[i].style.background = randomColor({ luminosity: "light" });
+  }
+
+  cssScrollSnapPolyfill();
+};
+init();
+</script>
+<div data-aos="fade-up" id="carouselExampleIndicators" class="carousel slide carousel-container" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img class="d-block w-100 banner" [src]="activeBanner.Image">
+        <div class="carousel-caption d-none d-md-block">
+            <h2 class="bannertext1">a step towards a better future</h2>
+            <h5>{{activeBanner.Title}}</h5>
+            <p>{{activeBanner.Description}}</p>
+        </div>
+    </div>
+    <div class="carousel-item" *ngFor="let item of bannerlist">
+        <img class="d-block w-100 banner" [src]="item.Image">
+        <div class="carousel-caption d-none d-md-block">
+            <h2 class="bannertext1">a step towards a better future</h2>
+            <h5>{{item.Title}}</h5>
+            <p>{{item.Description}}</p>
+        </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev carousel-inner" href="#carouselExampleIndicators"
+  style="padding-top: 190px;" role="button" data-slide="prev">
+    <span aria-hidden="true"><i class="fas fa-angle-left fa-3x"></i></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next carousel-inner" href="#carouselExampleIndicators" 
+  style="padding-top: 190px;" role="button" data-slide="next">
+    <span aria-hidden="true"><i class="fas fa-angle-right fa-3x"></i></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<div style="background-color: white;align-content: center">
+
+<section id="categories">
+    <div class="row justify-content-center">
+      <!-- <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddCategory()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #ebebeb"></i></span></a>
+      </div> -->
+      <div class="col-md-2 col-sm-3 divcategorycard m-5 justify-content-center" data-aos="zoom-in-up" 
+        (click)="GetProducts()">
+        <div class="row">
+          <div class="col-3">
+            <!-- <img [src]="item.Icon" 
+            style="width:50px; height: 50px;align-content: center;object-fit: cover;border-radius: 50%;"> -->
+          </div>
+          <h3 class="col-7 mt-2">All</h3>
+          <span class="col-2 mt-2"><i class="fas fa-angle-right"></i></span>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3 divcategorycard m-5 justify-content-center" data-aos="zoom-in-up" 
+      *ngFor="let item of categorylist" data-aos-duration="3000" [hidden]="item.Hidden" (click)="GetProductsByCategory(item)">
+        <div class="row">
+          <!-- <img class="d-block col-3" width="50%" [src]="item.Icon"> -->
+
+          <div class="col-3">
+            <img [src]="item.Icon" 
+            style="width:50px; height: 50px;align-content: center;object-fit: cover;border-radius: 50%;">
+          </div>
+          <h3 class="col-7 mt-2">{{item.Title}}</h3>
+          <span class="col-2 mt-2"><i class="fas fa-angle-right"></i></span>
+        </div>
+      </div>
+      <!-- <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveCategory()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #ebebeb"></i></span></a>
+      </div> -->
+    </div>
+</section>
+
+<section id="products">
+    <div class="row justify-content-center">
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddProduct()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #ebebeb"></i></span></a>
+      </div>
+      <div class="col-md-2 col-sm-12 divcard m-2 justify-content-center" data-aos="zoom-in-up" 
+      *ngFor="let item of productlist" data-aos-duration="3000" [hidden]="item.Hidden">
+          <img class="d-block w-100 mb-5" [src]="item.Image">
+          <h5 style="text-align: left;color: #c79416">Product Name</h5>
+          <p style="text-align: left;color: black"><b>{{item.Title}}</b></p>
+          <h5 style="text-align: left;color: black">Price</h5>
+          <p style="text-align: left;color: #52b788"><b>Rs {{item.Price}}</b></p>
+          <button class="btnsubmit2 float-left" 
+          style="vertical-align:middle;" (click)="addToCartBtnClick(item)" [hidden]="item.IsAddedToCart">
+              <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+              <span>Add to cart </span>
+          </button>
+          <button class="btnsubmit3 float-left" 
+          style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)" [hidden]="!item.IsAddedToCart">
+              <i class="far fa-times-circle mr-2" aria-hidden="true"></i>
+              <span>Remove </span>
+          </button>
+          <button class="btnsubmitfavourite float-right" 
+          style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+          </button>
+      </div>
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveProduct()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #ebebeb"></i></span></a>
+      </div>
+    </div>
+    <hr class="mt-5 mb-3">
+</section>
+<!-- <section id="posts">
+      <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Posts</h1>
+      <hr data-aos="zoom-in" data-aos-duration="2000">
+      <div class="row" [hidden]="!showpost1">
+          <div class="col-6" data-aos="fade-right" data-aos-duration="3000">
+              <img class="d-block w-100" [src]="post1">
+          </div>
+          <div class="col-6 div2" data-aos="fade-left" data-aos-duration="3000">
+              <h2 style="margin-top: 5%;margin-right:30%;word-wrap:break-word;">{{posttitle1}}</h2>
+              <hr style="height:1px;margin-right:30%;">
+              <p style="margin-top:2%;word-wrap:break-word;">{{postdescription1}}</p>
+          </div>
+      </div>
+      <div class="row mt-5" [hidden]="!showpost2">
+          <div class="col-6 div2" data-aos="fade-right" data-aos-duration="3000">
+              <h2 style="margin-top: 5%;margin-right:30%;word-wrap:break-word;">{{posttitle2}}</h2>
+              <hr style="height:1px;margin-right:30%;">
+              <p style="margin-top:2%;word-wrap:break-word;">{{postdescription2}}</p>
+          </div>
+          <div class="col-6" data-aos="fade-left" data-aos-duration="3000">
+              <img class="d-block w-100" [src]="post2">
+          </div>
+      </div>
+      <div class="row mt-5" [hidden]="showposts">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 div3 ml-2 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
+            <h2 style="margin-top: 5%;text-align: center;word-wrap:break-word;">Currently there are no Posts</h2>
+        </div>
+      </div>
+      <div class="row mt-5">
+          <div class="col-md-5"></div>
+          <div class="col-md-2 col-sm-12">
+              <button data-aos="zoom-in" data-aos-duration="2000" class="btntransparent" style="vertical-align:middle;word-wrap:break-word;"
+              (click)="ShowPosts()"><span>Read More </span></button>
+          </div>
+      </div>
+</section> -->
+<section id="bgimage1">
+    <div class="justify-content-center background1">
+        <p class="textstylegery">A leading total solution provider for all your agricultural needs</p>
+        <div class="row justify-content-center mb-5" style="padding-top: 8px">
+            <div class="col-2 divservices pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/Planting.png">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Consultancy</h4>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 divservices pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/irrigation.png">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Irrigation</h4>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 divservices pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/Fertilizer.png">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Fertilizer</h4>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 divservices pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/plant-pot.png">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Growing Pots</h4>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="bestsellers" class="mt-5">
+    <div class="col-1 divnewcard">
+        <h3>Best</h3>
+    </div>
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Best Sellers</h1>
+    <hr data-aos="zoom-in" data-aos-duration="2000">
+    <div class="row justify-content-center">
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="AddBestSellersProduct()"><span><i class="fas fa-chevron-circle-left fa-2x" style="color: #ebebeb"></i></span></a>
+      </div>
+      <div class="col-md-2 col-sm-12 divcard m-3 justify-content-center" data-aos="zoom-in-up" 
+        *ngFor="let item of bestsellersproductlist" data-aos-duration="3000" [hidden]="item.Hidden">
+        <img class="d-block w-100 mb-5" [src]="item.Image">
+          <h5 style="text-align: left;color: #c79416">Product Name</h5>
+          <p style="text-align: left;color: black"><b>{{item.Title}}</b></p>
+          <h5 style="text-align: left;color: black">Price</h5>
+          <p style="text-align: left;color: #52b788"><b>Rs {{item.Price}}</b></p>
+          <button class="btnsubmit2 float-left" 
+          style="vertical-align:middle;" (click)="addToCartBtnClick(item)" [hidden]="item.IsAddedToCart">
+              <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+              <span>Add to cart </span>
+          </button>
+          <button class="btnsubmit3 float-left" 
+          style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)" [hidden]="!item.IsAddedToCart">
+              <i class="far fa-times-circle mr-2" aria-hidden="true"></i>
+              <span>Remove </span>
+          </button>
+          <button class="btnsubmitfavourite float-right" 
+          style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+          </button>
+      </div>
+      <div class="col-md-1 col-sm-12 divanglebutton justify-content-center" data-aos="zoom-in-up">
+        <a (click)="RemoveBestSellersProduct()"><span ><i class="fas fa-chevron-circle-right fa-2x" style="color: #ebebeb"></i></span></a>
+      </div>
+   </div>
+</section>
+
+<section id="services" class="section-services">
+      <div class="row justify-content-center">
+          <div class="col-md-2 col-sm-12 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon1" src="../../assets/images/services_grids/delivery-truck.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Island - wide</h3>
+                    <h5 style="color: grey;align-content: center">Delivery</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-md-2 col-sm-12 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon1" src="../../assets/images/services_grids/best-price.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Reasonable</h3>
+                    <h5 style="color: grey;align-content: center">Prices</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-md-2 col-sm-12 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon3" src="../../assets/images/services_grids/hand.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Easy</h3>
+                    <h5 style="color: grey;align-content: center">Payments</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-md-2 col-sm-12 divservicecard m-3">
+              <ul class="list-inline" style="text-align: center">
+                <li>
+                    <img class="service-icon4" src="../../assets/images/services_grids/new-product.png">
+                </li>
+                <li class="justify-content-center">
+                    <h3>Quality</h3>
+                    <h5 style="color: grey;align-content: center">Products</h5>
+                </li>
+              </ul>
+          </div>
+          <div class="col-md-2 col-sm-12 divservicecard m-3">
+            <ul class="list-inline" style="text-align: center">
+              <li>
+                  <img class="service-icon4" src="../../assets/images/services_grids/special-offers.png">
+              </li>
+              <li class="justify-content-center">
+                  <h3>Special</h3>
+                  <h5 style="color: grey;align-content: center">Offers</h5>
+              </li>
+            </ul>
+        </div>
+      </div>
+</section>
+
+
+<section id="newarrivals">
+    <div class="col-1 divnewcard">
+        <h3>New</h3>
+    </div>
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">New Arrivals</h1>
+    <hr data-aos="zoom-in" data-aos-duration="2000">
+    <div class="row justify-content-center">
+        <div class="col-md-3 col-sm-12 divgallery m-2 justify-content-center" data-aos="zoom-in-up" 
+        *ngFor="let item of newarrivalsproductlist" data-aos-duration="3000">
+        <img class="d-block w-100 mb-5" [src]="item.Image">
+        <h5 style="text-align: left;color: #c79416">Product Name</h5>
+        <p style="text-align: left;color: black"><b>{{item.Title}}</b></p>
+        <h5 style="text-align: left;color: black">Price</h5>
+        <p style="text-align: left;color: #52b788"><b>Rs {{item.Price}}</b></p>
+        <button class="btnsubmit2 float-left" 
+        style="vertical-align:middle;" (click)="addToCartBtnClick(item)" [hidden]="item.IsAddedToCart">
+            <i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>
+            <span>Add to cart </span>
+        </button>
+        <button class="btnsubmit3 float-left" 
+        style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)" [hidden]="!item.IsAddedToCart">
+            <i class="far fa-times-circle mr-2" aria-hidden="true"></i>
+            <span>Remove </span>
+        </button>
+        <button class="btnsubmitfavourite float-right" 
+        style="vertical-align:middle;" (click)="removeFromCartBtnClick(item)">
+            <i class="fas fa-heart" aria-hidden="true"></i>
+        </button>
+        </div>
+    </div> 
+</section>
+
+<section class="organic-products-section" id="organicproducts">
+    <div class="col-1 divnewcard">
+        <h3>New</h3>
+    </div>
+    <h1 class="landing-header-text" data-aos="zoom-in" data-aos-duration="2000">Orgaic Products</h1>
+    <hr data-aos="zoom-in" data-aos-duration="2000">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <img class="d-block w-100 mr-5 left-align organicproduct1" [src]="organicproduct1">
+        </div>
+        <div class="col-5">
+            <div class="row justify-content-center">
+              <img class="d-block w-100 mb-2 right-align organicproduct2" [src]="organicproduct2">
+            </div>
+            <div class="row justify-content-center">
+                <img class="d-block w-100 mt-3 right-align organicproduct2" [src]="organicproduct3">
+            </div>
+        </div>
+    </div> 
+</section>
+<!-- <div class="jumbotron">
+    <section id="about">
+        <div data-aos="fade-up" data-aos-duration="2000">
+            <h1 style="text-align: center;word-wrap:break-word;">About Us</h1>
+            <hr>
+            <p style="text-align: center;word-wrap:break-word;">Know what you want to listen to? Just search and hit play.</p>
+        </div>
+    </section>
+</div> -->
+
+<!-- <section class="slider">
+<ul id="autoWidth" class="cs-hidden">
+    <li class="item-a">
+        <div class="box">
+            <div class="slide-img">
+                <img alt="1" src="images/1.jpg">
+                <div class="overlay">
+                <a href="#" class="buy-btn">Buy Now</a>	
+                </div>
+            </div>
+            <div class="detail-box">
+                <div class="type">
+                    <a href="#">Rabbed Cardigan</a>
+                    <span>Noe Arrival</span>
+                </div>
+                <a href="#" class="price">$23</a>	
+            </div>
+        </div>		
+    </li>
+</ul>
+</section> -->
+
+<section class="bottom-section" id="bgimage2">
+    <div class="justify-content-center background2">
+        <div class="row justify-content-center row-padding">
+            <div class="col-2 m-3 mb-1">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon8" src="../../assets/images/bottom_company_achievements/new-product.png">
+                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
+                        <span class="stat-count" data-count="500">0</span> +
+                      </h1>
+                      <h3 class="h3-counts">Quality</h3>
+                      <h3 class="h3-counts">Products</h3>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 m-3 mb-1">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon8" src="../../assets/images/bottom_company_achievements/agriculture.png">
+                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
+                        <span class="stat-count" data-count="80">0</span>
+                      </h1>
+                      <h3 class="h3-counts">Agricultural</h3>
+                      <h3 class="h3-counts">Products</h3>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 m-3 mb-1">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon7" src="../../assets/images/bottom_company_achievements/person.png">
+                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
+                        <span class="stat-count" data-count="100">0</span>
+                      </h1>
+                      <h3 class="h3-counts">Quality</h3>
+                      <h3 class="h3-counts">Products</h3>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 m-3 mb-1">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon7" src="../../assets/images/bottom_company_achievements/brand_champion.png">
+                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
+                        <span class="stat-count" data-count="800">0</span>
+                      </h1>
+                      <h3 class="h3-counts">Quality</h3>
+                      <h3 class="h3-counts">Products</h3>
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-center footer-row1">
+            <div class="col-12 footer-box1 ml-5 mr-5">
+                <p class="textstylewhite">Let's Stay In Touch</p>
+                <p style="color:white;">All our latest products and news for agriculture needs delivered to your inbox a few times a month</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <section class="bottom-section2" id="bgimage2"> -->
+
+<!-- </section> -->
+</div>
+<footer>
+    <!-- <div class="row justify-content-center mb-5">
+      Copyright © 2021 AgroLinks 
+    </div> -->
+    <div class="row justify-content-center footer-row2">
+        <div class="col-12 footer-box2">
+            <div class="row pt-5 justify-content-center">
+                <div class="col-2 footercols mt-2 pr-5 justify-content-center">  
+                    <a href="/"><img src="../../assets/images/agrolinklogo.png" class="logo"></a>
+                    <p class="pt-2 footertext">Agrolinks Company</p>
+                    <p class="pt-3 footertextaddress">No 571, Highlevel Road, Delkanda, Nugegoda</p>
+                </div>
+                <div class="col-md-1 col-2 footercols mt-5" style="text-align: left">  
+                    <p class="footertextheader">Main</p>
+                    <p class="pt-2 footertext">Home</p>
+                    <p class="footertext">About Us</p>
+                    <p class="footertext">Contact Us</p>
+                </div>
+                <div class="col-md-1 col-2 footercols mt-5" style="text-align: left">  
+                    <p class="footertextheader">More</p>
+                    <p class="pt-2 footertext">Home</p>
+                    <p class="footertext">About Us</p>
+                    <p class="footertext">Contact Us</p>
+                </div>
+                <div class="col-md-1 col-2 footercols mt-5" style="text-align: left">  
+                    <p class="footertextheader">Category</p>
+                    <p class="pt-2 footertext">Home</p>
+                    <p class="footertext">About Us</p>
+                    <p class="footertext">Contact Us</p>
+                </div>
+                <div class="col-3 footercols2 mr-3 mt-5" style="text-align: right">  
+                    <p class="footertext"><i class="fas fa-mobile-alt" style="color: #f8c67c" aria-hidden="true"></i>  + 94 77 123 4567</p>
+                    <p class="pt-2 footertext"><i class="fas fa-envelope" style="color: #f8c67c" aria-hidden="true"></i>  data.landmarkseeds@gmail.com</p>
+                    <p class="pt-2 footertext">follow us on:</p>
+                    <a href="/" class="p-2"><img class="socialmedia1" src="../../assets/images/navbar_and_banner_section/facebook1.png"></a>
+                    <a href="/" class="p-2"><img class="socialmedia2" src="../../assets/images/navbar_and_banner_section/instagram1.png"></a>
+                    <a href="/" class="p-2"><img class="socialmedia2" src="../../assets/images/navbar_and_banner_section/twitter1.png"></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+

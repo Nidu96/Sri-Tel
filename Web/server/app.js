@@ -5,12 +5,25 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const formidable = require('formidable');
+const fs = require('fs');
+var http = require('http');
+var https = require('https');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/agrolinks.lk/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/agrolinks.lk/cert.pem', 'utf8');
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	//ca: ca
+};
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
 app.use(methodOverride('_method'));
 app.use(bodyParser.json({limit: '200mb'}));
 app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 app.use(bodyParser.text({ limit: '200mb' }));
 app.use(cors());
+
 
 
 app.use(function (req, res, next) {
@@ -24,7 +37,7 @@ app.use(function (req, res, next) {
 const con = mysql.createConnection({
   host:'localhost',
   user:'root',
-  password:'',
+  password:'landmarkseeds',
   database:'agrodb'
 });
 
@@ -436,7 +449,18 @@ app.post("/order/deleteorder", (req, res, next) => {
   });
 });
 //#endregion
-app.listen(3000, () => {
-  console.log('Server started!')
+// app.listen(3000, () => {
+//   console.log('Server started!')
+// });
+
+httpServer.listen(3001, (err) => {
+  if(err){
+    console.log(err)
+  }
+  console.log('http server started!')
+});
+
+httpsServer.listen(3000, () => {
+  console.log('https server started!')
 });
 

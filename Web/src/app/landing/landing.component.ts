@@ -268,7 +268,6 @@ export class LandingComponent implements OnInit {
     },
     error => { 
       this.alertService.clear()
-      this.alertService.error('Error!')
     });
   }
   //#endregion

@@ -52,7 +52,7 @@ CREATE TABLE `agrodb`.`productorder`(
 PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
 
 CREATE TABLE `agrodb`.`orderedproduct`(
-`Id` VARCHAR(100) NULL DEFAULT NULL , 
+`Id` VARCHAR(100) NOT NULL , 
 `OrderId` VARCHAR(100) NULL DEFAULT NULL ,  
 `Quantity` VARCHAR(100) NULL DEFAULT NULL , 
 `ProductID` VARCHAR(250) NULL DEFAULT NULL , 

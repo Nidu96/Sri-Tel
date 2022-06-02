@@ -12,7 +12,7 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-	baseUrl = 'http://137.184.93.255:3000/payment';
+	baseUrl = 'https://agrolinks.lk:3000/payment';
 
 	payment(paymentdetails: FormData): Observable<any> {return this.http.post<any>(`${this.baseUrl}/payment`, paymentdetails);}
 }

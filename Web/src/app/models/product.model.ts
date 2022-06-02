@@ -11,6 +11,6 @@ export class Product {
         public TotalWeight?: string,
         public Quantity?: number,
         public Description?: string,
-        public DatePublished?: Date
+        public DatePublished?: string
     ) {}
 }

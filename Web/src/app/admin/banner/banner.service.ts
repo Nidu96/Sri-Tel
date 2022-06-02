@@ -12,7 +12,7 @@ export class BannerService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'http://137.184.93.255:3000/banner';
+  baseUrl = 'https://agrolinks.lk:3000/banner';
 
   savebanner(banner: Banner): Observable<any> {return this.http.post<any>(`${this.baseUrl}/savebanner`, banner);}
 

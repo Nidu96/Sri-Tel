@@ -5,7 +5,7 @@ export class Category {
         public Icon?: string,
         public ImageFile?: string,
         public Description?: string,
-        public DatePublished?: Date,
+        public DatePublished?: string,
         public ProductCount?: number,
     ) {}
 }

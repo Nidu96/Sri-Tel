@@ -103,13 +103,13 @@ export class ProfileComponent implements OnInit {
     this.userService.getuserdata(this.user).subscribe(data => {
       this.user = data[0]
 
-      this.id = data.Id;
-      this.fullname = data.Name;
-      this.username = data.Username;
-      this.password = data.Password;
-      this.confirmpassword = data.Password;
-      this.status = data.Active;
-      this.userrole = data.UserRole;
+      this.id = this.user.Id;
+      this.fullname = this.user.Name;
+      this.username = this.user.Username;
+      this.password = this.user.Password;
+      this.confirmpassword = this.user.Password;
+      this.status = this.user.Active;
+      this.userrole = this.user.UserRole;
       localStorage.setItem(LocalStorage.LOGGED_USER, JSON.stringify(this.user));
     },
     error => { 
