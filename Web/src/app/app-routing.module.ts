@@ -13,6 +13,8 @@ import { PaymentComponent } from './payment/payment.component';
 import { BannerComponent } from './admin/banner/banner.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './admin/order/order.component';
+import { AboutComponent } from './about/about.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: '', component: LandingComponent, data: { allowed: false } },
   { path: 'products', component: ProductsComponent, data: { allowed: false } },
   { path: 'services', component: ServicesComponent, data: { allowed: false } },
+  { path: 'about', component: AboutComponent, data: { allowed: false } },
+  { path: 'contactus', component: ContactusComponent, data: { allowed: false } },
   { path: 'payment', component: PaymentComponent, data: { allowed: false } },
   { path: 'cart', component: CartComponent, data: { allowed: false } },
 

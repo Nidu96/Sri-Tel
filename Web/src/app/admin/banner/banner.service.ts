@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators' 
 import { Banner } from 'src/app/models/banner.model';
 import { environment } from 'src/environments/environment';
+import { SystemUser } from 'src/app/models/systemuser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,28 @@ export class BannerService {
 
   baseUrl = 'https://agrolinks.lk:3000/banner';
 
-  savebanner(banner: Banner): Observable<any> {return this.http.post<any>(`${this.baseUrl}/savebanner`, banner);}
+  savebanner(banner: Banner,user: SystemUser): Observable<any> {
+    var auth: string ='basic' + ' ' + btoa(user.Username + ':' + user.Password)
+    var options = {
+      headers: {               
+         'Authorization': auth
+      }
+    }
+    return this.http.post<any>(`${this.baseUrl}/savebanner`, banner,options);}
 
-  getbanners(startlimit: String,endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getbanners`, 
-  JSON.stringify({start: startlimit,end: endlimit}));}
+  getbanners(startlimit: String,endlimit: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/getbanners`, JSON.stringify({start: startlimit,end: endlimit}));}
 
-  getbannerdata(banner: Banner): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getbannerdata`, banner);}
+  getbannerdata(banner: Banner): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/getbannerdata`, banner);}
 
-  deletebanner(banner: Banner): Observable<any> {return this.http.post<any>(`${this.baseUrl}/deletebanner`, banner);}
+  deletebanner(banner: Banner,user: SystemUser): Observable<any> {
+    var auth: string ='basic' + ' ' + btoa(user.Username + ':' + user.Password)
+    var options = {
+      headers: {               
+         'Authorization': auth
+      }
+    }
+    return this.http.post<any>(`${this.baseUrl}/deletebanner`, banner,options);}
 }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as AOS from 'aos';
 
 @Component({
@@ -8,10 +9,14 @@ import * as AOS from 'aos';
 })
 export class ServicesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     AOS.init();
+    if(this.router.url === '/services'){
+      document.body.style.backgroundImage = "url('assets/images/banner2.jpg')"; 
+      document.body.className = "products-body"
+    }
   }
 
 }

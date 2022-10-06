@@ -18,7 +18,8 @@ export class OrderService {
 
   saveorder(order: Order): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveorder`, order);}
 
-  getorders(): Observable<any> {return this.http.get<any>(`${this.baseUrl}/getorders`);}
+  getorders(startlimit: String,endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getorders`,
+  JSON.stringify({start: startlimit,end: endlimit}));}
 
   getorderdata(order: Order): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getorderdata`, order);}
 

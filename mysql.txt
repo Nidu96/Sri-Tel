@@ -49,6 +49,7 @@ CREATE TABLE `agrodb`.`productorder`(
 `Status` VARCHAR(250) NOT NULL , 
 `City` VARCHAR(100) NOT NULL ,
 `DateOfPayment` DATETIME NULL DEFAULT NULL , 
+`TotalAmount` DECIMAL(16,2) NULL DEFAULT NULL,
 PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
 
 CREATE TABLE `agrodb`.`orderedproduct`(

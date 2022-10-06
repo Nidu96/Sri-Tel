@@ -13,7 +13,6 @@ const certificate = fs.readFileSync('/etc/letsencrypt/live/agrolinks.lk/cert.pem
 const credentials = {
 	key: privateKey,
 	cert: certificate,
-	//ca: ca
 };
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
@@ -53,42 +52,41 @@ con.connect((err) => {
 //#region authenticate
 app.post("/auth/authenticate", (req, res, next) => {
   const credentials = req.body;
+  var user = AuthenticateUser(credentials,res);
+  user;
+});
+
+function AuthenticateUser(credentials,res){
+  var user = [];
   con.query('SELECT * FROM systemuser WHERE Username = ?', credentials.Username, function(err, rows, fields) {
     if(err) throw err;
-    var count = rows.length;
-    res.json(rows);
-    // if (count) {
-    //   con.query('SELECT * FROM SystemUser WHERE Username = ? AND Password = ?', [credentials.Username,credentials.Password], function(err, rows, fields) {
-    //     if(err) throw err;
-    //     var count = rows.length;
-    //     if (count) {
-    //       var id = rows.map(i => i.Id); 
-    //       var name = rows.map(i => i.Name); 
-    //       var username = rows.map(i => i.Username); 
-    //       var active = rows.map(i => i.Active); 
-    //       var userrole = rows.map(i => i.UserRole); 
-    //       con.query('SELECT * FROM Permissions WHERE UserId = ?', id, function(err, permissions, fields) {
-    //         if(err) throw err;
-    //         var user = [];
-    //         user.push({Id: id[0], Name: name[0], Username: username[0],
-    //           Active: active[0], UserRole: userrole[0],
-    //           PermissionsList: JSON.parse(JSON.stringify(permissions))})
-    //         res.json(user);
-    //       });
-
-    //     } else{
-    //       var user = [];
-    //       user.push({Username: credentials.Username,Password: "invalid"})
-    //       res.json(user);
-    //     }
-    //   });
-    // }else{
-    //   var user = [];
-    //   user.push({Username: "usernotexists",Password: ""})
-    //   res.json(user);
-    // }
+    var count1 = rows.length;
+    if (count1) {
+      con.query('SELECT * FROM systemuser WHERE Username = ? AND Password = ?', [credentials.Username,credentials.Password], function(error, rows2, fields) {
+        if(error) throw error;
+        var count2 = rows2.length;
+        if (count2) {
+          rows2.forEach(function(element, index) {
+            var id = element.Id; 
+            var name = element.Name; 
+            var username = element.Username; 
+            var active = element.Active; 
+            var userrole = element.UserRole; 
+            user.push({Id: id, Name: name, Username: username, Active: active, UserRole: userrole})
+          });
+          res.json(user);
+        } else{
+          user.push({Username: credentials.Username,Password: "invalid"});
+          res.json(user);
+        }
+      });
+    }else{
+      user.push({Username: "usernotexists",Password: ""});
+      res.json(user);
+    }
   });
-});
+  return res;
+};
 //#endregion
 
 //#region user
@@ -200,21 +198,26 @@ app.post("/user/deletepermissions", (req, res, next) => {
 
 //#region banners
 app.post("/banner/savebanner", (req, res, next) => {
-  const banner = req.body;
-  if(banner.Id == undefined || banner.Id == null || banner.Id == ""){
-    banner.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO banner SET ?', banner, (err, row) => {
-      if(err) throw err;
-      res.json("")
-    });
-  }else{
-    con.query('UPDATE banner SET Title = ?,Image = ?, Description = ?, DatePublished = ? Where Id = ?',
-    [banner.Title,banner.Image,banner.Description, banner.DatePublished,banner.Id], (err, row) => {
-      if(err) throw err;
-      res.json("")
-    });
+  var username = atoa(req.headers.authorization).split(":")[0];
+  var password = atoa(req.headers.authorization).split(":")[1];
+  var credentials = {Username: username,Password: password};
+  var user = AuthenticateUser(credentials);
+  if(user != undefined && user != null && user != "" && user != []){
+    const banner = req.body;
+    if(banner.Id == undefined || banner.Id == null || banner.Id == ""){
+      banner.Id = Math.random().toString(7).slice(2);
+      con.query('INSERT INTO banner SET ?', banner, (err, row) => {
+        if(err) throw err;
+        res.json("")
+      });
+    }else{
+      con.query('UPDATE banner SET Title = ?,Image = ?, Description = ?, DatePublished = ? Where Id = ?',
+      [banner.Title,banner.Image,banner.Description, banner.DatePublished,banner.Id], (err, row) => {
+        if(err) throw err;
+        res.json("")
+      });
+    }
   }
-
 });
 
 app.post("/banner/getbanners", (req, res, next) => {
@@ -394,8 +397,8 @@ app.post("/order/saveorder", (req, res, next) => {
   console.log(order)
   if(order.Id == undefined || order.Id == null || order.Id == ""){
     order.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO productorder(Id,IdForCustomer,UserEmail,DeliveryNote,Phone,RecepientName,RecepientPhone,Status,DateofPayment,City) VALUES (?,?,?,?,?,?,?,?,?,?)', 
-    [order.Id,order.IdForCustomer,order.UserEmail,order.DeliveryNote,order.Phone,order.RecepientName,order.RecepientPhone,order.Status,order.DateofPayment,order.City], (err, row) => {
+    con.query('INSERT INTO productorder(Id,IdForCustomer,UserEmail,DeliveryNote,Phone,RecepientName,RecepientPhone,Status,DateofPayment,City,TotalAmount) VALUES (?,?,?,?,?,?,?,?,?,?,?)', 
+    [order.Id,order.IdForCustomer,order.UserEmail,order.DeliveryNote,order.Phone,order.RecepientName,order.RecepientPhone,order.Status,order.DateofPayment,order.City,order.TotalAmount], (err, row) => {
       if(err) 
       {
         console.log(err)

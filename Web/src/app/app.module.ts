@@ -32,6 +32,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
 import { OrderComponent } from './admin/order/order.component';
+import { AboutComponent } from './about/about.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { OrderComponent } from './admin/order/order.component';
     PaymentComponent,
     BannerComponent,
     CartComponent,
-    OrderComponent
+    OrderComponent,
+    AboutComponent,
+    ContactusComponent
   ],
   imports: [
     BrowserModule,

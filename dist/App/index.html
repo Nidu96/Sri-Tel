@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="HandheldFriendly" content="true">
+  <title>Agrolinks</title>
+  <base href="/">
+  <link rel="icon" type="image/x-icon" href="assets/images/agrolinklogo.png">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script>
+window.onwheel = beforeScroll;
+window.onkeydown = beforeScroll;
+var scrollVal = 0;
+function beforeScroll(e) {
+    if (e.type == 'wheel') {
+        if (e.deltaY < 0) {
+            scrollUp();
+        } else {
+            scrollDown();
+        }
+    }
+    else if (e.type == 'keydown' && (e.key == 'ArrowDown' || e.key == 'ArrowUp')) {
+        if (e.key == 'ArrowDown')
+            scrollDown();
+        else if (e.key == 'ArrowUp')
+            scrollUp();
+    }
+
+    return;
+}
+
+function scrollUp() {
+    if (scrollVal > 0)
+        scrollVal -= 200;
+
+    this.scroll(0, scrollVal);
+}
+
+function scrollDown() {
+    setTimeout(function(){reInitCount();},1000);
+    if (scrollVal < document.body.scrollHeight)
+        scrollVal += 200;
+    //should detect for maximum scroll
+    this.scroll(0, scrollVal);
+}
+
+
+
+function reInitCount(){
+  $(".stat-count").each(function() {
+    $(this).html('0');
+    count($(this));
+  });
+}
+
+function count($this) {
+  var current = parseInt($this.html(), 10);
+  current = current + 1;
+  $this.html(++current);
+  if (current > $this.data('count')) {
+    $this.html($this.data('count'));
+  } else {
+    setTimeout(function() {
+      count($this)
+    }, 1);
+  }
+}
+</script>
+<link rel="stylesheet" href="styles.9e4721b7fca4bd4a79e3.css"></head>
+<body>
+<app-root></app-root>
+<script src="runtime-es2015.cdfb0ddb511f65fdc0a0.js" type="module"></script><script src="runtime-es5.cdfb0ddb511f65fdc0a0.js" nomodule defer></script><script src="polyfills-es5.364a03347a8ed7a41f65.js" nomodule defer></script><script src="polyfills-es2015.e4a7cc92b72f59da5223.js" type="module"></script><script src="scripts.766cde46cebacf080408.js" defer></script><script src="main-es2015.5acc0171ffb42a8aeb16.js" type="module"></script><script src="main-es5.5acc0171ffb42a8aeb16.js" nomodule defer></script></body>
+</html>

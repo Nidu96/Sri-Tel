@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarView, CalendarEvent } from 'angular-calendar';
 import { Category } from '../models/category.model';
 import { BannerService } from '../admin/banner/banner.service';
+import { SystemUser } from '../models/systemuser.model';
 
 @Component({
   selector: 'app-landing',
@@ -60,8 +61,6 @@ export class LandingComponent implements OnInit {
     this.GetBanners();
     AOS.init();
     localStorage.setItem(LocalStorage.LANDING_BODY, "1");
-
-    
   }
 
   //#region navigation methods

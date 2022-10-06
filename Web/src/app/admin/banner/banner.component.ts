@@ -15,6 +15,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
   styleUrls: ['./banner.component.scss']
 })
 export class BannerComponent implements OnInit {
+  public user: SystemUser;
   public pbanners: number = 1;
   public bannercount: number = 0;
   public closeResult = '';
@@ -43,6 +44,7 @@ export class BannerComponent implements OnInit {
     this.bannerlist = []
     this.GetBanners(0)
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
+    this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
   }
 
   Initialize(){
@@ -81,7 +83,7 @@ export class BannerComponent implements OnInit {
       let tempdate = year+"-"+month+"-"+date;
       this.banner.DatePublished = tempdate;
       
-      this.bannerService.savebanner(this.banner).subscribe(data => {
+      this.bannerService.savebanner(this.banner,this.user).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
         this.bannerlist = []
@@ -185,7 +187,7 @@ export class BannerComponent implements OnInit {
       this.banner = new Banner();
       this.banner.Id = id
       this.banner.Image = image
-      this.bannerService.deletebanner(this.banner).subscribe(data => {
+      this.bannerService.deletebanner(this.banner,this.user).subscribe(data => {
         this.alertService.success('Successfully deleted!')
         this.bannerlist = []
         this.GetBanners(0)

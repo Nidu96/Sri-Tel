@@ -30,6 +30,8 @@ export class HeaderComponent implements OnInit {
       this.router.url === '/login' ||
       this.router.url === '/products' ||
       this.router.url === '/services' ||
+      this.router.url === '/about' ||
+      this.router.url === '/contactus' ||
       this.router.url === '/gallery' ||
       this.router.url === '/profile' || 
       this.router.url === '/cart' || 

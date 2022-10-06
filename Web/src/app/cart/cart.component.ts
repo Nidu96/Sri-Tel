@@ -278,8 +278,14 @@ export class CartComponent implements OnInit {
       this.order.RecepientName = this.recname;
       this.order.RecepientPhone = this.recphone;
       this.order.Status = "Pending";
+      if(this.delivery == "0"){
+        this.order.Delivery = false;
+      }else{
+        this.order.Delivery = true;
+      }
       this.order.DeliveryNote = this.notes;
       this.order.City = this.city;
+      this.order.TotalAmount = this.totalprice;
       this.order.DateofPayment = new Date();
       let OrderedProducts = new Array<OrderedProduct>()
       this.selectedProducts.forEach(element => {

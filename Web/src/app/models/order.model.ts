@@ -8,8 +8,10 @@ export class Order {
         public RecepientName?: string,
         public RecepientPhone?: string,
         public Status?: string,
+        public Delivery?: boolean,
         public DateofPayment?: Date,
         public City?: string,
+        public TotalAmount?: Number,
         public OrderedProducts?: Array<OrderedProduct>,
     ) {}
 }

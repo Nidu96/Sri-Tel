@@ -42,12 +42,12 @@ export class LoginComponent implements OnInit {
 				this.user = new SystemUser();
 				if(data[0] == null || data[0] == undefined || data[0] == ""){
 					this.alertService.error('Invalid username or password')
-				}else if(data.password == "invalid"){
+				}else if(data[0].Password == "invalid"){
 					this.alertService.error('You have only ' + (3-this.loginattempts) + ' attempts left')
 					this.loginattempts += 1
-				}else if(data.username == "usernotexists"){
+				}else if(data[0].Username == "usernotexists"){
 					this.alertService.error('User does not exists')
-				}else if(data.active == "deactive"){
+				}else if(data[0].Active == "deactive"){
 					this.alertService.error('This account is deactivated. please contact the admin to activate')
 				}else{
 					this.user = data[0]
