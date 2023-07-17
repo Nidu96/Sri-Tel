@@ -16,6 +16,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+  public loggedInUser: SystemUser;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public product: Product;
@@ -50,6 +51,7 @@ export class ProductComponent implements OnInit {
     this.GetProducts(0)
     this.GetCategories()
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
   }
 
   Initialize(){
@@ -95,7 +97,7 @@ export class ProductComponent implements OnInit {
       let tempdate = year+"-"+month+"-"+date;
       this.product.DatePublished = tempdate;
 
-      this.productService.saveproduct(this.product).subscribe(data => {
+      this.productService.saveproduct(this.product,this.loggedInUser).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
         this.productlist = []
@@ -253,7 +255,7 @@ export class ProductComponent implements OnInit {
       this.product = new Product();
       this.product.Id = id
       this.product.Image = image
-      this.productService.deleteproduct(this.product).subscribe(data => {
+      this.productService.deleteproduct(this.product,this.loggedInUser).subscribe(data => {
         this.alertService.success('Successfully deleted!')
         this.productlist = []
         this.GetProducts(0)

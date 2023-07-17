@@ -16,14 +16,47 @@ export class UserService {
 
 	checkuserexist(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/checkuserexist`, user);}
 
-	saveuser(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveuser`, user);}
+	register(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveuser`, user);}
 
-	getusers(startlimit: String, endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getusers`, 
-	JSON.stringify({start: startlimit,end: endlimit}));}
+	saveuser(user: SystemUser,loggedInUser: SystemUser): Observable<any> {
+		var auth: string = loggedInUser.Token
+		var options = {
+		  headers: {               
+			 'Authorization': auth
+		  }
+		}
+		return this.http.post<any>(`${this.baseUrl}/saveuser`, user,options);
+	}
+
+	getusers(startlimit: String, endlimit: String,loggedInUser: SystemUser): Observable<any> {
+		var auth: string = loggedInUser.Token
+		var options = {
+		  headers: {               
+			 'Authorization': auth
+		  }
+		}
+		return this.http.post<any>(`${this.baseUrl}/getusers`,JSON.stringify({start: startlimit,end: endlimit}),options);
+	}
 
 	getuserdata(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getuserdata`, user);}
 
-	deleteuser(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/deleteuser`, user);}
+	deleteuser(user: SystemUser,loggedInUser: SystemUser): Observable<any> {
+		var auth: string = loggedInUser.Token
+		var options = {
+		  headers: {               
+			 'Authorization': auth
+		  }
+		}
+		return this.http.post<any>(`${this.baseUrl}/deleteuser`, user,options);
+	}
 
-	deletepermissions(permissionlist: any): Observable<any> {return this.http.post<any>(`${this.baseUrl}/deletepermissions`, permissionlist);}
+	deletepermissions(permissionlist: any, user: SystemUser): Observable<any> {
+		var auth: string = user.Token
+		var options = {
+		  headers: {               
+			 'Authorization': auth
+		  }
+		}
+		return this.http.post<any>(`${this.baseUrl}/deletepermissions`, permissionlist,options);
+	}
 }

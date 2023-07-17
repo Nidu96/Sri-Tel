@@ -16,7 +16,7 @@ export class BannerService {
   baseUrl = 'https://agrolinks.lk:3000/banner';
 
   savebanner(banner: Banner,user: SystemUser): Observable<any> {
-    var auth: string ='basic' + ' ' + btoa(user.Username + ':' + user.Password)
+    var auth: string = user.Token
     var options = {
       headers: {               
          'Authorization': auth
@@ -31,7 +31,7 @@ export class BannerService {
     return this.http.post<any>(`${this.baseUrl}/getbannerdata`, banner);}
 
   deletebanner(banner: Banner,user: SystemUser): Observable<any> {
-    var auth: string ='basic' + ' ' + btoa(user.Username + ':' + user.Password)
+    var auth: string = user.Token
     var options = {
       headers: {               
          'Authorization': auth

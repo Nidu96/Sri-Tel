@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
       this.router.url === '/services' ||
       this.router.url === '/about' ||
       this.router.url === '/contactus' ||
+      this.router.url === '/terms' ||
       this.router.url === '/gallery' ||
       this.router.url === '/profile' || 
       this.router.url === '/cart' || 

@@ -29,7 +29,7 @@ html {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	font-size: 16px;
+	font-size: 12px;
   }
 
   .products-body {
@@ -44,7 +44,7 @@ html {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	font-size: 16px;
+	font-size: 12px;
 	padding-top: 400px !important;
   }
   * {
@@ -576,6 +576,7 @@ html {
 	padding-left: 16px;
 	padding-right: 10px;
 	text-decoration: none;
+	font-size: 12px;
   }
    
   .sidebar a.active {
@@ -658,7 +659,7 @@ html {
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 14px;
   }
   
   .nav-link.active,.nav-link:focus{
@@ -697,7 +698,7 @@ html {
 }
 
 .left-bar{
-	padding-left: 100px;
+	padding-left: 20px;
 }
 
 @media screen and (max-width: 600px) {
@@ -709,7 +710,8 @@ html {
 
 .logo{
 	height: 50px;
-	width: 200px;
+	width: 180px;
+	padding-bottom: 5px;
 }
 
 @media screen and (max-width: 600px) {
@@ -732,7 +734,7 @@ html {
   }
 .navbar-address1 {
 	color: rgb(7, 7, 7);
-	font-size: 12px;
+	font-size: 11px;
 }
 
 @media screen and (max-width: 600px) {
@@ -1460,6 +1462,78 @@ html {
 	}
   }
 
+  .divservices4 {
+	vertical-align: middle;
+	justify-content: center;
+	border-radius: 7px;
+	background: #ffffff;
+	color: white;  
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	display: grid;
+	text-align: center;
+	margin: 7px !important;
+	border-style: solid;
+	border-color: rgb(183, 182, 192);
+	border-width: 2px;
+}
+
+@media screen and (min-width: 600px) {
+	.divservices4 {
+		vertical-align: middle;
+		justify-content: center;
+		border-radius: 7px;
+		background: #ffffff;
+		color: white;
+		padding: 12px;  
+		padding-bottom: 15px;
+		padding-left: 0px;
+		padding-right: 0px;
+		display: grid;
+		border-style: solid;
+		border-color: rgb(183, 182, 192);
+		border-width: 2px;
+	}
+  }
+
+
+  .divservices5 {
+	vertical-align: middle;
+	justify-content: center;
+	border-radius: 7px;
+	background: #ffffff;
+	color: white;  
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	display: grid;
+	text-align: center;
+	margin: 7px !important;
+}
+
+@media screen and (min-width: 600px) {
+	.divservices5 {
+		vertical-align: middle;
+		justify-content: center;
+		border-radius: 7px;
+		background: #ffffff;
+		color: white;
+		padding: 12px;  
+		padding-bottom: 15px;
+		padding-left: 0px;
+		padding-right: 0px;
+		display: grid;
+	}
+  }
+
+
+@media screen and (min-width: 600px) {
+	.inputwidth {
+		width: 75% !important;
+	}
+  }
+
 .divservicecard {
 	vertical-align: middle;
 	justify-content: center;
@@ -2147,6 +2221,36 @@ form.search input[type=text] {
 	padding: 10px;
 	border: none;
 	padding-bottom: 7px;
+  }
+
+  .textareastyle{
+	color: #0d0d0d;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 5px;
+	width: 85%;
+	border: 2px solid #f6f6f6;
+	transition: all 0.5s ease-in-out;
+	border-radius: 5px 5px 5px 5px;
+	background-color: #f6f6f6;
+  }
+
+  .sendbutton{
+	display: inline-block !important;
+	border-radius: 10px !important;
+	color: rgb(255, 255, 255) !important;
+	text-align: center !important;
+	font-size: 20px !important;
+	transition: all 1s !important;
+	cursor: pointer !important;
+	margin: 5px !important;
+	border-color: #0d2878 !important;
+	background-color:#0d2878 !important;
+	padding-right: 100px !important;
+	width: 5% !important;
   }
 
 .organicproduct1{

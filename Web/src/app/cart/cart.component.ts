@@ -11,6 +11,7 @@ import { Product } from '../models/product.model';
 import { debug } from 'util';
 import { Order, OrderedProduct } from '../models/order.model';
 import { OrderService } from '../admin/order/order.service';
+import { SystemUser } from '../models/systemuser.model';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,7 @@ import { OrderService } from '../admin/order/order.service';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-
+  public loggedInUser: SystemUser;
   public order: Order;
   public selectedProducts: Array<Product>;
   public emptyCart: boolean = true;
@@ -47,7 +48,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     AOS.init();
-
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
     let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
     this.selectedProducts = [];
     if(temp != undefined && temp != null && temp != ""){
@@ -299,7 +300,7 @@ export class CartComponent implements OnInit {
 
       this.order.OrderedProducts = []
       this.order.OrderedProducts = OrderedProducts
-      this.orderService.saveorder(this.order).subscribe(data => {
+      this.orderService.saveorder(this.order,this.loggedInUser).subscribe(data => {
         if(this.delivery == "0"){
           this.alertService.success('Order submitted Successfully!')
         }

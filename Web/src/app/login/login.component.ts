@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
 				this.user.Active = data[0].Active;
 				this.user.UserRole = data[0].UserRole;
 				this.user.Active = "deactive";
-			  	this.userService.saveuser(this.user).subscribe(data => {
+			  	this.userService.register(this.user).subscribe(data => {
 					this.alertService.error('This account is blocked')
 				},
 				error => { 

@@ -6,6 +6,7 @@ import { Product } from 'src/app/models/product.model';
 import { environment } from 'src/environments/environment';
 import { LocalStorage } from 'src/app/util/localstorage.service';
 import { Category } from 'src/app/models/category.model';
+import { SystemUser } from 'src/app/models/systemuser.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,15 @@ export class ProductService {
   
   baseUrl = 'https://agrolinks.lk:3000/product';
 
-  saveproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveproduct`, product);}
+  saveproduct(product: Product,loggedInUser: SystemUser): Observable<any> {
+    var auth: string = loggedInUser.Token
+    var options = {
+      headers: {               
+        'Authorization': auth
+      }
+    }
+    return this.http.post<any>(`${this.baseUrl}/saveproduct`, product,options);
+  }
 
   getproducts(startlimit: String, endlimit: String): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getproducts`, 
   JSON.stringify({start: startlimit,end: endlimit}));}
@@ -55,7 +64,15 @@ export class ProductService {
 
   getallproductscount(): Observable<any> {return this.http.post<any>(`${this.baseUrl}/getallproductscount`, null);}
 
-  deleteproduct(product: Product): Observable<any> {return this.http.post<any>(`${this.baseUrl}/deleteproduct`, product);}
+  deleteproduct(product: Product,loggedInUser: SystemUser): Observable<any> {
+    var auth: string = loggedInUser.Token
+    var options = {
+      headers: {               
+        'Authorization': auth
+      }
+    }
+    return this.http.post<any>(`${this.baseUrl}/deleteproduct`, product,options);
+  }
 
   pay(directpay: any): Observable<any> {return this.http.post<any>(`https://testpay.directpay.lk/`, directpay);}
 }

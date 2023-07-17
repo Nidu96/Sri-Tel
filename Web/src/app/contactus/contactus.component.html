@@ -3,11 +3,11 @@
 </div>
 <div class="row justify-content-center" style="background-color: white">
     <p style="padding-left: 70px;padding-top: 30px;">Home / Contact Us</p>
-    <div class="col-12">
+    <div class="col-12 divservices5">
       <section id="bgimage1" style="margin-top: 2%;">
         <div class="justify-content-center">
           <div class="row justify-content-center mb-5" style="padding-top: 8px">
-            <div class="col-md-2 col-sm-12 divservices3 pb-5">
+            <div class="col-md-3 col-sm-12 divservices4 pb-5">
                 <ul class="list-inline justify-content-center" style="text-align: center">
                   <li>
                     <span aria-hidden="true"><i class="fas fa-map-marker-alt fa-2x mb-2 mt-3" style="color:#0d2878"></i></span>
@@ -18,7 +18,9 @@
                   </li>
                 </ul>
             </div>
-            <div class="col-md-2 col-sm-12 divservices3 pb-5">
+            <div class="col-md-1 col-sm-12 pb-5">
+            </div>
+            <div class="col-md-3 col-sm-12 divservices4 pb-5">
                 <ul class="list-inline justify-content-center" style="text-align: center">
                   <li>
                     <span aria-hidden="true"><i class="fas fa-mobile-alt fa-2x mb-2 mt-3" style="color:#0d2878"></i></span>
@@ -29,7 +31,9 @@
                   </li>
                 </ul>
             </div>
-            <div class="col-md-2 col-sm-12 divservices3 pb-5">
+            <div class="col-md-1 col-sm-12 pb-5">
+            </div>
+            <div class="col-md-3 col-sm-12 divservices4 pb-5">
                 <ul class="list-inline justify-content-center" style="text-align: center">
                   <li>
                     <span aria-hidden="true"><i class="fa fa-phone fa-2x mb-2 mt-3" style="color:#0d2878"></i></span>
@@ -40,22 +44,28 @@
                   </li>
                 </ul>
             </div>
-            <!-- <div class="justify-content-center">
-                <div class="row justify-content-center mb-5" style="padding-top: 8px">
-                    <h3 class="mb-3">Sign Up</h3>
-		  
-
-                    <form style="align-content: center">
-                      <input type="text" id="fullname" class="fadeIn first" name="fullname" placeholder="name" [(ngModel)]="fullname">
-                      <input type="text" id="username" class="fadeIn second" name="username" placeholder="email" [(ngModel)]="username">
-                      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="password">
-                      <input type="password" id="confirmpassword" class="fadeIn third" name="confirmpassword" placeholder="confirm password" [(ngModel)]="confirmpassword">
-                      <input type="button" class="fadeIn third btnsubmit" value="Sign Up" (click)="RegisterBtnClickEvent()" [disabled]="!savebtnactive">
-                    </form>
+          </div>
+        </div>
+        <div class="justify-content-center">
+          <div class="row justify-content-center mb-5" style="padding-top: 8px">
+            <div class="col-12">
+            <p class="textstylegery" style="color:#0d2878;font-weight:bold;font-size: 30px;padding-top: 0%;padding-bottom: 0%;margin-top: 0%;">
+              Have Questions?
+            </p>
+            <p class="textstylegery" style="color:#52b788;font-weight:bold;font-size: 30px;padding-top: 0%;padding-bottom: 0%;margin-top: 0%;">
+              Let's Talk<span style="color:#0d2878;">.</span>
+            </p>
+              <form style="align-content: center">
+                <input type="text" id="fullname" class="fadeIn first inputwidth" name="fullname" placeholder="name" [(ngModel)]="fullname">
+                <input type="text" id="email" class="fadeIn second inputwidth" name="email" placeholder="email" [(ngModel)]="email">
+                <textarea id="message" class="fadeIn third inputwidth textareastyle" name="message" placeholder="message" [(ngModel)]="message" rows="5"></textarea>
+                <div class="row justify-content-center">
+                    <input type="button" class="fadeIn third sendbutton" value="Send" (click)="ContactUsBtnClickEvent()">
                 </div>
-            </div> -->
-        </div>
-        </div>
+              </form>
+            </div>
+          </div>
+      </div>
     </section>
     </div>
 </div>

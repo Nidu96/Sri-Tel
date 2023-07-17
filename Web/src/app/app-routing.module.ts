@@ -15,6 +15,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './admin/order/order.component';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'services', component: ServicesComponent, data: { allowed: false } },
   { path: 'about', component: AboutComponent, data: { allowed: false } },
   { path: 'contactus', component: ContactusComponent, data: { allowed: false } },
+  { path: 'terms', component: TermsComponent, data: { allowed: false } },
   { path: 'payment', component: PaymentComponent, data: { allowed: false } },
   { path: 'cart', component: CartComponent, data: { allowed: false } },
 

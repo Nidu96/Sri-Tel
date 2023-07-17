@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
       this.user.UserRole = "user"
       this.userService.checkuserexist(this.user).subscribe(data => {
         if(data == false){
-          this.userService.saveuser(this.user).subscribe(data => {
+          this.userService.register(this.user).subscribe(data => {
             this.alertService.clear()
             this.alertService.success('Successfully saved!')
             localStorage.setItem(LocalStorage.LOGGED_USER, JSON.stringify(this.user));

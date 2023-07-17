@@ -15,6 +15,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
+  public user: SystemUser;
   public pcategories: number = 1;
   public categorycount: number = 0;
   public closeResult = '';
@@ -44,6 +45,7 @@ export class CategoryComponent implements OnInit {
     this.categorylist = []
     this.GetCategories(0)
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
+    this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
   }
 
   Initialize(){
@@ -82,7 +84,7 @@ export class CategoryComponent implements OnInit {
       let tempdate = year+"-"+month+"-"+date;
       this.category.DatePublished = tempdate;
 
-      this.categoryService.savecategory(this.category).subscribe(data => {
+      this.categoryService.savecategory(this.category,this.user).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
         this.categorylist = []
@@ -181,7 +183,7 @@ export class CategoryComponent implements OnInit {
       this.category = new Category();
       this.category.Id = id
       this.category.Icon = icon
-      this.categoryService.deletecategory(this.category).subscribe(data => {
+      this.categoryService.deletecategory(this.category,this.user).subscribe(data => {
         if(data == "Cannot delete"){
           this.alertService.error('Cannot delete, there are products under this category')
         }else{

@@ -8,6 +8,7 @@ import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/d
 import { Banner } from 'src/app/models/banner.model';
 import { LocalStorage } from 'src/app/util/localstorage.service';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-banner',
@@ -53,7 +54,7 @@ export class BannerComponent implements OnInit {
     this.description = "";
     this.image = "";
     this.showImage = false;
-    this.datepublished = new Date();
+    this.datepublished = new Date(); 
     this.savebtnactive = true
   }
 

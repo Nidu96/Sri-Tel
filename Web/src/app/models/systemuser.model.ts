@@ -5,6 +5,7 @@ export class SystemUser {
         public Username?: string,
         public Password?: string,
         public Active?: string,
-        public UserRole?: string
+        public UserRole?: string,
+        public Token?: string
     ) {}
 }

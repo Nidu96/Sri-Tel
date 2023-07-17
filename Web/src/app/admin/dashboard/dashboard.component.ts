@@ -15,6 +15,7 @@ import { SystemUser } from 'src/app/models/systemuser.model';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public loggedInUser: SystemUser;
   pusers: number = 1;
   ppermissions: number = 1;
   public closeResult = '';
@@ -43,6 +44,7 @@ export class DashboardComponent implements OnInit {
     AOS.init();
     this.GetUsers()
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
   }
 
   Initialize(){
@@ -81,7 +83,7 @@ export class DashboardComponent implements OnInit {
       this.user.Active = this.status.trim();
       this.user.UserRole = this.userrole.trim();
   
-      this.userService.saveuser(this.user).subscribe(data => {
+      this.userService.saveuser(this.user,this.loggedInUser).subscribe(data => {
         this.alertService.clear()
         this.alertService.success('Successfully saved!')
         this.CloseModal()
@@ -133,7 +135,7 @@ export class DashboardComponent implements OnInit {
   }
 
   GetUsers(){
-    this.userService.getusers("0","5").subscribe(data => {
+    this.userService.getusers("0","5",this.loggedInUser).subscribe(data => {
       this.userlist = data
     },
     error => { 
@@ -196,7 +198,7 @@ export class DashboardComponent implements OnInit {
         this.alertService.clear()
         this.user = new SystemUser();
         this.user.Id = id
-        this.userService.deleteuser(this.user).subscribe(data => {
+        this.userService.deleteuser(this.user,this.loggedInUser).subscribe(data => {
           this.alertService.success('Successfully deleted!')
           this.GetUsers()
         },

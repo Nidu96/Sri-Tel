@@ -34,6 +34,7 @@ import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
 import { OrderComponent } from './admin/order/order.component';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
+import { TermsComponent } from './terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ContactusComponent } from './contactus/contactus.component';
     CartComponent,
     OrderComponent,
     AboutComponent,
-    ContactusComponent
+    ContactusComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,

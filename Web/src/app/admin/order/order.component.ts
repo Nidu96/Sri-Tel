@@ -16,6 +16,7 @@ import { Order, OrderedProduct } from 'src/app/models/order.model';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
+  public loggedInUser: SystemUser;
   public closeResult = '';
   public ModalRef : BsModalRef;
   public order: Order;
@@ -51,6 +52,7 @@ export class OrderComponent implements OnInit {
     this.orderproductlist = []
     this.GetOrders(0)
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
   }
 
   Initialize(){
@@ -81,7 +83,7 @@ export class OrderComponent implements OnInit {
       }
       this.order.Status = this.status;
 
-      this.orderService.saveorder(this.order).subscribe(data => {
+      this.orderService.saveorder(this.order,this.loggedInUser).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
         this.orderlist = []
@@ -116,7 +118,7 @@ export class OrderComponent implements OnInit {
   }
 
   GetOrders(startlimit){
-    this.orderService.getorders(startlimit.toString(),"10").subscribe(data => {
+    this.orderService.getorders(startlimit.toString(),"10",this.loggedInUser).subscribe(data => {
       data.forEach(element => {
         var i = this.orderlist.findIndex(x=> x.Id  === element.Id)
         if(this.orderlist.findIndex(x=> x.Id  === element.Id) == -1){
@@ -134,7 +136,7 @@ export class OrderComponent implements OnInit {
     this.alertService.clear()
     this.order = new Order();
     this.order.Id = id
-    this.orderService.getorderdata(this.order).subscribe(data => {
+    this.orderService.getorderdata(this.order,this.loggedInUser).subscribe(data => {
       this.order = data[0]
 
       this.id = data[0].Id;
@@ -170,7 +172,7 @@ export class OrderComponent implements OnInit {
     this.alertService.clear()
     this.order = new Order();
     this.order.Id = id
-    this.orderService.getorderdata(this.order).subscribe(data => {
+    this.orderService.getorderdata(this.order,this.loggedInUser).subscribe(data => {
       this.order = data[0]
 
       this.id = data[0].Id;
@@ -207,7 +209,7 @@ export class OrderComponent implements OnInit {
       this.alertService.clear()
       this.order = new Order();
       this.order.Id = id
-      this.orderService.deleteorder(this.order).subscribe(data => {
+      this.orderService.deleteorder(this.order,this.loggedInUser).subscribe(data => {
         this.alertService.success('Successfully deleted!')
         this.orderlist = []
         this.GetOrders(0)

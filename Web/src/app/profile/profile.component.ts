@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
       this.user.Active = this.status.trim();
       this.user.UserRole = this.userrole.trim();
   
-      this.userService.saveuser(this.user).subscribe(data => {
+      this.userService.register(this.user).subscribe(data => {
         this.alertService.clear()
         this.alertService.success('Successfully saved!')
         this.GetUser(this.user.Id)

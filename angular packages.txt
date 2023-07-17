@@ -19,3 +19,5 @@ npm i directpay-ipg-js
 npm i ng-direct-pay-ipg
 npm i ngx-loading
 npm i crypto-js
+npm install --save atob
+npm install --save btoa
