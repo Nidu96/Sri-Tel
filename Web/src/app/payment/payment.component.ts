@@ -44,7 +44,7 @@ export class PaymentComponent implements OnInit {
     this.productid = localStorage.getItem(LocalStorage.PRODUCT_ID)
     this.productname = localStorage.getItem(LocalStorage.PRODUCT_NAME)
     this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser; 
-    if(this.user == null || this.user == "" || this.user == undefined){
+    if(this.user == null || this.user == undefined){
       this.router.navigateByUrl('/login')
     }
 

@@ -12,13 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CategoryComponent } from './admin/category/category.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './register/register.component';
-import { ProductsComponent } from './products/products.component';
 import { ServicesComponent } from './services/services.component';
-import { ProductComponent } from './admin/product/product.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -31,10 +28,9 @@ import { CartComponent } from './cart/cart.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
-import { OrderComponent } from './admin/order/order.component';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
-import { TermsComponent } from './terms/terms.component';
+import { BillsComponent } from './bills/bills.component';
 
 @NgModule({
   declarations: [
@@ -44,20 +40,16 @@ import { TermsComponent } from './terms/terms.component';
     SidebarComponent,
     DashboardComponent,
     AlertComponent,
-    CategoryComponent,
     ProfileComponent,
+    BillsComponent,
     LandingComponent,
     RegisterComponent,
-    ProductsComponent,
     ServicesComponent,
-    ProductComponent,
     PaymentComponent,
     BannerComponent,
     CartComponent,
-    OrderComponent,
     AboutComponent,
     ContactusComponent,
-    TermsComponent
   ],
   imports: [
     BrowserModule,

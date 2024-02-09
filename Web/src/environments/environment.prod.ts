@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  server_URL: 'https://agrolinks.lk/', 
+  server_URL: 'https://localhost:3000/', 
 	router_prefix: '/api/' 
 };

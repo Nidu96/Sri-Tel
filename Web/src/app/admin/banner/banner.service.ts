@@ -13,7 +13,7 @@ export class BannerService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'https://agrolinks.lk:3000/banner';
+  baseUrl = environment.authenticate_service_URL + 'banner';
 
   savebanner(banner: Banner,user: SystemUser): Observable<any> {
     var auth: string = user.Token

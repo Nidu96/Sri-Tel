@@ -4,7 +4,6 @@ import { BsModalService,BsModalRef}   from 'ngx-bootstrap/modal';
 import { AlertService } from 'src/app/alert/alert.service';
 import { UserService } from './user.service';
 import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-service';
-import { CategoryService } from '../category/category.service';
 import { LocalStorage } from 'src/app/util/localstorage.service';
 import * as AOS from 'aos';
 import { SystemUser } from 'src/app/models/systemuser.model';
@@ -42,9 +41,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     AOS.init();
-    this.GetUsers()
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
     this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
+    this.GetUsers()
   }
 
   Initialize(){

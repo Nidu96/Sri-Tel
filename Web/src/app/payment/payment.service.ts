@@ -12,7 +12,7 @@ export class PaymentService {
 
   constructor(private http: HttpClient) { }
 
-	baseUrl = 'https://agrolinks.lk:3000/payment';
+	baseUrl = environment.authenticate_service_URL + 'payment';
 
 	payment(paymentdetails: FormData): Observable<any> {return this.http.post<any>(`${this.baseUrl}/payment`, paymentdetails);}
 }

@@ -14,7 +14,7 @@ export class ContactusService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'https://agrolinks.lk:3000/contactus';
+  baseUrl = environment.authenticate_service_URL + 'contactus';
 
   contactmessage(contactusmessage: ContactUsMessage): Observable<any> {return this.http.post<any>(`${this.baseUrl}/savemessage`, contactusmessage);}
 }

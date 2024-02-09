@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'https://agrolinks.lk:3000/user';
+  baseUrl = environment.authenticate_service_URL + 'user';
 
 	checkuserexist(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/checkuserexist`, user);}
 

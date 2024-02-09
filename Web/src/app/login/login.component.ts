@@ -60,6 +60,14 @@ export class LoginComponent implements OnInit {
 					}
 					this.user.Active = data[0].Active;
 					this.user.UserRole = data[0].UserRole;
+					this.user.Roaming = data[0].Roaming;
+					this.user.RingingTone = data[0].RingingTone;
+					this.user.WorkPackage = data[0].WorkPackage;
+					this.user.StudentPackage = data[0].StudentPackage;
+					this.user.WorkStudentPackage = data[0].WorkStudentPackage;
+					this.user.FamilyPackage = data[0].FamilyPackage;
+					this.user.FamilyPlusPackage = data[0].FamilyPlusPackage;
+
 					if(this.user.UserRole == "admin"){
 						this.router.navigateByUrl('dashboard')
 					}else{

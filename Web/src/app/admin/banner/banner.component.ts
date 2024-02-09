@@ -43,9 +43,9 @@ export class BannerComponent implements OnInit {
 
   ngOnInit() {
     this.bannerlist = []
-    this.GetBanners(0)
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
     this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
+    this.GetBanners(0)
   }
 
   Initialize(){

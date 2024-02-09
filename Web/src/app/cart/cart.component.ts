@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import * as AOS from 'aos';
 import { LocalStorage } from '../util/localstorage.service';
-import { ProductService } from '../admin/product/product.service';
 import { AlertService } from '../alert/alert.service';
 // import { JsonPipe } from '@angular/common';
 // import hmacSHA256 from 'crypto-js/hmac-sha512';
 // import Base64 from 'crypto-js/enc-base64';
 import * as CryptoJS from 'crypto-js';
-import { Product } from '../models/product.model';
 import { debug } from 'util';
-import { Order, OrderedProduct } from '../models/order.model';
-import { OrderService } from '../admin/order/order.service';
 import { SystemUser } from '../models/systemuser.model';
 
 @Component({
@@ -20,8 +16,6 @@ import { SystemUser } from '../models/systemuser.model';
 })
 export class CartComponent implements OnInit {
   public loggedInUser: SystemUser;
-  public order: Order;
-  public selectedProducts: Array<Product>;
   public emptyCart: boolean = true;
   public showDirectPay: boolean = false;
   public delivery: string;
@@ -44,42 +38,12 @@ export class CartComponent implements OnInit {
   public dataString: any;
   public paymentRequest: any;
 
-  constructor(private productService: ProductService,private alertService: AlertService,private orderService: OrderService) { }
+  constructor(private alertService: AlertService) { }
 
   ngOnInit() {
     AOS.init();
     this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
     let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
-    this.selectedProducts = [];
-    if(temp != undefined && temp != null && temp != ""){
-      this.selectedProducts = JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART));
-    }
-
-    if(this.selectedProducts == null || this.selectedProducts == undefined || this.selectedProducts.length == 0){
-      this.emptyCart = true;
-    }else{
-      this.emptyCart = false;
-      this.calculations()
-    }
-  }
-
-  removeFromCartBtnClick(item: any){
-    this.selectedProducts = []
-    let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
-    if(temp != undefined && temp != null && temp != ""){
-      this.selectedProducts = JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART));
-    }
-    if(this.selectedProducts != null && this.selectedProducts != undefined && this.selectedProducts.length != 0){
-      this.selectedProducts.splice(item, 1)
-    }
-    localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(this.selectedProducts));
-    this.productService.refreshshoppingcart();
-    if(this.selectedProducts == null || this.selectedProducts == undefined || this.selectedProducts.length == 0){
-      this.emptyCart = true;
-    }else{
-      this.calculations()
-    }
-    // this.router.navigateByUrl('/payment')
   }
 
 //#region "validations"
@@ -135,49 +99,6 @@ export class CartComponent implements OnInit {
     }
   }
 
-  validateQuantity(event,id){
-    this.quantity = event.target.value
-    var regex = /^[0-9]*$/
-    if(!regex.test(this.quantity.toString())){
-      this.quantity = 0
-      return
-    }else{
-      this.selectedProducts.find( x=> x.Id  == id).Quantity = parseInt(this.quantity.toString())
-      localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(this.selectedProducts));
-      var price = 0
-      var weight = 0
-      this.selectedProducts.forEach(element => {
-        price += (parseFloat(element.Price) * element.Quantity)
-        this.subtotal = Number(price.toFixed(2))
-        this.totalprice = Number(price.toFixed(2))
-        weight += parseInt(element.Weight)
-        this.totalweight = weight
-      });
-    }
-  }
-
-  calculations(){
-    var price = 0
-    var weight = 0
-    this.selectedProducts.forEach(e => {
-      e.Price = parseFloat(e.Price).toFixed(2).toString()
-      e.TotalPrice = parseFloat(e.TotalPrice).toFixed(2).toString()
-      price += (parseFloat(e.Price) * e.Quantity)
-      this.subtotal = Number(price.toFixed(2))
-      this.totalprice = Number(price.toFixed(2))
-      weight += parseInt(e.TotalWeight)
-      this.totalweight = weight
-    });
-    this.noofitems = this.selectedProducts.length
-    if(this.totalweight > 1000){
-      var cal = ((parseInt((this.totalweight - 1000).toString())/1000)*45) + 190
-      this.deliveryfee = cal
-      this.totalprice += this.deliveryfee
-    } else{
-      this.deliveryfee = 190
-      this.totalprice += this.deliveryfee
-    }
-  }
 
   isDelivery(val){
     this.delivery = val.toString()
@@ -187,45 +108,6 @@ export class CartComponent implements OnInit {
 //#region "Payment"
   ContinueToPayment(){
     if(this.Validations()){
-      // let email = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)).Username;
-      if(this.selectedProducts != null && this.selectedProducts != undefined && this.selectedProducts.length != 0){
-        let description = ""
-        this.orderid = (Math.floor(Math.random() * 999) + 1).toString()
-        description = "Order ID: " + this.orderid.toString() +"    "
-        this.selectedProducts.forEach(element => {
-          description = description + 
-          "Product Name: " + element.Title + " "
-          "Unit Price: " + element.Price + " "
-          "Quantity: " + element.Quantity + " "
-        });
-        description = description + "   Subtotal: " + this.subtotal
-        description = description + "   Delivery Fee: " + this.deliveryfee
-        description = description + "   Total Price: " + this.totalprice
-        var json = {
-          "merchant_id": "AA08654",
-          "amount": this.totalprice,
-          "type": 'ONE_TIME',
-          "order_id": this.orderid.toString(),
-          "currency": "LKR",
-          "return_url": "",
-          "response_url": "",
-          "first_name": this.name,
-          "last_name": "",
-          "phone": this.phone,
-          "email": this.email,
-          "description": description,
-          "page_type": 'IN_APP',
-        }
-        this.dataString =  CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify(json)));
-        this.signature = CryptoJS.HmacSHA256(this.dataString, "2fedba4a6adb86c990cded02e56cf460c07e4275f7bb0f80f1545ecb87f416a8");
-      
-        this.paymentRequest = {
-          signature: this.signature,
-          dataString: this.dataString,
-          stage: 'DEV'
-        };
-        this.showDirectPay = true
-      }
     }
     
   }
@@ -244,71 +126,10 @@ export class CartComponent implements OnInit {
 //#endregion
 
 //#region "order"
-  plusClick(id){
-    this.selectedProducts.find( x=> x.Id  == id).Quantity += 1
-    var pricecal = this.selectedProducts.find( x=> x.Id  == id).Quantity * parseInt(this.selectedProducts.find( x=> x.Id  == id).Price)
-    var weightcal = this.selectedProducts.find( x=> x.Id  == id).Quantity * parseInt(this.selectedProducts.find( x=> x.Id  == id).Weight)
-    this.selectedProducts.find( x=> x.Id  == id).TotalPrice = pricecal.toString()
-    this.selectedProducts.find( x=> x.Id  == id).TotalWeight = weightcal.toString()
-    this.calculations()
-    localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(this.selectedProducts));
-  }
-
-  minusClick(id){
-    if(this.selectedProducts.find( x=> x.Id  == id).Quantity > 1){
-      this.selectedProducts.find( x=> x.Id  == id).Quantity -= 1
-      var pricecal = this.selectedProducts.find( x=> x.Id  == id).Quantity * parseInt(this.selectedProducts.find( x=> x.Id  == id).Price)
-      var weightcal = this.selectedProducts.find( x=> x.Id  == id).Quantity * parseInt(this.selectedProducts.find( x=> x.Id  == id).Weight)
-      this.selectedProducts.find( x=> x.Id  == id).TotalPrice = pricecal.toString()
-      this.selectedProducts.find( x=> x.Id  == id).TotalWeight = weightcal.toString()
-      this.calculations()
-      localStorage.setItem(LocalStorage.SHOPPING_CART, JSON.stringify(this.selectedProducts));
-    }
-  }
 
   saveOrder(){
     if(this.Validations()){
-      this.order = new Order();
-      this.order.Id = "";
-      if(this.orderid == null || this.orderid == undefined || this.orderid == ""){
-        this.orderid = (Math.floor(Math.random() * 999) + 1).toString()
-      }
-      this.order.IdForCustomer = this.orderid;
-      this.order.UserEmail = this.email;
-      this.order.Phone = this.phone;
-      this.order.RecepientName = this.recname;
-      this.order.RecepientPhone = this.recphone;
-      this.order.Status = "Pending";
-      if(this.delivery == "0"){
-        this.order.Delivery = false;
-      }else{
-        this.order.Delivery = true;
-      }
-      this.order.DeliveryNote = this.notes;
-      this.order.City = this.city;
-      this.order.TotalAmount = this.totalprice;
-      this.order.DateofPayment = new Date();
-      let OrderedProducts = new Array<OrderedProduct>()
-      this.selectedProducts.forEach(element => {
-        let orderedproduct = new OrderedProduct()
-        orderedproduct.Id = ""
-        orderedproduct.OrderId = this.orderid
-        orderedproduct.ProductID = element.Id
-        orderedproduct.Quantity = element.Quantity.toString()
-        OrderedProducts.push(orderedproduct)
-      });
 
-      this.order.OrderedProducts = []
-      this.order.OrderedProducts = OrderedProducts
-      this.orderService.saveorder(this.order,this.loggedInUser).subscribe(data => {
-        if(this.delivery == "0"){
-          this.alertService.success('Order submitted Successfully!')
-        }
-      },
-      error => {
-        this.alertService.clear() 
-        this.alertService.error('Error!')
-      });
     }
   }
 //#endregion

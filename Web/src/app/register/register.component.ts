@@ -62,7 +62,15 @@ export class RegisterComponent implements OnInit {
         this.user.Password = this.password.trim();
       }
       this.user.Active = "Active";
-      this.user.UserRole = "user"
+      this.user.UserRole = "user";
+      this.user.Roaming = "Deactive";
+      this.user.RinginTone = "Deactive";
+      this.user.WorkPackage = "Deactive";
+      this.user.StudentPackage = "Deactive";
+      this.user.WorkStudentPackage = "Deactive";
+      this.user.FamilyPackage = "Deactive";
+      this.user.FamilyPlusPackage = "Deactive";
+
       this.userService.checkuserexist(this.user).subscribe(data => {
         if(data == false){
           this.userService.register(this.user).subscribe(data => {

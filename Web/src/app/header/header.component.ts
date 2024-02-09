@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorage } from '../util/localstorage.service';
 import { SystemUser } from '../models/systemuser.model';
-import { ProductService } from '../admin/product/product.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +19,7 @@ export class HeaderComponent implements OnInit {
   public isUser: boolean = false;
   public isAdminDashboard: boolean = false;
 
-  constructor(private router: Router,private productService: ProductService) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     if(
@@ -35,6 +34,7 @@ export class HeaderComponent implements OnInit {
       this.router.url === '/terms' ||
       this.router.url === '/gallery' ||
       this.router.url === '/profile' || 
+      this.router.url === '/bills' || 
       this.router.url === '/cart' || 
       this.router.url === '/payment')
     {
@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
     this.isAdmin = false
     this.isUser = false
     this.loggedinuser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER));
-    if(this.loggedinuser != "" && this.loggedinuser != null && this.loggedinuser != undefined){
+    if(this.loggedinuser != null && this.loggedinuser != undefined){
       this.name = this.loggedinuser.Name
       this.userLoggedIn = true
       if(this.loggedinuser.UserRole == "admin"){
@@ -58,10 +58,6 @@ export class HeaderComponent implements OnInit {
       }
     }
 
-
-    this.productService.selectedProducts.subscribe(res => {
-      this.selectedProducts = res;
-    });
 
     let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
     this.selectedProducts = "0";

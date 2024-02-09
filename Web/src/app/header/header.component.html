@@ -1,82 +1,22 @@
 <div class="fixed-top">
-<nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 5%;background-color: white;">
-    <div class="right_bar">
-        <div class="navbar-address1">
-            <ul class="list-inline pt-2">
-                <li class="pl-3 pt-3" id="memberLinkPanRegister">
-                    <a href="/"><img class="smartphone" src="../../assets/images/navbar_and_banner_section/smartphone1.png"></a>
-                </li>
-                <li id="memberLinkPanRegister">
-                    <span><a href="tel:94-77-178-7000" style="color:black;">+ 94 77 178 7000</a> or 
-                        <a href="tel:94-31-226-1205" style="color:black;">+94 31 226 1205</a></span>
-                </li>
-                <li style="font-size:16px;"><span>|</span></li>
-                <li class="pl-3 pt-3" id="memberLinkPanRegister">
-                    <a href="/"><img class="email" src="../../assets/images/navbar_and_banner_section/1email.png"></a>
-                </li>
-                <li id="memberLinkPanRegister">
-                    <span><a href="mailto:data.landmarkseeds@gmail.com" style="color:black;" >data.landmarkseeds@gmail.com</a></span>
-                </li>
-                <li style="font-size:16px;"><span>|</span></li>
-                <li class="pl-3 pt-3 float-right" id="memberLinkPanRegister">
-                    <a href="/"><img class="socialmedia2" src="../../assets/images/navbar_and_banner_section/twitter1.png"></a>
-                </li>
-                <li class="pl-3 pt-3 float-right" id="memberLinkPanRegister">
-                    <a href="/"><img class="socialmedia2" src="../../assets/images/navbar_and_banner_section/instagram1.png"></a>
-                </li>
-                <li class="pl-3 pt-3 float-right" id="memberLinkPanRegister">
-                    <a href="/"><img class="socialmedia1" src="../../assets/images/navbar_and_banner_section/facebook1.png"></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="box justify-content-center">Welcome to Sri Lanka's biggest Online agriculture experience </div>
-</nav>
+
 <nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 60px;background-color: rgba(34,54,97,1);">
     <div class="float-left left-bar">
         <div>
             <ul class="list-inline">
                 <li class="pl-3 float-left" id="memberLinkPanRegister">
-                    <a href="/"><img src="../../assets/images/agrolinklogo.png" class="logo"></a>
+                    <a href="/"><img src="../../assets/images/sritel.jpg" class="logo"></a>
                 </li>
             </ul>
         </div> 
     </div>
-    <!-- <div class="float-left left-bar">
-        <div>
-            <ul class="list-inline">
-                <li id="memberLinkPanRegister">
-                    <form class="search" style="max-width:800px">
-                    <input type="text" placeholder="Search.." name="search" [(ngModel)]="search">
-                    <button type="button" (click)="SearchProduct()"><i class="fa fa-search"></i></button>
-                    </form>
-                </li>
-            </ul>
-        </div> 
-    </div> -->
     <div class="right_bar">
         <div class="navbar-address2">
             <ul class="list-inline navbar_address-tab">
-                <!-- <li id="memberLinkPanRegister" style="padding-right: 300px;">
-                    <form class="search" style="max-width:800px">
-                    <input type="text" placeholder="Search In AgroLinks" name="search2">
-                    <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
-                    </form>
-                </li> -->
                 <!-- <li style="font-size:32px;"><span>|</span></li> -->
-                <li class="pl-3" id="memberLinkPanRegister">
+                <li class="pl-3 pt-3" id="memberLinkPanRegister">
                     <a href="/"><img class="pin" src="../../assets/images/navbar_and_banner_section/pin.png"></a>
                 </li>
-                <li class="pt-3" id="memberLinkPanRegister">
-                    <span>Katanawatta Road,<br/>Dankotuwa</span>
-                </li>
-                <li style="font-size:32px;"><span>|</span></li>
-                <li>
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/cart">
-                        <i class="fa" style="font-size:24px;color: white">&#xf07a;</i>
-                        <span class="cart-span"> {{selectedProducts}} </span>
-                    </a>
-			    </li>
             </ul>
         </div>
     </div>
@@ -93,19 +33,13 @@
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="500" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/products">Online Store</a>
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/services">Telco Services</a>
 			    </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/services">Services</a>
-			    </li>
-			    <li class="nav-item">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/about">About Us</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/contactus">Contact Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/terms">Terms</a>
+                <li class="nav-item" [hidden]="!userLoggedIn">
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/bills">Bills</a>
                 </li>
 			    <li class="nav-item" [hidden]="!isAdmin">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="800" href="/dashboard">Dashboard</a>
