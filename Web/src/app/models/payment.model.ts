@@ -2,8 +2,6 @@ export class Payment {
     constructor( 
         public Id?: string,
         public UserId?: string,
-        public TutorialId?: string,
-        public TutorialName?: string,
         public StripeProductKey?: string,
         public Price?: Number,
         public NameOnCard?: string,
@@ -11,5 +9,15 @@ export class Payment {
         public ExpMonth?: Number,
         public ExpYear?: Number,
         public CVV?: string,
+    ) {}
+}
+
+export class Bill {
+    constructor( 
+        public Id?: string,
+        public UserId?: string,
+        public TotalAmount?: string,
+        public Payment?: string,
+        public DatePublished?: string
     ) {}
 }

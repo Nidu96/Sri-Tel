@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
   public id: string;
   public fullname: string;
   public username: string;
+  public phone: string;
   public password: string;
   public confirmpassword: string;
   public status: string;
@@ -39,6 +40,7 @@ export class RegisterComponent implements OnInit {
     this.id = "";
     this.fullname = "";
     this.username = "";
+    this.phone = "";
     this.confirmpassword = "";
     this.password = "";
     this.status = "";
@@ -58,13 +60,14 @@ export class RegisterComponent implements OnInit {
       }
       this.user.Name = this.fullname.trim();
       this.user.Username = this.username.trim();
+      this.user.Phone = this.phone.trim();
       if(this.password != null && this.password != undefined && this.password != ""){
         this.user.Password = this.password.trim();
       }
       this.user.Active = "Active";
       this.user.UserRole = "user";
       this.user.Roaming = "Deactive";
-      this.user.RinginTone = "Deactive";
+      this.user.RingingTone = "Deactive";
       this.user.WorkPackage = "Deactive";
       this.user.StudentPackage = "Deactive";
       this.user.WorkStudentPackage = "Deactive";
@@ -114,6 +117,11 @@ export class RegisterComponent implements OnInit {
       return false
     }else if(!re.test(this.username)){
       this.alertService.error('Invalid email')
+      return false
+    }
+
+    if(this.phone == null || this.phone == undefined || this.phone == ""){
+      this.alertService.error('Phone is required')
       return false
     }
 

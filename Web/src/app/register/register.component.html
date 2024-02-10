@@ -9,6 +9,7 @@
 			  <form style="align-content: center">
                 <input type="text" id="fullname" class="fadeIn first" name="fullname" placeholder="name" [(ngModel)]="fullname">
                 <input type="text" id="username" class="fadeIn second" name="username" placeholder="email" [(ngModel)]="username">
+				<input type="text" id="phone" class="fadeIn second" name="phone" placeholder="phone" [(ngModel)]="phone">
                 <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" [(ngModel)]="password">
                 <input type="password" id="confirmpassword" class="fadeIn third" name="confirmpassword" placeholder="confirm password" [(ngModel)]="confirmpassword">
 				<input type="button" class="fadeIn third btnsubmit" value="Sign Up" (click)="RegisterBtnClickEvent()" [disabled]="!savebtnactive">

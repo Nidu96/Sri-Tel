@@ -52,167 +52,51 @@ function UserAuthPermission(credentials, callback) {
 }
 //#endregion
 
-//#region user
-app.post("/user/register", (req, res, next) => {
-  const user = req.body;
-  if(user.Id == undefined || user.Id == null || user.Id == ""){
-    user.Id = Math.random().toString(7).slice(2);
-    con.query('INSERT INTO systemuser SET ?', user, (err, row) => {
-      if(err) throw err;
-      res.json("")
-    });
-  }else{
-    con.query('UPDATE systemuser SET Name = ?, Username = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
-    [user.Name,user.Username, user.Password,user.Active,"user",user.Id], (err, row) => {
-      if(err) throw err;
-      res.json("")
-    });
-  }
-});
-
-app.post("/user/saveuser", (req, res, next) => {
+//#region payment
+app.post("/bills/savebill", (req, res, next) => {
   //check the permission to allow the method
   var usrpwd = atob(req.headers.authorization.split("basic")[1].trim())
   var username = usrpwd.split(":")[0]
   var password = usrpwd.split(":")[1]
   var credentials = {Username: username,Password: password};
 
-  AdminAuthPermission(credentials, function(err, count) {
+  UserAuthPermission(credentials, function(err, count) {
     if(count == 1){
-      const user = req.body;
-      if(user.Id == undefined || user.Id == null || user.Id == ""){
-        user.Id = Math.random().toString(7).slice(2);
-        con.query('INSERT INTO systemuser SET ?', user, (err, row) => {
-          if(err) throw err;
-          res.json("")
-        });
-      }else{
-        con.query('UPDATE systemuser SET Name = ?, Username = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
-        [user.Name,user.Username, user.Password,user.Active,user.UserRole,user.Id], (err, row) => {
+      const bill = req.body;
+      if(bill.Id == undefined || bill.Id == null || bill.Id == ""){
+        bill.Id = Math.random().toString(7).slice(2);
+        con.query('INSERT INTO bills SET ?', bill, (err, row) => {
           if(err) throw err;
           res.json("")
         });
       }
+    } else{
+      res.status(401)
     }
   });
+
 });
 
-
-app.post("/user/checkuserexist", (req, res, next) => {
-  const credentials = req.body;
-  con.query('SELECT * FROM systemuser WHERE Username = ?', credentials.Username, function(err, rows, fields) {
-    if(err) throw err;
-    var count = rows.length;
-    if (count) {
-      res.json(true);
-    }else{
-      res.json(false);
-    }
-  });
-});
-
-
-app.post("/user/getusers", (req, res, next) => {
-  //check the permission to allow the method
+app.post("/bills/getbills", (req, res, next) => {
+    //check the permission to allow the method
   var usrpwd = atob(req.headers.authorization.split("basic")[1].trim())
   var username = usrpwd.split(":")[0]
   var password = usrpwd.split(":")[1]
   var credentials = {Username: username,Password: password};
 
-  AdminAuthPermission(credentials, function(err, count) {
+  UserAuthPermission(credentials, function(err, count) {
     if(count == 1){
-      let users = []
-      const limit = JSON.parse(req.body);
-      con.query('SELECT * FROM systemuser LIMIT ?,?', [parseInt(limit.start),parseInt(limit.end)], (err,rows) => {
+      const userId = req.body;
+      con.query('SELECT * FROM bills WHERE UserId = ? ORDER BY DatePublished DESC', userId, (err,rows) => {
         if(err) throw err;
         res.json(rows);
-        var count = rows.length;
-        if (count) {
-          rows.forEach(function(element, index) {
-            var id = element.Id; 
-            var name = element.Name; 
-            var username = element.Username; 
-            var active = element.Active; 
-            var userrole = element.UserRole; 
-
-            // con.query('SELECT * FROM Permissions WHERE UserId = ?', id, function(err, permissions, fields) {
-            //   if(err) throw err;
-            //   users.push({Id: id, Name: name, Username: username,
-            //     Active: active, UserRole: userrole,
-            //     PermissionsList: JSON.parse(JSON.stringify(permissions))});
-
-
-            //   if (index === rows.length - 1) {
-            //     res.json(users);
-            //   }
-            // });
-            
-          });
-        }
       });
+    } else{
+      res.status(401)
     }
   });
 });
 
-
-app.post("/user/getuserdata", (req, res, next) => {
-  const user = req.body;
-  con.query('SELECT * FROM systemuser WHERE Id = ?', user.Id.toString(), (err, rows) => {
-    if(err) throw err;
-    res.json(rows);
-  });
-});
-
-app.post("/user/deleteuser", (req, res, next) => {
-  //check the permission to allow the method
-  var usrpwd = atob(req.headers.authorization.split("basic")[1].trim())
-  var username = usrpwd.split(":")[0]
-  var password = usrpwd.split(":")[1]
-  var credentials = {Username: username,Password: password};
-
-  AdminAuthPermission(credentials, function(err, count) {
-    if(count == 1){
-      const user = req.body;
-      con.query('SELECT * FROM systemuser WHERE Id = ?', user.Id.toString(), function(err, rows, fields) {
-        if(err) throw err;
-        var count = rows.length;
-        if (count) { 
-          con.query('DELETE FROM systemuser WHERE Id = ?', user.Id.toString(), function(err, row, fields) {
-            if(err) throw err;
-            res.json("");
-          });
-        } 
-      });
-    }
-  });
-});
-
-app.post("/user/deletepermissions", (req, res, next) => {
-  //check the permission to allow the method
-  var usrpwd = atob(req.headers.authorization.split("basic")[1].trim())
-  var username = usrpwd.split(":")[0]
-  var password = usrpwd.split(":")[1]
-  var credentials = {Username: username,Password: password};
-
-  AdminAuthPermission(credentials, function(err, count) {
-    if(count == 1){
-      const permissionlist = req.body;
-      permissionlist.forEach(element => {
-        con.query('SELECT * FROM permissions WHERE Id = ?', element.Id.toString(), function(err, rows, fields) {
-          if(err) throw err;
-          var count = rows.length;
-          if (count) {
-            var id = rows.map(i => i.Id); 
-            con.query('DELETE FROM permissions WHERE Id = ?', element.Id.toString(), function(err, row, fields) {
-              if(err) throw err;
-              res.json("");
-            });
-          } 
-        });
-      });
-    }
-  });
-});
 //#endregion
 
 

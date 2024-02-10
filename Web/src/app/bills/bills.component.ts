@@ -5,6 +5,9 @@ import { AlertService } from '../alert/alert.service';
 import * as CryptoJS from 'crypto-js';
 import { debug } from 'util';
 import { SystemUser } from '../models/systemuser.model';
+import { Router } from '@angular/router';
+import { PaymentService } from '../payment/payment.service';
+import { Bill } from '../models/payment.model';
 
 @Component({
   selector: 'app-bills',
@@ -13,34 +16,58 @@ import { SystemUser } from '../models/systemuser.model';
 })
 export class BillsComponent implements OnInit {
   public loggedInUser: SystemUser;
-  public emptyCart: boolean = true;
-  public showDirectPay: boolean = false;
-  public delivery: string;
-  public orderid: string;
   public name: string;
-  public recname: string;
-  public recphone: string;
   public phone: string;
   public email: string;
-  public address: string;
-  public notes: string;
-  public city: string;
-  public quantity: number;
+  public roaming: boolean = false;
+  public ringingtone: boolean = false;
+  public package: boolean = false;
+  public roamingprice: number = 0;
+  public ringingtoneprice: number = 0;
+  public packageprice: number = 0;
   public totalprice: number = 0;
-  public subtotal: number = 0;
-  public deliveryfee: number = 190;
-  public totalweight: number = 0;
-  public noofitems: number = 0;
-  public signature: any;
-  public dataString: any;
-  public paymentRequest: any;
+  public billslist: Array<Bill> = []
 
-  constructor(private alertService: AlertService) { }
+  constructor(private alertService: AlertService,private router: Router,private paymentService: PaymentService) { }
 
   ngOnInit() {
     AOS.init();
     this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
-    let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
+    this.GetBills();
+
+    this.name = this.loggedInUser.Name;
+    this.email = this.loggedInUser.Username;
+    this.phone = this.loggedInUser.Phone;
+    if(this.loggedInUser.Roaming == "Active"){
+      this.roamingprice = 1200
+      this.roaming = true;
+    }
+    if(this.loggedInUser.RingingTone == "Active"){
+      this.ringingtoneprice = 200
+      this.ringingtone = true;
+    }
+    if(this.loggedInUser.WorkPackage == "Active"){
+      this.packageprice = 1850
+      this.package = true;
+    }
+    if(this.loggedInUser.StudentPackage == "Active"){
+      this.packageprice = 550
+      this.package = true;
+    }
+    if(this.loggedInUser.WorkStudentPackage == "Active"){
+      this.packageprice = 1500
+      this.package = true;
+    }
+    if(this.loggedInUser.FamilyPackage == "Active"){
+      this.packageprice = 2300
+      this.package = true;
+    }
+    if(this.loggedInUser.FamilyPlusPackage == "Active"){
+      this.packageprice = 3200
+      this.package = true;
+    }
+    this.totalprice = this.roamingprice + this.ringingtoneprice + this.packageprice;
+    localStorage.setItem(LocalStorage.TOTAL_PRICE, this.totalprice.toString());
   }
 
 //#region "validations"
@@ -60,20 +87,6 @@ export class BillsComponent implements OnInit {
       this.alertService.error('Email is required')
       return false
     }
-    if(this.delivery == undefined || this.delivery == "" || this.delivery == null){
-      this.alertService.error('please select store pickup or delivery')
-      return false
-    }
-
-    if((this.address == undefined || this.address == "" || this.address == null) && this.delivery == "1"){
-      this.alertService.error('Delivery address is required')
-      return false
-    }
-
-    if((this.city == undefined || this.city == "" || this.city == null) && this.delivery == "1"){
-      this.alertService.error('Delivery city is required')
-      return false
-    }
     return true
   }
 
@@ -82,28 +95,19 @@ export class BillsComponent implements OnInit {
     if(!regex.test(this.phone)){
       this.phone = ""
     }
-    if(!regex.test(this.recphone)){
-      this.recphone = ""
-    }
   }
 
-
-  isDelivery(val){
-    this.delivery = val.toString()
-  }
 //#endregion 
 
 //#region "Payment"
   ContinueToPayment(){
     if(this.Validations()){
+      this.router.navigate(['/payment']);
     }
-    
   }
-
 
   public onSuccess(param: any): void {
     console.log('client-onSuccess',param);
-    this.saveOrder()
     alert(JSON.stringify(param))
   }
 
@@ -113,12 +117,18 @@ export class BillsComponent implements OnInit {
   }
 //#endregion
 
-//#region "order"
+//#region "get bills"
 
-  saveOrder(){
-    if(this.Validations()){
-
-    }
-  }
+GetBills(){
+  this.paymentService.getbills(this.loggedInUser.Id, this.loggedInUser).subscribe(data => {
+    data.forEach(element => {
+      this.billslist.push(element)
+    });
+  },
+  error => { 
+    this.alertService.clear()
+    this.alertService.error('Error!')
+  });
+}
 //#endregion
 }

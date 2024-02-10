@@ -8,7 +8,6 @@ import { RegisterComponent } from './register/register.component';
 import { ServicesComponent } from './services/services.component';
 import { PaymentComponent } from './payment/payment.component';
 import { BannerComponent } from './admin/banner/banner.component';
-import { CartComponent } from './cart/cart.component';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { BillsComponent } from './bills/bills.component';
@@ -25,7 +24,6 @@ const routes: Routes = [
   { path: 'contactus', component: ContactusComponent, data: { allowed: false } },
   { path: 'bills', component: BillsComponent, data: { allowed: false } },
   { path: 'payment', component: PaymentComponent, data: { allowed: false } },
-  { path: 'cart', component: CartComponent, data: { allowed: false } },
 
   //admin
   { path: 'dashboard', component: DashboardComponent, data: { allowed: false } },

@@ -5,17 +5,16 @@
     <h1 class="pt-5 pb-4" data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Your Payments</h1>
     <hr data-aos="zoom-in" data-aos-duration="2000">
     <div class="col-md-7 col-sm-12 m-5" data-aos="zoom-out-up" data-aos-duration="2000">
-      <table class="custom">
+      <table class="">
         <tr>
           <th>Date</th>
           <th>Total Amount</th>
           <th>Payment</th>
-          <th></th>
         </tr>
-        <tr *ngFor="let item of selectedProducts">
-          <td><b>{{item.TotalPrice| number:'.2-2'}}</b></td>
-          <td><b>Rs.{{item.TotalPrice| number:'.2-2'}}</b></td>
-          <td><b>Rs.{{item.TotalPrice| number:'.2-2'}}</b></td>
+        <tr *ngFor="let item of billslist">
+          <td>{{item.DatePublished | date:'yyyy-MM-dd'}}</td>
+          <td>Rs. {{item.TotalAmount| number:'.2-2'}}</td>
+          <td>Rs. {{item.Payment| number:'.2-2'}}</td>
         </tr>
       </table>
       <div class="row mt-5 justify-content-center" [hidden]="!emptyCart">
@@ -30,7 +29,7 @@
                 Current Month Bill</h1>
               </div>
               <hr/>
-              <div class="form-group" [hidden]="showDirectPay">
+              <div class="form-group">
                 <label for="name"><i class="fas fa-user mr-3"></i>Customer Name</label>
                 <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i> 
                 <div class="input-group">
@@ -38,7 +37,7 @@
                 [(ngModel)]="name">
                 </div>
               </div>
-              <div class="form-group" [hidden]="showDirectPay">
+              <div class="form-group">
                 <label for="name"><i class="fas fa-phone-alt mr-3"></i>Phone</label>
                 <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
                 <div class="input-group">
@@ -46,7 +45,7 @@
                 [(ngModel)]="phone" (keyup)="validateNumbers()">
                 </div>
               </div>
-              <div class="form-group" [hidden]="showDirectPay">
+              <div class="form-group">
                 <label for="name"><i class="fas fa-envelope mr-3"></i>Email</label>
                 <i class="fas fa-pen mr-3 float-right" style="color: #52b788"></i>
                 <div class="input-group">
@@ -56,6 +55,30 @@
               </div>
               <div class="form-group m-5">
                 <h4 class="custom-h4 mb-3">Summary</h4>
+                <div class="row" [hidden]="!roaming">
+                  <div class="col-6">
+                      <label class="total-label">Roaming</label>
+                  </div>
+                  <div class="col-6">
+                      <label class="float-right total-custom-label" style="color: #f89602">Rs.{{roamingprice| number:'.2-2'}}</label>
+                  </div>
+                </div>
+                <div class="row" [hidden]="!ringingtone">
+                  <div class="col-6">
+                      <label class="total-label">Ringing Tone</label>
+                  </div>
+                  <div class="col-6">
+                      <label class="float-right total-custom-label" style="color: #f89602">Rs.{{ringingtoneprice| number:'.2-2'}}</label>
+                  </div>
+                </div>
+                <div class="row" [hidden]="!package">
+                  <div class="col-6">
+                      <label class="total-label">Package</label>
+                  </div>
+                  <div class="col-6">
+                      <label class="float-right total-custom-label" style="color: #f89602">Rs.{{packageprice| number:'.2-2'}}</label>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-6">
                       <label class="total-label">Total</label>
@@ -66,7 +89,7 @@
                 </div>
               </div>
               <div>
-                <div class="row justify-content-center" [hidden]="showDirectPay">
+                <div class="row justify-content-center">
                   <button type="button" style="padding: 8px;width: 40%;font-size: 16px" class="btnsubmit2" (click)="ContinueToPayment()">Proceed to pay</button>
                 </div>
               </div>

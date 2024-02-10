@@ -10,13 +10,13 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  	constructor(private http: HttpClient) { }
 
-  baseUrl = environment.authenticate_service_URL + 'user';
+  	baseUrl = environment.authenticate_service_URL + 'user';
 
 	checkuserexist(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/checkuserexist`, user);}
 
-	register(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/saveuser`, user);}
+	register(user: SystemUser): Observable<any> {return this.http.post<any>(`${this.baseUrl}/register`, user);}
 
 	saveuser(user: SystemUser,loggedInUser: SystemUser): Observable<any> {
 		var auth: string = loggedInUser.Token

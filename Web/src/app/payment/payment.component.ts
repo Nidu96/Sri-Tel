@@ -5,7 +5,7 @@ import { AlertService } from '../alert/alert.service';
 import { SystemUser } from '../models/systemuser.model';
 import { UserService } from '../admin/dashboard/user.service';
 import { LocalStorage } from '../util/localstorage.service';
-import { Payment } from '../models/payment.model';
+import { Bill, Payment } from '../models/payment.model';
 import { isNumber } from 'util';
 import { PaymentService } from './payment.service';
 import * as AOS from 'aos';
@@ -17,7 +17,7 @@ import * as AOS from 'aos';
 })
 export class PaymentComponent implements OnInit {
 
-  public user: SystemUser;
+  public loggedInUser: SystemUser;
   public productid: string = "";
   public productname: string = "";
   public stripeproductkey: string = "";
@@ -28,6 +28,7 @@ export class PaymentComponent implements OnInit {
   public expyear: string = "year of expiry";
   public cvv: string = "0";
 	public payment: Payment;
+  public bill: Bill;
   public savebtnactive: boolean = true
   public paymentsuccess: boolean = false
   public cardtype: string = "";
@@ -40,11 +41,9 @@ export class PaymentComponent implements OnInit {
 	ngOnInit() {
     AOS.init();
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
-    this.price = localStorage.getItem(LocalStorage.PRODUCT_PRICE)
-    this.productid = localStorage.getItem(LocalStorage.PRODUCT_ID)
-    this.productname = localStorage.getItem(LocalStorage.PRODUCT_NAME)
-    this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser; 
-    if(this.user == null || this.user == undefined){
+    this.price = localStorage.getItem(LocalStorage.TOTAL_PRICE)
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser; 
+    if(this.loggedInUser == null || this.loggedInUser == undefined){
       this.router.navigateByUrl('/login')
     }
 
@@ -122,10 +121,8 @@ export class PaymentComponent implements OnInit {
 		localStorage.clear();
 		if(this.Validations()){
       this.payment = new Payment();
-      this.payment.UserId = this.user.Id
-      this.payment.TutorialId = this.productid
+      this.payment.UserId = this.loggedInUser.Id
       this.payment.StripeProductKey = this.stripeproductkey
-      this.payment.TutorialName = this.productname
       this.payment.Price = parseFloat(this.price)
       // this.payment.CardNumber = CryptoJS.AES.encrypt(this.cardno, "app0000").toString()
       this.payment.CardNumber = this.cardno
@@ -139,28 +136,52 @@ export class PaymentComponent implements OnInit {
 
       //let payment = CryptoJS.AES.encrypt(JSON.stringify(this.payment), "app0000")
       paymentdetails.append("payment", JSON.stringify(this.payment));
-      paymentdetails.append("user", JSON.stringify(this.user));
+      paymentdetails.append("user", JSON.stringify(this.loggedInUser));
+
+      this.bill = new Bill();
+      this.bill.Payment = parseFloat(this.price).toFixed(2).toString();
+      this.bill.TotalAmount = parseFloat(this.price).toFixed(2).toString();
+      this.bill.UserId = this.loggedInUser.Id
+      let d = new Date();
+      let year = new Date(d).getFullYear();
+      let month = new Date(d).getMonth()+1;
+      let date = new Date(d).getDate();
+      let tempdate = year+"-"+month+"-"+date;
+      this.bill.DatePublished = tempdate;
 
 			this.alertService.info('Please wait..')
-			this.paymentService.payment(paymentdetails).subscribe(data => {
-        this.alertService.clear()
-        this.savebtnactive = true
-        if(data == "succeeded"){
-          this.alertService.success('Payment successful!')
-          this.paymentsuccess = true
-        }else{
-          this.alertService.error('Payment declined!')
-        }
-        
-			},
-			error => { 
-				this.alertService.clear()
-        this.alertService.error('Error!')
-        this.savebtnactive = true
-			});
-    }else{
+		// 	this.paymentService.payment(paymentdetails).subscribe(data => {
+    //     this.alertService.clear()
+    //     this.savebtnactive = true
+    //     if(data == "succeeded"){
+    //       this.alertService.success('Payment successful!')
+    //       this.paymentsuccess = true
+    //     }else{
+    //       this.alertService.error('Payment declined!')
+    //    } 
+		// 	},
+		// 	error => { 
+		// 		this.alertService.clear()
+    //     this.alertService.error('Error!')
+    //     this.savebtnactive = true
+		// 	});
+    // }else{
+    //   this.savebtnactive = true
+    // }
+
+    this.paymentService.savebill(this.bill, this.loggedInUser).subscribe(data => {
+      this.alertService.clear()
       this.savebtnactive = true
-    }
+      this.alertService.success('Successfully saved!')
+    },
+    error => { 
+      this.alertService.clear()
+      this.alertService.error('Error!')
+      this.savebtnactive = true
+    });
+  }else{
+    this.savebtnactive = true
+  }
   } 
 
   GetCardType()

@@ -24,7 +24,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BannerComponent } from './admin/banner/banner.component';
-import { CartComponent } from './cart/cart.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgxImageCompressService} from 'ngx-image-compress';
 import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
@@ -47,7 +46,6 @@ import { BillsComponent } from './bills/bills.component';
     ServicesComponent,
     PaymentComponent,
     BannerComponent,
-    CartComponent,
     AboutComponent,
     ContactusComponent,
   ],

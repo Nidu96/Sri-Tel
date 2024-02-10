@@ -16,12 +16,13 @@ export class ProfileComponent implements OnInit {
 
   public closeResult = '';
   public ModalRef : BsModalRef;
-  public user: SystemUser;
+  public loggedInUser: SystemUser;
 
   //form fields
   public id: string;
   public fullname: string;
   public username: string;
+  public phone: string;
   public password: string;
   public confirmpassword: string;
   public status: string;
@@ -37,9 +38,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     AOS.init();
-    this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
-    this.GetUser(this.user.Id)
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
+    this.fullname = this.loggedInUser.Name;
+    this.username = this.loggedInUser.Username;
+    this.password = this.loggedInUser.Password;
+    this.confirmpassword = this.loggedInUser.Password;
+    this.phone = this.loggedInUser.Phone;
   }
 
   SaveUser(){
@@ -47,23 +52,17 @@ export class ProfileComponent implements OnInit {
 
     if(this.Validations()){
       this.alertService.info('Please wait..')
-      this.user = new SystemUser();
 
-      if(this.id != null && this.id != undefined && this.id != ""){
-        this.user.Id = this.id.trim();
-      }
-      this.user.Name = this.fullname.trim();
-      this.user.Username = this.username.trim();
+      this.loggedInUser.Name = this.fullname.trim();
+      this.loggedInUser.Username = this.username.trim();
       if(this.password != null && this.password != undefined && this.password != ""){
-        this.user.Password = this.password.trim();
+        this.loggedInUser.Password = this.password.trim();
       }
-      this.user.Active = this.status.trim();
-      this.user.UserRole = this.userrole.trim();
-  
-      this.userService.register(this.user).subscribe(data => {
+      this.loggedInUser.Phone = this.phone.trim();
+      this.userService.saveuser(this.loggedInUser, this.loggedInUser).subscribe(data => {
         this.alertService.clear()
         this.alertService.success('Successfully saved!')
-        this.GetUser(this.user.Id)
+        localStorage.setItem(LocalStorage.LOGGED_USER, JSON.stringify(this.loggedInUser));
       },
       error => { 
         this.alertService.clear()
@@ -88,33 +87,16 @@ export class ProfileComponent implements OnInit {
       return false
     }
 
+    if(this.phone == null || this.phone == undefined || this.phone == ""){
+      this.alertService.error('Phone is required')
+      return false
+    }
+
     if(this.confirmpassword == null || this.confirmpassword == undefined || this.confirmpassword == "" || this.confirmpassword != this.password){
       this.alertService.error('Please confirm the password')
       return false
     }
 
     return true
-  }
-
-
-  GetUser(id: string){
-    this.user = new SystemUser();
-    this.user.Id = id
-    this.userService.getuserdata(this.user).subscribe(data => {
-      this.user = data[0]
-
-      this.id = this.user.Id;
-      this.fullname = this.user.Name;
-      this.username = this.user.Username;
-      this.password = this.user.Password;
-      this.confirmpassword = this.user.Password;
-      this.status = this.user.Active;
-      this.userrole = this.user.UserRole;
-      localStorage.setItem(LocalStorage.LOGGED_USER, JSON.stringify(this.user));
-    },
-    error => { 
-      this.alertService.clear()
-      this.alertService.error('Error!')
-    });
   }
 }

@@ -57,13 +57,6 @@ export class HeaderComponent implements OnInit {
         this.isUser = true
       }
     }
-
-
-    let temp = localStorage.getItem(LocalStorage.SHOPPING_CART)
-    this.selectedProducts = "0";
-    if(temp != undefined && temp != null && temp != ""){
-      this.selectedProducts = (JSON.parse(localStorage.getItem(LocalStorage.SHOPPING_CART))).length;
-    }
   }
 
   Logout(){

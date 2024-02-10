@@ -62,6 +62,7 @@ function AuthenticateUser(credentials,res){
             var id = element.Id; 
             var name = element.Name; 
             var username = element.Username; 
+            var phone = element.Phone; 
             var active = element.Active; 
             var userrole = element.UserRole; 
             var roaming = element.Roaming; 
@@ -73,7 +74,7 @@ function AuthenticateUser(credentials,res){
             var familyplus = element.FamilyPlusPackage; 
 
             var token = 'basic' + ' ' + btoa(element.Username + ':' + element.Password)
-            user.push({Id: id, Name: name, Username: username, Active: active, UserRole: userrole,
+            user.push({Id: id, Name: name, Username: username, Phone: phone, Active: active, UserRole: userrole,
               Roaming: roaming, RingingTone: ringingtone, WorkPackage: work, 
               StudentPackage: student, WorkStudentPackage: workstudent, 
               FamilyPackage: family, FamilyPlusPackage: familyplus, Token: token})
@@ -121,8 +122,8 @@ app.post("/user/register", (req, res, next) => {
       res.json("")
     });
   }else{
-    con.query('UPDATE systemuser SET Name = ?, Username = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
-    [user.Name,user.Username, user.Password,user.Active,"user",user.Id], (err, row) => {
+    con.query('UPDATE systemuser SET Name = ?, Username = ?, Phone = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
+    [user.Name,user.Username, user.Phone, user.Password,user.Active,"user",user.Id], (err, row) => {
       if(err) throw err;
       res.json("")
     });
@@ -136,7 +137,7 @@ app.post("/user/saveuser", (req, res, next) => {
   var password = usrpwd.split(":")[1]
   var credentials = {Username: username,Password: password};
 
-  AdminAuthPermission(credentials, function(err, count) {
+  UserAuthPermission(credentials, function(err, count) {
     if(count == 1){
       const user = req.body;
       if(user.Id == undefined || user.Id == null || user.Id == ""){
@@ -146,8 +147,8 @@ app.post("/user/saveuser", (req, res, next) => {
           res.json("")
         });
       }else{
-        con.query('UPDATE systemuser SET Name = ?, Username = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
-        [user.Name,user.Username, user.Password,user.Active,user.UserRole,user.Id], (err, row) => {
+        con.query('UPDATE systemuser SET Name = ?, Username = ?, Phone = ?, Password = ?, Active = ?, UserRole = ? Where Id = ?',
+        [user.Name, user.Username, user.Phone, user.Password,user.Active,user.UserRole,user.Id], (err, row) => {
           if(err) throw err;
           res.json("")
         });

@@ -7,11 +7,5 @@ export class LocalStorage {
 
     public static LANDING_BODY: string = "landing_body";
 
-    public static PRODUCT_PRICE: string = "price";
-
-    public static PRODUCT_ID: string = "product_id";
-
-    public static PRODUCT_NAME: string = "product_name";
-
-    public static SHOPPING_CART: string = "selected_products_array";
+    public static TOTAL_PRICE: string = "price";
 }
