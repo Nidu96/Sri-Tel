@@ -19,17 +19,15 @@ init();
     <div class="carousel-item active">
         <img class="d-block w-100 banner" [src]="activeBanner.Image">
         <div class="carousel-caption d-none d-md-block">
-            <h2 class="bannertext1">a step towards a better future</h2>
             <h5>{{activeBanner.Title}}</h5>
-            <p>{{activeBanner.Description}}</p>
+            <h2 class="bannertext1">{{activeBanner.Description}}</h2>
         </div>
     </div>
     <div class="carousel-item" *ngFor="let item of bannerlist">
         <img class="d-block w-100 banner" [src]="item.Image">
         <div class="carousel-caption d-none d-md-block">
-            <h2 class="bannertext1">a step towards a better future</h2>
             <h5>{{item.Title}}</h5>
-            <p>{{item.Description}}</p>
+            <h2 class="bannertext1">{{item.Description}}</h2>
         </div>
     </div>
   </div>
@@ -45,141 +43,6 @@ init();
   </a>
 </div>
 <div style="background-color: white;align-content: center">
-
-<section id="bgimage1">
-    <div class="justify-content-center background1">
-        <p class="textstylegery">A Leading Telecommunication Provider in Sri Lanka, as Sri Care</p>
-        <p class="textstylegery" style="color:white;font-size: small;padding-top: 0%;padding-bottom: 0%;margin-top: 0%;">
-          Sri Tel Ltd (STL), is a Sri Lankan-based Telecommunication company offering mobile 
-          communication services to the citizens of Sri Lanka. We offer GSM/3G/4G/LTE-based services 
-          related to voice and data
-        </p>
-        <div class="row justify-content-center mb-5" style="padding-top: 8px">
-            <div class="col-2 divservices pb-5">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/roaming.png" style="width: 80%;">
-                      <h4 class="mb-5 mt-1 services-text" style="color:black">Roaming</h4>
-                  </li>
-                </ul>
-            </div>
-            <div class="col-2 divservices pb-5">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                    <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/ringingtone.png">
-                      <h4 class="mb-5 mt-1 services-text" style="color:black">Ringing Tones</h4>
-                  </li>
-                </ul>
-            </div>
-            <div class="col-2 divservices pb-5">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                    <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/work.png" style="width: 80%;">
-                      <h4 class="mb-5 mt-1 services-text" style="color:black">Packages</h4>
-                  </li>
-                </ul>
-            </div>
-            <div class="col-2 divservices pb-5">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                    <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/other.png" style="width: 35%;">
-                      <h4 class="mb-5 mt-1 services-text" style="color:black">Many Other Services</h4>
-                  </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="services" class="section-services">
-      <div class="row justify-content-center">
-          <div class="col-md-2 col-sm-12 divservicecard m-3">
-              <ul class="list-inline" style="text-align: center">
-                <li>
-                    <img class="service-icon1" src="../../assets/images/services_grids/best-price.png">
-                </li>
-                <li class="justify-content-center">
-                    <h3>Packages</h3>
-                    <h5 style="color: grey;align-content: center">Choose the best for you</h5>
-                </li>
-              </ul>
-          </div>
-          <div class="col-md-2 col-sm-12 divservicecard m-3">
-              <ul class="list-inline" style="text-align: center">
-                <li>
-                    <img class="service-icon3" src="../../assets/images/services_grids/hand.png">
-                </li>
-                <li class="justify-content-center">
-                    <h3>Easy Payments</h3>
-                    <h5 style="color: grey;align-content: center">Pay Online</h5>
-                </li>
-              </ul>
-          </div>
-          <div class="col-md-2 col-sm-12 divservicecard m-3">
-              <ul class="list-inline" style="text-align: center">
-                <li>
-                    <img class="service-icon4" src="../../assets/images/services_grids/new-product.png">
-                </li>
-                <li class="justify-content-center">
-                    <h3>Reasonable Prices</h3>
-                    <h5 style="color: grey;align-content: center">Affordable prices for your needs</h5>
-                </li>
-              </ul>
-          </div>
-          <div class="col-md-2 col-sm-12 divservicecard m-3">
-            <ul class="list-inline" style="text-align: center">
-              <li>
-                  <img class="service-icon4" src="../../assets/images/services_grids/special-offers.png">
-              </li>
-              <li class="justify-content-center">
-                  <h3>Special Offers</h3>
-                  <h5 style="color: grey;align-content: center">Discounts and offers</h5>
-              </li>
-            </ul>
-        </div>
-      </div>
-</section>
-
-<section class="bottom-section" id="bgimage2">
-    <div class="justify-content-center background2">
-        <div class="row justify-content-center row-padding">
-            <div class="col-3 m-3 mb-1">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                      <img class="service-icon7" src="../../assets/images/bottom_company_achievements/brand_champion.png">
-                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
-                        <span class="stat-count" data-count="2015">2024</span>
-                      </h1>
-                      <h3 class="h3-counts">Since</h3>
-                  </li>
-                </ul>
-            </div>
-            <div class="col-3 m-3 mb-1">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                    <img class="service-icon7" src="../../assets/images/bottom_company_achievements/person.png">
-                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
-                        <span class="stat-count" data-count="500">0</span> +
-                      </h1>
-                      <h3 class="h3-counts">User</h3>
-                  </li>
-                </ul>
-            </div>
-            <div class="col-3 m-3 mb-1">
-                <ul class="list-inline justify-content-center" style="text-align: center">
-                  <li>
-                      <img class="service-icon8" src="../../assets/images/bottom_company_achievements/new-product.png">
-                      <h1 class="mt-3 mb-4 h1-counts" style="color: #f89602;font-weight: bold">
-                        <span class="stat-count" data-count="8">0</span> +
-                      </h1>
-                      <h3 class="h3-counts">Packages</h3>
-                  </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
 </div>
 
 

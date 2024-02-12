@@ -1,56 +1,149 @@
-<app-header></app-header>
-<div class="mt-5" height="100%" style="background-color: white">
-<section>
-  <div class="row justify-content-center mt-5 pt-5">
-    <h1 class="pt-5 pb-4" data-aos="zoom-in" data-aos-duration="2000" style="text-align: center">Your Details</h1>
-    <hr data-aos="zoom-in" data-aos-duration="2000">
-    <div class="col-md-4 div3 col-sm-12" data-aos="zoom-out-up" data-aos-duration="3000">
-        <form>
-        <div class="form-group">
-            <label for="fullname">Name</label>
-            <div class="input-group">
-            <input type="text" id="fullname" class="form-control" style="text-align: left" placeholder="name" name="fullname" 
-            [(ngModel)]="fullname">
+<app-sidebar></app-sidebar>
+
+<div class="maincontent">
+    <div class="main">
+        <section class="section-custom">
+            <div class="justify-content-center">
+                <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;">Profile</h1>
+                <form>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label for="name" class="col-form-label">Name</label>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" id="fullname" class="form-control" style="text-align: left" placeholder="fullname" name="fullname" 
+                            [(ngModel)]="fullname">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label for="username" class="col-form-label">Username</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="username" class="form-control" style="text-align: left" placeholder="username" name="username" 
+                            [(ngModel)]="username">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label for="email" class="col-form-label">Password</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="password" id="password" class="form-control" style="text-align: left" placeholder="password" name="password" 
+                            [(ngModel)]="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label for="phone" class="col-form-label">Phone</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="phone" class="form-control" style="text-align: left" placeholder="phone" name="phone" 
+                            [(ngModel)]="phone">
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label for="email" class="col-form-label">Confirm Password</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="password" id="confirmpassword" class="form-control" style="text-align: left" placeholder="confirm password" name="confirmpassword" 
+                            [(ngModel)]="confirmpassword">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="bmi" class="col-form-label">What is your BMI (Body Mass Index) ?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="bmi" class="form-control" style="text-align: left" placeholder="bmi" name="bmi" 
+                            [(ngModel)]="bmi">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="mentalhealth" class="col-form-label">For how many days during the past 30 days your mental health was not good?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="mentalhealth" class="form-control" style="text-align: left" placeholder="mental health" name="mentalhealth" 
+                            [(ngModel)]="mentalhealth">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="physicalhealth" class="col-form-label">For how many days during the past 30 days your physical health was not good?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="physicalhealth" class="form-control" style="text-align: left" placeholder="physical health" name="physicalhealth" 
+                            [(ngModel)]="physicalhealth">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="genhealth" class="col-form-label">How would you describe your overall general health?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="genhealth" class="form-control" style="text-align: left" placeholder="general health" name="genhealth" 
+                            [(ngModel)]="genhealth">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="sleeptime" class="col-form-label">On average, how many hours you sleep per night?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="sleeptime" class="form-control" style="text-align: left" placeholder="sleep time" name="sleeptime" 
+                            [(ngModel)]="sleeptime">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="alcoholdrinking" class="col-form-label">How is your Alcohol Consumption?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="alcoholdrinking" class="form-control" style="text-align: left" placeholder="alcohol consumption" name="alcoholdrinking" 
+                            [(ngModel)]="alcoholdrinking">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="smoking" class="col-form-label">Have you smoked at least 100 cigarettes in your entire life?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="smoking" class="form-control" style="text-align: left" placeholder="smoking" name="smoking" 
+                            [(ngModel)]="smoking">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="physicalactivity" class="col-form-label">Have you done any physical activity or exercise during the past 30 days?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="physicalactivity" class="form-control" style="text-align: left" placeholder="physical activity" name="physicalactivity" 
+                            [(ngModel)]="physicalactivity">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <label for="diffwalking" class="col-form-label">Do you have any difficulty walking?</label>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1">
+                            <input type="text" id="diffwalking" class="form-control" style="text-align: left" placeholder="difficulty walking" name="diffwalking" 
+                            [(ngModel)]="diffwalking">
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="username">Email</label>
-            <div class="input-group">
-                <input type="text" id="username" class="form-control" style="text-align: left" placeholder="username" name="username"
-                [(ngModel)]="username">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <div class="input-group">
-                <input type="text" id="phone" class="form-control" style="text-align: left" placeholder="phone" name="phone"
-                [(ngModel)]="phone">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <div class="input-group">
-                <input type="password" id="password" class="form-control" style="text-align: left" placeholder="password" name="password"
-                [(ngModel)]="password">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="confirmpassword">Confirm Password</label>
-            <div class="input-group">
-                <input type="password" id="confirmpassword" class="form-control" style="text-align: left" placeholder="confirm password" name="confirmpassword"
-                [(ngModel)]="confirmpassword">
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="button" class="btn btn-outline-dark" (click)="SaveUser()">Save</button>
-        </div>
-        </form>
-    </div>
-  </div>
-</section>
-</div>
-<div class="row justify-content-center">
-    <div class="col-12 footer-box1-about-us ml-5 mr-5">
-        <p style="color:white;" class="justify-content-center mt-5">Copyright © 2021 Sri-Tel</p>
+        </section>
     </div>
 </div>

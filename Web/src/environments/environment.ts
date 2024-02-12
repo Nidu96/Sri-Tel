@@ -11,8 +11,7 @@
 export const environment = {
 	production: false,
 	authenticate_service_URL: 'http://localhost:2000/', 
-	bills_service_URL: 'http://localhost:3000/', 
-	telco_service_URL: 'http://localhost:4000/', 
+	factors_URL: 'http://localhost:4000/', 
 	router_prefix: '/api/' 
 };
 

@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
 					this.user.FamilyPlusPackage = data[0].FamilyPlusPackage;
 
 					if(this.user.UserRole == "admin"){
-						this.router.navigateByUrl('dashboard')
+						this.router.navigateByUrl('profile')
 					}else{
 						this.router.navigateByUrl('/')
 					}

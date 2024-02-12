@@ -1,14 +1,13 @@
 <div class="sidebar" id="sidebartoggle" [hidden]="!showSidebar">
-    <span><a href="/"><img width="130px" height="130px" src="../../assets/images/sritel.jpg"></a></span>
-    <span><a class="navtext"><i class="far fa-user mr-3"></i>  Hi {{name}}!</a></span>
-    <span><a class="navtext" id="user" (click)="Users()"><i class="fas fa-users-cog mr-3"></i>  User</a></span>
-    <span><a class="navtext" id="order" (click)="Orders()"><i class="fas fa-poll-h mr-3"></i> Order</a></span>
-    <span><a class="navtext" id="category" (click)="Category()"><i class="far fa-calendar mr-3"></i> Category</a></span>
-    <span><a class="navtext" id="product" (click)="Product()"><i class="fas fa-sticky-note mr-3"></i>  Product</a></span>
-    <span><a class="navtext" id="banner" (click)="Banner()"><i class="fas fa-image mr-3"></i>  Banner Images</a></span>
+    <span><a href="/"><img width="120px" height="120px" src="../../assets/images/cvd.png"></a></span>
+    <span><a class="navtext" id="profile" (click)="Profile()"><i class="far fa-user mr-3"></i>  Hi {{name}}!</a></span>
+    <span><a class="navtext" id="graphs"><i class="far fa-user mr-3"></i>  Graphs</a></span>
+    <span><a class="navtext" id="riskanalysis"><i class="far fa-user mr-3"></i>  Risk Analysis</a></span>
+    <span [hidden]="!isAdminDashboard"><a class="navtext" id="user" (click)="Users()"><i class="fas fa-users-cog mr-3"></i>  Users</a></span>
+    <span [hidden]="!isAdminDashboard"><a class="navtext" id="banner" (click)="Banner()"><i class="fas fa-image mr-3"></i>  Banner Images</a></span>
     <span id="footer"><a class="navtext" (click)="Logout()"><i class="fas fa-sign-out-alt mr-3"></i>  Logout</a></span>
 </div>
 <div class="fixedbreadcrumb">
     <button class="openbtn" (click)="toggleSidebar()">☰</button> 
-    <a class="navtext mt-2" style="margin-left: 12%;">/ {{sideBaritem}}</a>
+    <a class="navtext mt-2" style="margin-left: 15%;">/ {{sideBaritem}}</a>
 </div>

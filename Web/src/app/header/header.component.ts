@@ -13,7 +13,6 @@ export class HeaderComponent implements OnInit {
   public loggedinuser: SystemUser;
   public name: string;
   public search: string;
-  public selectedProducts: string;
   public userLoggedIn: boolean = false;
   public isAdmin: boolean = false;
   public isUser: boolean = false;
@@ -27,16 +26,8 @@ export class HeaderComponent implements OnInit {
       this.router.url === '/' ||
       this.router.url === '/register' ||
       this.router.url === '/login' ||
-      this.router.url === '/products' ||
-      this.router.url === '/services' ||
-      this.router.url === '/about' ||
-      this.router.url === '/contactus' ||
-      this.router.url === '/terms' ||
-      this.router.url === '/gallery' ||
-      this.router.url === '/profile' || 
-      this.router.url === '/bills' || 
-      this.router.url === '/cart' || 
-      this.router.url === '/payment')
+      this.router.url === '/factors' ||
+      this.router.url === '/about'  )
     {
       localStorage.setItem(LocalStorage.LANDING_BODY, "1");
       this.isAdminDashboard = false
@@ -49,7 +40,7 @@ export class HeaderComponent implements OnInit {
     this.isUser = false
     this.loggedinuser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER));
     if(this.loggedinuser != null && this.loggedinuser != undefined){
-      this.name = this.loggedinuser.Name
+      this.name = "Hi " + this.loggedinuser.Name
       this.userLoggedIn = true
       if(this.loggedinuser.UserRole == "admin"){
         this.isAdmin = true

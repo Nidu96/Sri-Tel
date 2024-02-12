@@ -15,8 +15,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './register/register.component';
-import { ServicesComponent } from './services/services.component';
-import { PaymentComponent } from './payment/payment.component';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -29,7 +27,7 @@ import {NgxImageCompressService} from 'ngx-image-compress';
 import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
-import { BillsComponent } from './bills/bills.component';
+import { FactorsComponent } from './factors/factors.component';
 
 @NgModule({
   declarations: [
@@ -40,11 +38,9 @@ import { BillsComponent } from './bills/bills.component';
     DashboardComponent,
     AlertComponent,
     ProfileComponent,
-    BillsComponent,
     LandingComponent,
     RegisterComponent,
-    ServicesComponent,
-    PaymentComponent,
+    FactorsComponent,
     BannerComponent,
     AboutComponent,
     ContactusComponent,

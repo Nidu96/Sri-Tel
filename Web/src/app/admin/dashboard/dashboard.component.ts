@@ -7,6 +7,7 @@ import { DatepickerServiceInputs } from '@ng-bootstrap/ng-bootstrap/datepicker/d
 import { LocalStorage } from 'src/app/util/localstorage.service';
 import * as AOS from 'aos';
 import { SystemUser } from 'src/app/models/systemuser.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,13 +37,18 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('createnewuser', {static: false}) createnewuser: TemplateRef<any>
   
-  constructor(private bsModalService :BsModalService, private userService: UserService, 
+  constructor(private bsModalService :BsModalService, private userService: UserService, private router: Router,
     private parserFormatter: NgbDateParserFormatter, private alertService: AlertService) { }
 
   ngOnInit() {
     AOS.init();
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
     this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
+    if(this.loggedInUser != null && this.loggedInUser != undefined){
+      if(this.loggedInUser.UserRole != "admin"){
+        this.router.navigateByUrl('/')
+      }
+    }
     this.GetUsers()
   }
 

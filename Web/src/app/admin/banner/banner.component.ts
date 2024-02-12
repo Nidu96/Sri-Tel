@@ -9,6 +9,7 @@ import { Banner } from 'src/app/models/banner.model';
 import { LocalStorage } from 'src/app/util/localstorage.service';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { DatePipe } from '@angular/common'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-banner',
@@ -16,7 +17,7 @@ import { DatePipe } from '@angular/common'
   styleUrls: ['./banner.component.scss']
 })
 export class BannerComponent implements OnInit {
-  public user: SystemUser;
+  public loggedInUser: SystemUser;
   public pbanners: number = 1;
   public bannercount: number = 0;
   public closeResult = '';
@@ -38,13 +39,18 @@ export class BannerComponent implements OnInit {
 
   @ViewChild('createnewbanner', {static: false}) createnewbanner: TemplateRef<any>
   
-  constructor(private bsModalService :BsModalService, private bannerService: BannerService, 
+  constructor(private bsModalService :BsModalService, private bannerService: BannerService, private router: Router,
     private parserFormatter: NgbDateParserFormatter, private alertService: AlertService,private imageCompress: NgxImageCompressService) { }
 
   ngOnInit() {
     this.bannerlist = []
     localStorage.setItem(LocalStorage.LANDING_BODY, "0");
-    this.user = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
+    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
+    if(this.loggedInUser != null && this.loggedInUser != undefined){
+      if(this.loggedInUser.UserRole != "admin"){
+        this.router.navigateByUrl('/')
+      }
+    }
     this.GetBanners(0)
   }
 
@@ -84,7 +90,7 @@ export class BannerComponent implements OnInit {
       let tempdate = year+"-"+month+"-"+date;
       this.banner.DatePublished = tempdate;
       
-      this.bannerService.savebanner(this.banner,this.user).subscribe(data => {
+      this.bannerService.savebanner(this.banner,this.loggedInUser).subscribe(data => {
         this.alertService.success('Successfully saved!')
         this.CloseModal()
         this.bannerlist = []
@@ -188,7 +194,7 @@ export class BannerComponent implements OnInit {
       this.banner = new Banner();
       this.banner.Id = id
       this.banner.Image = image
-      this.bannerService.deletebanner(this.banner,this.user).subscribe(data => {
+      this.bannerService.deletebanner(this.banner,this.loggedInUser).subscribe(data => {
         this.alertService.success('Successfully deleted!')
         this.bannerlist = []
         this.GetBanners(0)

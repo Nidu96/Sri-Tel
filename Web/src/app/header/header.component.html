@@ -1,11 +1,14 @@
 <div class="fixed-top">
 
-<nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 60px;background-color: rgba(34,54,97,1);">
+<nav class="navbar-customized navbar-expand-lg navbar-light fixed-top-second-row" style="height: 60px;background-color: rgb(66, 133, 244);">
     <div class="float-left left-bar">
         <div>
             <ul class="list-inline">
                 <li class="pl-3 float-left" id="memberLinkPanRegister">
-                    <a href="/"><img src="../../assets/images/sritel.jpg" class="logo"></a>
+                    <a href="/"><img src="../../assets/images/cvd.png" class="logo"></a>
+                </li>
+                <li class="pl-3 float-left" id="memberLinkPanRegister">
+                    <h1>Your Heart and Mind</h1>
                 </li>
             </ul>
         </div> 
@@ -13,9 +16,8 @@
     <div class="right_bar">
         <div class="navbar-address2">
             <ul class="list-inline navbar_address-tab">
-                <!-- <li style="font-size:32px;"><span>|</span></li> -->
                 <li class="pl-3 pt-3" id="memberLinkPanRegister">
-                    <a href="/"><img class="pin" src="../../assets/images/navbar_and_banner_section/pin.png"></a>
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/profile" style="color: white;">{{name}}</a>
                 </li>
             </ul>
         </div>
@@ -33,19 +35,13 @@
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="500" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/services">Telco Services</a>
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/factors">Factors</a>
 			    </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/contactus">Contact Us</a>
-                </li>
-                <li class="nav-item" [hidden]="!userLoggedIn">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/bills">Bills</a>
-                </li>
-			    <li class="nav-item" [hidden]="!isAdmin">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="800" href="/dashboard">Dashboard</a>
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="600" href="/about">About</a>
                 </li>
 			    <li class="nav-item" [hidden]="!userLoggedIn">
-                    <a class="nav-link" data-aos="fade-left" data-aos-duration="900" href="/profile">Hi {{name}}!</a>
+                    <a class="nav-link" data-aos="fade-left" data-aos-duration="800" href="/profile">Dashboard</a>
                 </li>
 			    <li class="nav-item" [hidden]="!userLoggedIn">
                     <a class="nav-link" data-aos="fade-left" data-aos-duration="1000" href="/" (click)="Logout()">Logout</a>
