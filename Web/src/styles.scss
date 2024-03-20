@@ -14,7 +14,6 @@ html {
 	background-color: #fff;
 	scroll-behavior: smooth;
 	height: 100%;
-	overflow: hidden;
   }
   
   body {
@@ -29,7 +28,7 @@ html {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	font-size: 12px;
+	font-size: 16px;
   }
 
   .p{
@@ -298,7 +297,29 @@ html {
   }
 
   .select-control{
-	height: 4rem !important;
+	background-color: #f6f6f6;
+	border: none;
+	color: #0d0d0d;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	height: 3.25rem !important;
+  }
+  
+  .select-control:focus {
+	background-color: #fff;
+	border-bottom: 2px solid rgb(66, 133, 244);
+  }
+  
+  .select-control:placeholder {
+	color: #cccccc;
   }
   
   input[type=button], input[type=submit], input[type=reset]  {
@@ -333,7 +354,7 @@ html {
 	transform: scale(0.95);
   }
   
-  input[type=text] {
+  input[type=text], input[type=number]{
 	background-color: #f6f6f6;
 	border: none;
 	color: #0d0d0d;
@@ -350,12 +371,12 @@ html {
 	border-radius: 5px 5px 5px 5px;
   }
   
-  input[type=text]:focus {
+  input[type=text]:focus, input[type=number]:focus{
 	background-color: #fff;
 	border-bottom: 2px solid rgb(66, 133, 244);
   }
   
-  input[type=text]:placeholder {
+  input[type=text]:placeholder,input[type=number]:placeholder {
 	color: #cccccc;
   }
   
@@ -640,7 +661,7 @@ html {
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 18px;
   }
   
   .nav-link.active,.nav-link:focus{
@@ -1080,87 +1101,6 @@ html {
 	right: 0;
   }
 
-
-  .btnsubmit3 {
-	display: inline-block;
-	border-radius: 10px;
-	background-color: #a10606;
-	color: #ffffff;
-	text-align: center;
-	font-size: 14px;
-	padding: 6px;
-	transition: all 1s;
-	cursor: pointer;
-	border-color: #a10606;
-	border: none;
-  }
-  
-  .btnsubmit3 span {
-	cursor: pointer;
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
-  }
-  
-  .btnsubmit3 span:after {
-	content: '\00bb';
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -20px;
-	transition: 0.5s;
-  }
-  
-  .btnsubmit3:hover span {
-	padding-right: 25px;
-  }
-  
-  .btnsubmit3:hover span:after {
-	opacity: 1;
-	right: 0;
-  }
-
-
-  .btnsubmitfavourite {
-	display: inline-block;
-	border-radius: 10px;
-	background-color: #e78e08;
-	color: #ffffff;
-	text-align: center;
-	font-size: 14px;
-	padding-left: 8px;
-	padding-right: 8px;
-	transition: all 1s;
-	cursor: pointer;
-	border-color: #e78e08;
-	border: none;
-  }
-  
-  .btnsubmitfavourite span {
-	cursor: pointer;
-	display: inline-block;
-	position: relative;
-	transition: 0.5s;
-  }
-  
-  .btnsubmitfavourite span:after {
-	content: '\00bb';
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -20px;
-	transition: 0.5s;
-  }
-  
-  .btnsubmitfavourite:hover span {
-	padding-right: 25px;
-  }
-  
-  .btnsubmitfavourite:hover span:after {
-	opacity: 1;
-	right: 0;
-  }
-
   .btnfixed {
 	background-color: rgb(66, 133, 244);
 	border: none;
@@ -1250,6 +1190,28 @@ html {
   .btnsubmitlanding:hover span:after {
 	opacity: 1;
 	right: 0;
+  }
+
+  .saveButton {
+	background-color: #38afba;
+	color: white;
+	border-color: #38afba;
+  }
+
+  .saveButton:hover {
+	background-color: #38afba;
+	color: white;
+	border-color: #38afba;
+  }
+
+  .saveButton:hover span {
+	padding-right: 25px;
+  }
+  
+  .saveButton:hover span:after {
+	opacity: 1;
+	right: 0;
+	color: white;
   }
 
 .div2 {

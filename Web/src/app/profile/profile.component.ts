@@ -1,102 +1,477 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import {NgbDate, NgbModal, ModalDismissReasons, NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
-import { BsModalService,BsModalRef}   from 'ngx-bootstrap/modal';
-import { SystemUser} from 'src/app/models/systemuser.model';
-import { AlertService } from 'src/app/alert/alert.service';
-import { LocalStorage } from 'src/app/util/localstorage.service';
-import * as AOS from 'aos';
-import { UserService } from '../admin/dashboard/user.service';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core'
+import {
+    NgbDate,
+    NgbModal,
+    ModalDismissReasons,
+    NgbDateParserFormatter,
+} from '@ng-bootstrap/ng-bootstrap'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { User } from 'src/app/models/user.model'
+import { AlertService } from 'src/app/alert/alert.service'
+import { LocalStorage } from 'src/app/util/localstorage.service'
+import * as AOS from 'aos'
+import { UserService } from '../admin/dashboard/user.service'
+import { PredictionHistory } from '../models/prediction-history.model'
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+    public closeResult = ''
+    public ModalRef: BsModalRef
+    public loggedInUser: User
 
-  public closeResult = '';
-  public ModalRef : BsModalRef;
-  public loggedInUser: SystemUser;
+    //form fields
+    public id: string;
+    public fullname: string;
+    public username: string;
+    public phone;
+    public password: string;
+    public confirmpassword: string;
+    public status: string;
+    public userrole: string;
+    public weight;
+    public height;
+    public bmi;
+    public issmokingyes: boolean;
+    public isalcoholdrinkingyes: boolean;
+    public physicalhealth;
+    public mentalhealth;
+    public isdiffwalkingyes: boolean;
+    public isphysicalactivityyes: boolean;
+    public genhealth;
+    public sleeptime;
+    public isheartdiseaseyes: boolean;
+    public isstrokeyes: boolean;
+    public userlist: Array<User> = []
+    public syslist: Array<any>
+    public savebtnactive: boolean = true
+    public predictions: PredictionHistory
 
-  //form fields
-  public id: string;
-  public fullname: string;
-  public username: string;
-  public phone: string;
-  public password: string;
-  public confirmpassword: string;
-  public status: string;
-  public userrole: string;
-  public userlist: Array<SystemUser> = []
-  public syslist: Array<any>;
-  public savebtn: boolean = true
+    @ViewChild('createnewuser', { static: false })
+    createnewuser: TemplateRef<any>
 
-  @ViewChild('createnewuser', {static: false}) createnewuser: TemplateRef<any>
+    constructor(
+        private bsModalService: BsModalService,
+        private userService: UserService,
+        private parserFormatter: NgbDateParserFormatter,
+        private alertService: AlertService
+    ) {}
+
+    ngOnInit() {
+        // AOS.init()
+        this.loggedInUser = JSON.parse(
+            localStorage.getItem(LocalStorage.LOGGED_USER)
+        ) as User
+        localStorage.setItem(LocalStorage.LANDING_BODY, '0')
+        this.Initialize()
+        this.fullname = this.loggedInUser.Name
+        this.username = this.loggedInUser.Username
+        this.password = atob(this.loggedInUser.Token.split("basic")[1].trim()).split(":")[1];
+        this.confirmpassword = atob(this.loggedInUser.Token.split("basic")[1].trim()).split(":")[1];
+        this.phone = this.loggedInUser.Phone
+        this.weight = this.loggedInUser.Weight;
+        this.height = this.loggedInUser.Height;
+        this.bmi = this.loggedInUser.BMI;
+        this.issmokingyes = this.loggedInUser.IsSmokingYes
+        this.isalcoholdrinkingyes = this.loggedInUser.IsAlcoholDrinkingYes;
+        this.physicalhealth = this.loggedInUser.PhysicalHealth;
+        this.mentalhealth = this.loggedInUser.MentalHealth;
+        this.isdiffwalkingyes = this.loggedInUser.IsDiffWalkingYes;
+        this.isphysicalactivityyes = this.loggedInUser.IsPhysicalActivityYes;
+        this.genhealth = this.loggedInUser.GenHealth;
+        this.sleeptime = this.loggedInUser.SleepTime;
+        this.isheartdiseaseyes = this.loggedInUser.IsHeartDiseaseYes;
+        this.isstrokeyes = this.loggedInUser.IsStrokeYes;
+        this.savebtnactive = true
+    }
+
+    Initialize() {
+        this.weight = 0;
+        this.height = 0;
+        this.bmi = 0;
+        this.issmokingyes = false;
+        this.isalcoholdrinkingyes = false;
+        this.physicalhealth = 0;
+        this.mentalhealth = 0;
+        this.isdiffwalkingyes = false;
+        this.isphysicalactivityyes = false;
+        this.genhealth = 0;
+        this.sleeptime = 0;
+        this.isheartdiseaseyes = false;
+        this.isstrokeyes = false;
+        this.savebtnactive = true
+    }
+
+    Cancel(){
+        this.Initialize();
+    }
+    
+    SaveUser() {
+        this.alertService.clear()
+
+        if (this.Validations()) {
+            this.savebtnactive = false
+            this.alertService.info('Please wait..')
+
+            this.loggedInUser.Name = this.fullname.trim()
+            this.loggedInUser.Username = this.username.trim()
+            if (
+                this.password != null &&
+                this.password != undefined &&
+                this.password !=  ''
+            ) {
+                this.loggedInUser.Password = this.password.trim()
+            }
+            this.loggedInUser.Phone = this.phone;
+            this.userService
+                .saveuser(this.loggedInUser, this.loggedInUser)
+                .subscribe(
+                    (data) => {
+                        this.alertService.clear()
+                        this.alertService.success('Successfully saved!')
+                        localStorage.setItem(
+                            LocalStorage.LOGGED_USER,
+                            JSON.stringify(this.loggedInUser)
+                        )
+                        this.savebtnactive = true
+                    },
+                    (error) => {
+                        this.alertService.clear()
+                        this.alertService.error('Error!')
+                    }
+                )
+        }
+    }
+
+    Validations() {
+        this.alertService.clear()
+        if (
+            this.fullname == null ||
+            this.fullname == undefined ||
+            this.fullname == ''
+        ) {
+            this.alertService.error('Name is required')
+            return false
+        }
+
+        var re = /\S+@\S+\.\S+/
+        if (
+            this.username == null ||
+            this.username == undefined ||
+            this.username == ''
+        ) {
+            this.alertService.error('Email is required')
+            return false
+        } else if (!re.test(this.username)) {
+            this.alertService.error('Invalid email')
+            return false
+        }
+
+        if (this.phone == null || this.phone == undefined) {
+            this.alertService.error('Phone is required')
+            return false
+        }
+
+        if (
+            this.confirmpassword == null ||
+            this.confirmpassword == undefined ||
+            this.confirmpassword == '' ||
+            this.confirmpassword != this.password
+        ) {
+            this.alertService.error('Please confirm the password')
+            return false
+        }
+
+        return true
+    }
+
+    SaveAnalysis() {
+        this.alertService.clear()
+
+        if (this.AnalysisValidations()) {
+            this.savebtnactive = false
+            this.alertService.info('Please wait..')
+
+            this.loggedInUser.Weight = this.weight;
+            this.loggedInUser.Height = this.height;
+            this.bmi = this.loggedInUser.BMI = this.bmi;
+            this.loggedInUser.IsSmokingYes = this.issmokingyes;
+            this.loggedInUser.IsAlcoholDrinkingYes = this.isalcoholdrinkingyes;
+            this.loggedInUser.PhysicalHealth = this.physicalhealth;
+            this.loggedInUser.MentalHealth = this.mentalhealth;
+            this.loggedInUser.IsDiffWalkingYes = this.isdiffwalkingyes;
+            this.loggedInUser.IsPhysicalActivityYes = this.isphysicalactivityyes;
+            this.loggedInUser.GenHealth = this.genhealth;
+            this.loggedInUser.SleepTime = this.sleeptime;
+            this.loggedInUser.IsHeartDiseaseYes = this.isheartdiseaseyes;
+            this.loggedInUser.IsStrokeYes = this.isstrokeyes;
+
+            this.userService
+                .saveanalysis(this.loggedInUser, this.loggedInUser)
+                .subscribe(
+                    (data) => {
+                        this.alertService.clear()
+                        this.alertService.success('Successfully saved!')
+                        this.calculatePredictedProbability()
+                        localStorage.setItem(
+                            LocalStorage.LOGGED_USER,
+                            JSON.stringify(this.loggedInUser)
+                        )
+                        this.savebtnactive = true
+                    },
+                    (error) => {
+                        this.alertService.clear()
+                        this.alertService.error('Error!')
+                    }
+                )
+        }
+    }
+
+    AnalysisValidations() {
+        this.alertService.clear()
+        var re = /^\d*\.?\d*$/
+
+        if (this.weight == null || this.weight == undefined) {
+            this.alertService.error('Weight is required and should be a number')
+            return false
+        } else if(!re.test(this.weight.toString())){
+            this.alertService.error('Weight should be a number')
+            return false
+        }
+
+        if (this.height == null || this.height == undefined) {
+            this.alertService.error('Height is required and should be a number')
+            return false
+        } else if(!re.test(this.height.toString())){
+            this.alertService.error('Height should be a number')
+            return false
+        }
+
+        if (this.bmi == null || this.bmi == undefined) {
+            this.alertService.error('BMI is required and should be a number')
+            return false
+        } else if(!re.test(this.bmi.toString())){
+            this.alertService.error('BMI should be a number')
+            return false
+        }
+
+        if (this.mentalhealth == null || this.mentalhealth == undefined) {
+            this.alertService.error('Mental health status is required and should be a number')
+            return false
+        } else if(!re.test(this.mentalhealth.toString())){
+            this.alertService.error('Mental health status should be a number')
+            return false
+        }
+
+        if (this.physicalhealth == null || this.physicalhealth == undefined) {
+            this.alertService.error('Physical health status is required and should be a number')
+            return false
+        } else if(!re.test(this.physicalhealth.toString())){
+            this.alertService.error('Physical health status should be a number')
+            return false
+        }
+
+        if (this.genhealth == null || this.genhealth == undefined) {
+            this.alertService.error('General health status is required')
+            return false
+        }
+
+        if (this.sleeptime == null || this.sleeptime == undefined) {
+            this.alertService.error('Sleep time is required and should be a number')
+            return false
+        } else if(!re.test(this.sleeptime.toString())){
+            this.alertService.error('Sleep time should be a number')
+            return false
+        }
+
+        if (this.isalcoholdrinkingyes == null || this.isalcoholdrinkingyes == undefined) {
+            this.alertService.error('Alchohol drinking status is required')
+            return false
+        }
+
+        if (this.issmokingyes == null || this.issmokingyes == undefined) {
+            this.alertService.error('Smoking status is required')
+            return false
+        }
+
+        if (this.isphysicalactivityyes == null || this.isphysicalactivityyes == undefined) {
+            this.alertService.error('Physical activity status is required')
+            return false
+        }
+
+        if (this.isdiffwalkingyes == null || this.isdiffwalkingyes == undefined) {
+            this.alertService.error('Difficulty walking status is required')
+            return false
+        }
+
+        if (this.isheartdiseaseyes == null || this.isheartdiseaseyes == undefined) {
+            this.alertService.error('Heart diseases status is required')
+            return false
+        }
+
+        if (this.isstrokeyes == null || this.isstrokeyes == undefined) {
+            this.alertService.error('Stroke status is required')
+            return false
+        }
+        return true
+    }
+
+    SavePredictions(predictedHeartDiseasesProbability, predictedStrokeProbability, predictedMentalDiseasesProbability, combinedProbability) {
+        this.alertService.clear()
+        this.predictions = new PredictionHistory()
+        this.predictions.UserId = this.loggedInUser.Id;
+        this.predictions.HeartDiseasesRiskProbabilty = predictedHeartDiseasesProbability;
+        this.predictions.StrokeRiskProbabilty = predictedStrokeProbability;
+        this.predictions.MentalDiseasesRiskProbabilty = predictedMentalDiseasesProbability;
+        this.predictions.CombinedRiskProbabilty = combinedProbability;
+        let year = new Date(new Date()).getFullYear()
+        let month = new Date(new Date()).getMonth() + 1
+        let date = new Date(new Date()).getDate()
+        let tempdate = year + '-' + month + '-' + date
+        this.predictions.DatePublished = tempdate;
+        this.userService
+            .savepredictions(this.predictions, this.loggedInUser)
+            .subscribe(
+                (data) => {
+                    this.alertService.clear()
+                    this.alertService.success('Successfully saved!')
+                },
+                (error) => {
+                    this.alertService.clear()
+                    this.alertService.error('Error!')
+                }
+            )
+    }
+
+//#region 'Calculations'
+    calculateBMI(){
+        var bmival = ""
+        if(this.weight != 0 && this.weight != null && this.weight != undefined 
+            && this.height != 0 && this.height != null && this.height != undefined ){
+            bmival = (Number(this.weight) / (Number(this.height) * Number(this.height))).toFixed(2)
+        }
+        this.bmi = Number(bmival)
+    }
+
+    calculatePredictedProbability(){
+        var BMI = this.bmi;
+        var SmokingYes = this.issmokingyes == true ? 1:0;
+        var AlcoholDrinkingYes = this.isalcoholdrinkingyes == true ? 1:0;
+        var PhysicalHealth = this.physicalhealth;
+        var DiffWalkingYes = this.isdiffwalkingyes == true ? 1:0;
+        var PhysicalActivityYes = this.isphysicalactivityyes == true ? 1:0;
+        var GenHealthFair = this.genhealth == 'Fair' ? 1:0;
+        var GenHealthGood = this.genhealth == 'Good' ? 1:0;
+        var GenHealthPoor = this.genhealth == 'Poor' ? 1:0;
+        var GenHealthVeryGood = this.genhealth == 'Very Good' ? 1:0;
+        var SleepTime = this.sleeptime;
+        const predictedHeartDiseasesProbability = this.predictHeartDisease(BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
+        const predictedStrokeProbability = this.predictStroke(BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
+        const predictedMentalDiseasesProbability = this.predictMentalDiseases(PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
+        const combinedProbability = predictedHeartDiseasesProbability * predictedStrokeProbability * predictedMentalDiseasesProbability;
+        this.SavePredictions(predictedHeartDiseasesProbability, predictedStrokeProbability, predictedMentalDiseasesProbability, combinedProbability)
+    }
+
+    predictHeartDisease(BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) {
   
-  constructor(private bsModalService :BsModalService, private userService: UserService, 
-    private parserFormatter: NgbDateParserFormatter, private alertService: AlertService) { }
-
-  ngOnInit() {
-    AOS.init();
-    this.loggedInUser = JSON.parse(localStorage.getItem(LocalStorage.LOGGED_USER)) as SystemUser;
-    localStorage.setItem(LocalStorage.LANDING_BODY, "0");
-    this.fullname = this.loggedInUser.Name;
-    this.username = this.loggedInUser.Username;
-    this.password = this.loggedInUser.Password;
-    this.confirmpassword = this.loggedInUser.Password;
-    this.phone = this.loggedInUser.Phone;
-  }
-
-  SaveUser(){
-    this.alertService.clear()
-
-    if(this.Validations()){
-      this.alertService.info('Please wait..')
-
-      this.loggedInUser.Name = this.fullname.trim();
-      this.loggedInUser.Username = this.username.trim();
-      if(this.password != null && this.password != undefined && this.password != ""){
-        this.loggedInUser.Password = this.password.trim();
-      }
-      this.loggedInUser.Phone = this.phone.trim();
-      this.userService.saveuser(this.loggedInUser, this.loggedInUser).subscribe(data => {
-        this.alertService.clear()
-        this.alertService.success('Successfully saved!')
-        localStorage.setItem(LocalStorage.LOGGED_USER, JSON.stringify(this.loggedInUser));
-      },
-      error => { 
-        this.alertService.clear()
-        this.alertService.error('Error!')
-      });
-    }
-  }
-
-  Validations(){
-    this.alertService.clear()
-    if(this.fullname == null || this.fullname == undefined || this.fullname == ""){
-      this.alertService.error('Name is required')
-      return false
+        // Coefficients from the logistic regression model
+        const intercept = -4.1259703;
+        const coef_BMI = -0.0035544;
+        const coef_SmokingYes = 0.5021451;
+        const coef_AlcoholDrinkingYes = -0.5490177;
+        const coef_PhysicalHealth = 0.0015145;
+        const coef_DiffWalkingYes = 0.6540042;
+        const coef_PhysicalActivityYes = -0.0547622;
+        const coef_GenHealthFair = 1.9985704;
+        const coef_GenHealthGood = 1.420966;
+        const coef_GenHealthPoor = 2.4721658;
+        const coef_GenHealthVeryGood = 0.7084722;
+        const coef_SleepTime = 0.0505009;
+      
+        // Calculate the log odds based on the coefficients and predictor values
+        const logOdds = intercept +
+                  BMI * coef_BMI +
+                  SmokingYes * coef_SmokingYes +
+                  AlcoholDrinkingYes * coef_AlcoholDrinkingYes +
+                  PhysicalHealth * coef_PhysicalHealth +
+                  DiffWalkingYes * coef_DiffWalkingYes +
+                  PhysicalActivityYes * coef_PhysicalActivityYes +
+                  GenHealthFair * coef_GenHealthFair +
+                  GenHealthGood * coef_GenHealthGood +
+                  GenHealthPoor * coef_GenHealthPoor +
+                  GenHealthVeryGood * coef_GenHealthVeryGood +
+                  SleepTime * coef_SleepTime;
+      
+        // Calculate the probability of heart disease using the logistic function
+        const probability = 1 / (1 + Math.exp(-logOdds));
+        return probability;
     }
 
-    var re = /\S+@\S+\.\S+/;
-    if(this.username == null || this.username == undefined || this.username == ""){
-      this.alertService.error('Email is required')
-      return false
-    }else if(!re.test(this.username)){
-      this.alertService.error('Invalid email')
-      return false
+    predictStroke(BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) {
+  
+        // Coefficients from the logistic regression model
+        const intercept = -4.540990;
+        const coef_BMI = -0.017658;
+        const coef_SmokingYes = 0.307094;
+        const coef_AlcoholDrinkingYes = -0.426032;
+        const coef_PhysicalHealth = 0.004774;
+        const coef_DiffWalkingYes = 0.970274;
+        const coef_PhysicalActivityYes = -0.107860;
+        const coef_GenHealthFair = 1.760029;
+        const coef_GenHealthGood = 1.218661;
+        const coef_GenHealthPoor = 2.093943;
+        const coef_GenHealthVeryGood = 0.618886;
+        const coef_SleepTime = 0.057761;
+      
+        // Calculate the log odds based on the coefficients and predictor values
+        const logOdds = intercept +
+                  BMI * coef_BMI +
+                  SmokingYes * coef_SmokingYes +
+                  AlcoholDrinkingYes * coef_AlcoholDrinkingYes +
+                  PhysicalHealth * coef_PhysicalHealth +
+                  DiffWalkingYes * coef_DiffWalkingYes +
+                  PhysicalActivityYes * coef_PhysicalActivityYes +
+                  GenHealthFair * coef_GenHealthFair +
+                  GenHealthGood * coef_GenHealthGood +
+                  GenHealthPoor * coef_GenHealthPoor +
+                  GenHealthVeryGood * coef_GenHealthVeryGood +
+                  SleepTime * coef_SleepTime;
+      
+        // Calculate the probability of stroke using the logistic function
+        const probability = 1 / (1 + Math.exp(-logOdds));
+        return probability;
     }
 
-    if(this.phone == null || this.phone == undefined || this.phone == ""){
-      this.alertService.error('Phone is required')
-      return false
+    predictMentalDiseases(PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) {
+  
+        // Coefficients from the logistic regression model
+        const intercept = -1.6059489;
+        const coef_PhysicalHealth = 0.0445812;
+        const coef_DiffWalkingYes = -0.0247972;
+        const coef_PhysicalActivityYes = -0.1011481;
+        const coef_GenHealthFair = 1.1601883;
+        const coef_GenHealthGood = 0.6975336;
+        const coef_GenHealthPoor = 1.3900905;
+        const coef_GenHealthVeryGood = 0.3203412;
+        const coef_SleepTime = -0.1689265;
+      
+        // Calculate the log odds based on the coefficients and predictor values
+        const logOdds = intercept +
+                  PhysicalHealth * coef_PhysicalHealth +
+                  DiffWalkingYes * coef_DiffWalkingYes +
+                  PhysicalActivityYes * coef_PhysicalActivityYes +
+                  GenHealthFair * coef_GenHealthFair +
+                  GenHealthGood * coef_GenHealthGood +
+                  GenHealthPoor * coef_GenHealthPoor +
+                  GenHealthVeryGood * coef_GenHealthVeryGood +
+                  SleepTime * coef_SleepTime;
+      
+        // Calculate the probability of mental health disease using the logistic function
+        const probability = 1 / (1 + Math.exp(-logOdds));
+        return probability;
     }
-
-    if(this.confirmpassword == null || this.confirmpassword == undefined || this.confirmpassword == "" || this.confirmpassword != this.password){
-      this.alertService.error('Please confirm the password')
-      return false
-    }
-
-    return true
-  }
+//#endregion
 }

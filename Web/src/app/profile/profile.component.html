@@ -2,10 +2,16 @@
 
 <div class="maincontent">
     <div class="main">
+        <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;;color: gray;">Profile</h1>
         <section class="section-custom">
             <div class="justify-content-center">
-                <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;">Profile</h1>
                 <form>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <h1 class="col-form-label ml-0" style="color: black;">Personal Details</h1>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
                         <div class="col-md-1">
@@ -53,93 +59,183 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <label for="bmi" class="col-form-label">What is your BMI (Body Mass Index) ?</label>
-                        </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="bmi" class="form-control" style="text-align: left" placeholder="bmi" name="bmi" 
-                            [(ngModel)]="bmi">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-1">
+                        <button type="button" class="col-md-12 btn saveButton" (click)="SaveUser()" 
+                         [disabled]="!savebtnactive">Save</button>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
+                            <h1 class="col-form-label ml-0 pt-3" style="color: black;">Risk Factors</h1>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-1">
+                            <label for="weight" class="col-form-label">Weight (kg)</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" id="weight" class="form-control" style="text-align: left" placeholder="weight" name="weight" 
+                            [(ngModel)]="weight" (keyup)="calculateBMI()">
+                        </div>
+                        <div class="col-md-1">
+                            <label for="height" class="col-form-label">Height (m)</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" id="height" class="form-control" style="text-align: left" placeholder="height" name="height" 
+                            [(ngModel)]="height" (keyup)="calculateBMI()">
+                        </div>
+                        <div class="col-md-1">
+                            <label for="bmi" class="col-form-label">BMI</label>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" id="bmi" class="form-control" style="text-align: left" placeholder="bmi" name="bmi" 
+                            [(ngModel)]="bmi"  disabled>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
                             <label for="mentalhealth" class="col-form-label">For how many days during the past 30 days your mental health was not good?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="mentalhealth" class="form-control" style="text-align: left" placeholder="mental health" name="mentalhealth" 
-                            [(ngModel)]="mentalhealth">
+                        <div class="col-md-3">
+                            <input type="number" min="0" max="31" id="mentalhealth" class="form-control" style="text-align: left" placeholder="mental health" name="mentalhealth" 
+                            [(ngModel)]="mentalhealth" >
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-7">
                             <label for="physicalhealth" class="col-form-label">For how many days during the past 30 days your physical health was not good?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="physicalhealth" class="form-control" style="text-align: left" placeholder="physical health" name="physicalhealth" 
-                            [(ngModel)]="physicalhealth">
+                        <div class="col-md-3">
+                            <input type="number" id="physicalhealth" class="form-control" style="text-align: left" placeholder="physical health" name="physicalhealth" 
+                            [(ngModel)]="physicalhealth" >
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-7">
                             <label for="genhealth" class="col-form-label">How would you describe your overall general health?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="genhealth" class="form-control" style="text-align: left" placeholder="general health" name="genhealth" 
-                            [(ngModel)]="genhealth">
+                        <div class="col-md-3">
+                            <select [(ngModel)]="genhealth" id="genhealth" class="form-control select-control" 
+                            style="text-align: left" placeholder="general health" name="genhealth">
+                                <option value="0">select</option>
+                                <option value="1">Excellent</option>
+                                <option value="2">Very Good</option>
+                                <option value="3">Good</option>
+                                <option value="4">Fair</option>
+                                <option value="5">Poor</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-7">
                             <label for="sleeptime" class="col-form-label">On average, how many hours you sleep per night?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="sleeptime" class="form-control" style="text-align: left" placeholder="sleep time" name="sleeptime" 
-                            [(ngModel)]="sleeptime">
+                        <div class="col-md-3">
+                            <input type="number" min="0" max="24" id="sleeptime" class="form-control" style="text-align: left" placeholder="sleep time" name="sleeptime" 
+                            [(ngModel)]="sleeptime" >
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <label for="alcoholdrinking" class="col-form-label">How is your Alcohol Consumption?</label>
+                        <div class="col-md-7">
+                            <label for="alcoholdrinking" class="col-form-label">Do you drink alcohol regularly?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="alcoholdrinking" class="form-control" style="text-align: left" placeholder="alcohol consumption" name="alcoholdrinking" 
-                            [(ngModel)]="alcoholdrinking">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            <label for="smoking" class="col-form-label">Have you smoked at least 100 cigarettes in your entire life?</label>
-                        </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="smoking" class="form-control" style="text-align: left" placeholder="smoking" name="smoking" 
-                            [(ngModel)]="smoking">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="ml-0 mr-3 mb-2" type="radio" [(ngModel)]="isalcoholdrinkingyes" id="yes" name="isalcoholdrinkingyes" [value]="true">
+                                <label for="yes" class="mb-1 mr-5">Yes</label><br>
+                                <input class="mr-3 mb-2" type="radio" [(ngModel)]="isalcoholdrinkingyes" id="no" 
+                                name="isalcoholdrinkingyes" [value]="false">
+                                <label for="no" class="mb-1">No</label><br>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-7">
+                            <label for="smoking" class="col-form-label">Do you smoke very often?</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="ml-0 mr-3 mb-2" type="radio" [(ngModel)]="issmokingyes" id="yes" name="issmokingyes" [value]="true">
+                                <label for="yes" class="mb-1 mr-5">Yes</label><br>
+                                <input class="mr-3 mb-2" type="radio" [(ngModel)]="issmokingyes" id="no" name="issmokingyes" [value]="false">
+                                <label for="no" class="mb-1">No</label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
                             <label for="physicalactivity" class="col-form-label">Have you done any physical activity or exercise during the past 30 days?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="physicalactivity" class="form-control" style="text-align: left" placeholder="physical activity" name="physicalactivity" 
-                            [(ngModel)]="physicalactivity">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="ml-0 mr-3 mb-2" type="radio" [(ngModel)]="isphysicalactivityyes" id="yes" name="isphysicalactivityyes" [value]="true">
+                                <label for="yes" class="mb-1 mr-5">Yes</label><br>
+                                <input class="mr-3 mb-2" type="radio" [(ngModel)]="isphysicalactivityyes" id="no" name="isphysicalactivityyes" [value]="false">
+                                <label for="no" class="mb-1">No</label><br>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10">
+                        <div class="col-md-7">
                             <label for="diffwalking" class="col-form-label">Do you have any difficulty walking?</label>
                         </div>
-                        <div class="col-md-10 col-md-offset-1">
-                            <input type="text" id="diffwalking" class="form-control" style="text-align: left" placeholder="difficulty walking" name="diffwalking" 
-                            [(ngModel)]="diffwalking">
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="ml-0 mr-3 mb-2" type="radio" [(ngModel)]="isdiffwalkingyes" id="yes" name="isdiffwalkingyes" [value]="true">
+                                <label for="yes" class="mb-1 mr-5">Yes</label><br>
+                                <input class="mr-3 mb-2" type="radio" [(ngModel)]="isdiffwalkingyes" id="no" name="isdiffwalkingyes" [value]="false">
+                                <label for="no" class="mb-1">No</label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
+                            <label for="heartdisease" class="col-form-label">Have you ever had a heart disease?</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="ml-0 mr-3 mb-2" type="radio" [(ngModel)]="isheartdiseaseyes" id="yes" name="isheartdiseaseyes" [value]="true">
+                                <label for="yes" class="mb-1 mr-5">Yes</label><br>
+                                <input class="mr-3 mb-2" type="radio" [(ngModel)]="isheartdiseaseyes" id="no" name="isheartdiseaseyes" [value]="false">
+                                <label for="no" class="mb-1">No</label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
+                            <label for="stroke" class="col-form-label">Have you ever had a stroke?</label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="ml-0 mr-3 mb-2" type="radio" [(ngModel)]="isstrokeyes" id="yes" name="isstrokeyes" [value]="true">
+                                <label for="yes" class="mb-1 mr-5">Yes</label><br>
+                                <input class="mr-3 mb-2" type="radio" [(ngModel)]="isstrokeyes" id="no" name="isstrokeyes" [value]="false">
+                                <label for="no" class="mb-1">No</label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-8"></div>
+                        <div class="col-md-2">
+                            <button type="button" class="col-md-12 btn saveButton" 
+                            (click)="SaveAnalysis()" [disabled]="!savebtnactive">Save Analysis</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="col-md-12 btn btn-outline-dark" 
+                            (click)="Cancel()">Cancel</button>
                         </div>
                     </div>
                 </form>

@@ -2,7 +2,7 @@
 
 <div class="maincontent">
     <div class="main">
-    <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;">Banner</h1>
+    <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;;color: gray;">Banner</h1>
     <input type="button" class="float-right" style="padding: 8px 20px;margin-bottom: 10px;margin-right: 1px;font-size: 16px;overflow: hidden;" value="Create New Banner" (click)="CreateBanner()">
     <table class="table">
         <thead>
@@ -67,6 +67,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="SaveBanner()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
+    <button type="button" class="btn saveButton" (click)="SaveBanner()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
   </div>
 </ng-template>

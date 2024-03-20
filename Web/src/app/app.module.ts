@@ -28,6 +28,10 @@ import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { FactorsComponent } from './factors/factors.component';
+import { AnalysisHistoryComponent } from './analysis-history/analysis-history.component';
+import { RiskAnalysisComponent } from './risk-analysis/risk-analysis.component';
+
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,8 @@ import { FactorsComponent } from './factors/factors.component';
     BannerComponent,
     AboutComponent,
     ContactusComponent,
+    AnalysisHistoryComponent,
+    RiskAnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +58,7 @@ import { FactorsComponent } from './factors/factors.component';
     HttpClientModule,
     NgbModule,
     CommonModule,
+    ChartModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,

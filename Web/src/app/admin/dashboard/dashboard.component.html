@@ -2,7 +2,7 @@
 
 <div class="maincontent">
     <div class="main">
-      <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;">Dashboard</h1>
+      <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;;color: gray;">Dashboard</h1>
       
       <!-- users -->
       <table class="table">
@@ -76,6 +76,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="SaveUser()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
+    <button type="button" class="btn saveButton" (click)="SaveUser()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
   </div>
 </ng-template>

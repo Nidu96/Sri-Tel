@@ -24,63 +24,6 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script>
-window.onwheel = beforeScroll;
-window.onkeydown = beforeScroll;
-var scrollVal = 0;
-function beforeScroll(e) {
-    if (e.type == 'wheel') {
-        if (e.deltaY < 0) {
-            scrollUp();
-        } else {
-            scrollDown();
-        }
-    }
-    else if (e.type == 'keydown' && (e.key == 'ArrowDown' || e.key == 'ArrowUp')) {
-        if (e.key == 'ArrowDown')
-            scrollDown();
-        else if (e.key == 'ArrowUp')
-            scrollUp();
-    }
-
-    return;
-}
-
-function scrollUp() {
-    if (scrollVal > 0)
-        scrollVal -= 200;
-
-    this.scroll(0, scrollVal);
-}
-
-function scrollDown() {
-    setTimeout(function(){reInitCount();},1000);
-    if (scrollVal < document.body.scrollHeight)
-        scrollVal += 200;
-    //should detect for maximum scroll
-    this.scroll(0, scrollVal);
-}
-
-
-
-function reInitCount(){
-  $(".stat-count").each(function() {
-    $(this).html('0');
-    count($(this));
-  });
-}
-
-function count($this) {
-  var current = parseInt($this.html(), 10);
-  current = current + 1;
-  $this.html(++current);
-  if (current > $this.data('count')) {
-    $this.html($this.data('count'));
-  } else {
-    setTimeout(function() {
-      count($this)
-    }, 1);
-  }
-}
 </script>
 </head>
 <body>

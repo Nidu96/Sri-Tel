@@ -11,7 +11,6 @@ import { BannerService } from '../admin/banner/banner.service';
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-@HostListener('window:scroll', ['$event'])
 export class LandingComponent implements OnInit {
 
   public bannerlist: Array<any> = []

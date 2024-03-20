@@ -1,0 +1,32 @@
+<app-sidebar></app-sidebar>
+
+<div class="maincontent">
+    <div class="main">
+      <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;color: gray;">Risk Analysis</h1>
+      <div class="row">
+        <div class="col-md-5 card m-4">
+          <div style="width: 400px; height: 400px;">
+            <div [chart]="heartdiseasesriskchart"></div>
+          </div> 
+        </div>
+        <div class="col-md-5 card m-4">
+          <div style="width: 400px; height: 400px;">
+            <div [chart]="strokeriskchart"></div>
+          </div> 
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 card m-4">
+          <div style="width: 400px; height: 400px;">
+            <div [chart]="mentaldiseasesriskchart"></div>
+          </div> 
+        </div>
+        <div class="col-md-5 card m-4">
+          <div style="width: 400px; height: 400px;">
+            <div [chart]="combinedriskchart"></div>
+          </div> 
+        </div>
+      </div>    
+    </div>
+</div>
+
