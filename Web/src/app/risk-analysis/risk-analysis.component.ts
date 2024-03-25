@@ -32,6 +32,8 @@ export class RiskAnalysisComponent implements OnInit {
     public strokeriskchart: any;
     public mentaldiseasesriskchart: any;
     public combinedriskchart: any;
+    public factorsassociatingheartdiseaseschart: any;
+    public factorsassociatingstrokechart: any;
 
     constructor(
         private bsModalService: BsModalService,
@@ -58,6 +60,8 @@ export class RiskAnalysisComponent implements OnInit {
                 this.CreateStrokeRiskChart()
                 this.CreateMentalDiseaseRiskChart()
                 this.CreateCombinedRiskChart()
+                this.CreateFactorsAssociatingHDChart()
+                this.CreateFactorsAssociatingStrokeChart()
             },
             (error) => {
                 this.alertService.clear()
@@ -109,7 +113,7 @@ export class RiskAnalysisComponent implements OnInit {
                 enabled: true,
                 verticalAlign: 'bottom'
             },
-            colors: ['#c670e6', '#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+            colors: ['#FF4500', '#00CED1'],
             series: [{
                 name: 'Heart Diseases Risk',
                 colorByPoint: true,
@@ -162,7 +166,7 @@ export class RiskAnalysisComponent implements OnInit {
                 enabled: true,
                 verticalAlign: 'bottom'
             },
-            colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+            colors: ['#c4146c', '#fac400'],
             series: [{
                 name: 'Stroke Risk',
                 colorByPoint: true,
@@ -215,7 +219,7 @@ export class RiskAnalysisComponent implements OnInit {
                 enabled: true,
                 verticalAlign: 'bottom'
             },
-            colors: ['#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+            colors: ['#FF4500', '#4682B4'],
             series: [{
                 name: 'Mental Diseases Risk',
                 colorByPoint: true,
@@ -268,12 +272,188 @@ export class RiskAnalysisComponent implements OnInit {
                 enabled: true,
                 verticalAlign: 'bottom'
             },
-            colors: ['#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+            colors: ['#8B008B', '#26c73b'],
             series: [{
                 name: 'Cardiovascular Diseases Risk When having Mental Illnesses',
                 colorByPoint: true,
                 type: undefined,
                 data: combinedriskarr
+            }]
+        });
+        
+    }
+
+    CreateFactorsAssociatingHDChart(){
+        var factorscoefficients = [
+            {name: "BMI", y: 38.75},
+            {name: "Smoking", y: 42.22},
+            {name: "Alcohol Drinking", y: 0},
+            {name: "Physical Health", y: 38.81},
+            {name: "Diffculty Walking", y: 53.56},
+            {name: "Physical Activity", y: 38.14},
+            {name: "Poor General Health", y: 100},
+            {name: "Fair General Health", y: 80.78},
+            {name: "Good General Health", y: 57.40},
+            {name: "Very Good General Health", y: 45.31},
+            {name: "Sleep Time", y: 38.55}]
+        this.factorsassociatingheartdiseaseschart = new Chart({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'bar'
+            },
+            title: {
+                text: '',
+                style: {
+                    font: '14px "Eagle"'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: [
+                    'BMI', 
+                    'Smoking', 
+                    'Alcohol Drinking',
+                    'Physical Health',
+                    'Diffculty Walking',
+                    'Physical Activity',
+                    'Poor General Health',
+                    'Fair General Health',
+                    'Good General Health',
+                    'Very Good General Health',
+                    'Sleep Time'
+                ],
+                title: {
+                    text: null
+                },
+                gridLineWidth: 1,
+                lineWidth: 0
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Coefficients',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                },
+                gridLineWidth: 0
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 10,
+                    dataLabels: {
+                        enabled: true
+                    },
+                    groupPadding: 0.1
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                verticalAlign: 'bottom',
+                x: -40,
+                y: 80,
+                floating: true,
+                borderWidth: 1,
+                shadow: true
+            },
+            colors: ['#c670e6', '#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#64E572'],
+            series: [{
+                colorByPoint: true,
+                type: undefined,
+                data: factorscoefficients
+            }]
+        });
+        
+    }
+
+    CreateFactorsAssociatingStrokeChart(){
+        var factorscoefficients = [
+            {name: "BMI", y: 38.48},
+            {name: "Smoking", y: 30.45},
+            {name: "Alcohol Drinking", y: 0},
+            {name: "Physical Health", y: 50.29},
+            {name: "Diffculty Walking", y: 96.36},
+            {name: "Physical Activity", y: 42.93},
+            {name: "Poor General Health", y: 100},
+            {name: "Fair General Health", y: 85.17},
+            {name: "Good General Health", y: 68.81},
+            {name: "Very Good General Health", y: 51.88},
+            {name: "Sleep Time", y: 44.15}]
+        this.factorsassociatingstrokechart = new Chart({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'bar'
+            },
+            title: {
+                text: '',
+                style: {
+                    font: '14px "Eagle"'
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: [
+                    'BMI', 
+                    'Smoking', 
+                    'Alcohol Drinking',
+                    'Physical Health',
+                    'Diffculty Walking',
+                    'Physical Activity',
+                    'Poor General Health',
+                    'Fair General Health',
+                    'Good General Health',
+                    'Very Good General Health',
+                    'Sleep Time'
+                ],
+                title: {
+                    text: null
+                },
+                gridLineWidth: 1,
+                lineWidth: 0
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Coefficients',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                },
+                gridLineWidth: 0
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 10,
+                    dataLabels: {
+                        enabled: true
+                    },
+                    groupPadding: 0.1
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                verticalAlign: 'bottom',
+                x: -40,
+                y: 80,
+                floating: true,
+                borderWidth: 1,
+                shadow: true
+            },
+            colors: ['#c670e6', '#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4','#64E572'],
+            series: [{
+                colorByPoint: true,
+                type: undefined,
+                data: factorscoefficients
             }]
         });
         

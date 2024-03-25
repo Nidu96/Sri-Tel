@@ -3,13 +3,16 @@
 <div class="maincontent">
     <div class="main">
       <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;color: gray;">Risk Analysis</h1>
+      <p><span style="color: red;">* </span>Disclaimer: Please be aware that the analysis we provide is based on predictive models. These models may have some variability.</p>
       <div class="row">
         <div class="col-md-5 card m-4">
+          <h2 class="custom-h2 mt-5" style="color: black;">Heart Diseases Risk Percentage</h2>
           <div style="width: 400px; height: 400px;">
             <div [chart]="heartdiseasesriskchart"></div>
           </div> 
         </div>
         <div class="col-md-5 card m-4">
+          <h2 class="custom-h2 mt-5" style="color: black;">Stroke Risk Percentage</h2>
           <div style="width: 400px; height: 400px;">
             <div [chart]="strokeriskchart"></div>
           </div> 
@@ -17,16 +20,32 @@
       </div>
       <div class="row">
         <div class="col-md-5 card m-4">
+          <h2 class="custom-h2 mt-5" style="color: black;">Mental Diseases Risk Percentage</h2>
           <div style="width: 400px; height: 400px;">
             <div [chart]="mentaldiseasesriskchart"></div>
           </div> 
         </div>
         <div class="col-md-5 card m-4">
+          <h2 class="custom-h2 mt-5" style="color: black;">CVD Risk Percentage When Having Mental Health Diseases</h2>
           <div style="width: 400px; height: 400px;">
             <div [chart]="combinedriskchart"></div>
           </div> 
         </div>
-      </div>    
+      </div>  
+      <div class="row">
+        <div class="col-md-5 card m-4">
+          <h2 class="custom-h2 mt-5" style="color: black;">Association of Each Risk Factor in Heart Diseases</h2>
+          <div style="width: 400px; height: 400px;">
+            <div [chart]="factorsassociatingheartdiseaseschart"></div>
+          </div> 
+        </div>
+        <div class="col-md-5 card m-4">
+          <h2 class="custom-h2 mt-5" style="color: black;">Association of Each Risk Factor in Stroke</h2>
+          <div style="width: 400px; height: 400px;">
+            <div [chart]="factorsassociatingstrokechart"></div>
+          </div> 
+        </div>
+      </div>   
     </div>
 </div>
 

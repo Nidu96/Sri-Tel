@@ -357,6 +357,7 @@ export class ProfileComponent implements OnInit {
     }
 
     calculatePredictedProbability(){
+        var MentalHealth = this.mentalhealth;
         var BMI = this.bmi;
         var SmokingYes = this.issmokingyes == true ? 1:0;
         var AlcoholDrinkingYes = this.isalcoholdrinkingyes == true ? 1:0;
@@ -371,7 +372,7 @@ export class ProfileComponent implements OnInit {
         const predictedHeartDiseasesProbability = this.predictHeartDisease(BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
         const predictedStrokeProbability = this.predictStroke(BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
         const predictedMentalDiseasesProbability = this.predictMentalDiseases(PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
-        const combinedProbability = predictedHeartDiseasesProbability * predictedStrokeProbability * predictedMentalDiseasesProbability;
+        const combinedProbability = this.predictCVDRisk(MentalHealth, BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) * 100;
         this.SavePredictions(predictedHeartDiseasesProbability, predictedStrokeProbability, predictedMentalDiseasesProbability, combinedProbability)
     }
 
@@ -473,5 +474,82 @@ export class ProfileComponent implements OnInit {
         const probability = 1 / (1 + Math.exp(-logOdds));
         return probability;
     }
+
+    predictCVDRisk(MentalHealth, BMI, SmokingYes, AlcoholDrinkingYes, PhysicalHealth, DiffWalkingYes, PhysicalActivityYes, GenHealthFair, GenHealthGood, GenHealthPoor, GenHealthVeryGood, SleepTime) {
+  
+        // Coefficients from the logistic regression model for heart diseases when having mental diseases
+        const intercept_HD = -4.1159441;
+        const coef_MentalHealthYes_HD = -0.3648028;
+        const coef_BMI_HD = -0.0032044;
+        const coef_SmokingYes_HD = 0.5113103;
+        const coef_AlcoholDrinkingYes_HD = -0.5273060;
+        const coef_PhysicalHealth_HD = 0.0040254;
+        const coef_DiffWalkingYes_HD = 0.6543616;
+        const coef_PhysicalActivityYes_HD = -0.0589297;
+        const coef_GenHealthFair_HD = 2.0328350;
+        const coef_GenHealthGood_HD = 1.4332654;
+        const coef_GenHealthPoor_HD = 2.5366333;
+        const coef_GenHealthVeryGood_HD = 0.7120793;
+        const coef_SleepTime_HD = 0.0447955;
+      
+        // Calculate the log odds based on the coefficients and predictor values
+        const logOdds_HD = intercept_HD +
+                  MentalHealth * coef_MentalHealthYes_HD
+                  BMI * coef_BMI_HD +
+                  SmokingYes * coef_SmokingYes_HD +
+                  AlcoholDrinkingYes * coef_AlcoholDrinkingYes_HD +
+                  PhysicalHealth * coef_PhysicalHealth_HD +
+                  DiffWalkingYes * coef_DiffWalkingYes_HD +
+                  PhysicalActivityYes * coef_PhysicalActivityYes_HD +
+                  GenHealthFair * coef_GenHealthFair_HD +
+                  GenHealthGood * coef_GenHealthGood_HD +
+                  GenHealthPoor * coef_GenHealthPoor_HD +
+                  GenHealthVeryGood * coef_GenHealthVeryGood_HD +
+                  SleepTime * coef_SleepTime_HD;
+      
+        // Calculate the probability of heart disease when having mental diseases
+        const predicted_probability_heart_diseases = 1 / (1 + Math.exp(-logOdds_HD));
+        
+        // Coefficients from the logistic regression model for stroke when having mental diseases
+        const intercept_S = -4.534221;
+        const coef_MentalHealthYes_S = -0.054022;
+        const coef_BMI_S = -0.017602;
+        const coef_SmokingYes_S = 0.308488;
+        const coef_AlcoholDrinkingYes_S = -0.42240;
+        const coef_PhysicalHealth_S = 0.005160;
+        const coef_DiffWalkingYes_S = 0.970069;
+        const coef_PhysicalActivityYes_S = -0.108520;
+        const coef_GenHealthFair_S = 1.765308;
+        const coef_GenHealthGood_S = 1.220693;
+        const coef_GenHealthPoor_S = 2.103452;
+        const coef_GenHealthVeryGood_S = 0.619519;
+        const coef_SleepTime_S = 0.056973;
+      
+        // Calculate the log odds based on the coefficients and predictor values
+        const logOdds_S = intercept_S +
+                  MentalHealth * coef_MentalHealthYes_S
+                  BMI * coef_BMI_S +
+                  SmokingYes * coef_SmokingYes_S +
+                  AlcoholDrinkingYes * coef_AlcoholDrinkingYes_S +
+                  PhysicalHealth * coef_PhysicalHealth_S +
+                  DiffWalkingYes * coef_DiffWalkingYes_S +
+                  PhysicalActivityYes * coef_PhysicalActivityYes_S +
+                  GenHealthFair * coef_GenHealthFair_S +
+                  GenHealthGood * coef_GenHealthGood_S +
+                  GenHealthPoor * coef_GenHealthPoor_S +
+                  GenHealthVeryGood * coef_GenHealthVeryGood_S +
+                  SleepTime * coef_SleepTime_S;
+      
+        // Calculate the probability of heart disease when having mental diseases
+        const predicted_probability_stroke = 1 / (1 + Math.exp(-logOdds_S));
+
+        //Get the joint probability (probability of both heart disease and stroke occurring)
+        const joint_probability = predicted_probability_heart_diseases * predicted_probability_stroke
+
+        //Calculate the combined probability of either heart disease or stroke occurring
+        const combined_probability = predicted_probability_heart_diseases + predicted_probability_stroke - joint_probability
+        return combined_probability;
+    }
+
 //#endregion
 }
