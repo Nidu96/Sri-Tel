@@ -14,6 +14,7 @@ html {
 	background-color: #fff;
 	scroll-behavior: smooth;
 	height: 100%;
+	overflow: hidden;
   }
   
   body {
@@ -28,7 +29,26 @@ html {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	font-size: 16px;
+	font-size: 12px;
+  }
+
+  .products-body {
+	margin: 0 !important;
+	padding : 0px !important;
+	font-family: 'Segoe UI';
+	height: 100vh;
+	background-repeat: no-repeat;
+	background-size:contain;
+	background-position:center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	font-size: 12px;
+	padding-top: 400px !important;
+  }
+  * {
+    box-sizing: border-box;
   }
 
   .p{
@@ -77,12 +97,9 @@ html {
 
   .custom-h4 {
 	font-size: 20px !important;
-	color: rgb(66, 133, 244);
+	color: #f89602;
   }
 
-  .custom-h2 {
-	font-size: 20px !important;
-  }
 
   .custom-label {
 	font-size: 14px !important;
@@ -108,7 +125,7 @@ html {
 @media screen and (min-width: 600px) {
   .custom-h4 {
 	  font-size: 24px !important;
-	  color: rgb(66, 133, 244);
+	  color: #faa72a;
 	}
 }
 
@@ -149,6 +166,13 @@ html {
 	margin-left: 6%;
 	margin-right: 6%;
   }
+
+  .organic-products-section {
+	margin-top: 4%;
+	margin-bottom: 4%;
+	margin-left: 20%;
+	margin-right: 20%;
+  }
   
   .bottom-section {
 	margin-top: 4%;
@@ -164,14 +188,14 @@ html {
 	margin-right: 0%;
   }
 
-  .page-banner {
-	height: 50%;
+  .products-page{
+	height: 40%;
 	text-align: center;
   }
 
   @media screen and (min-width: 600px) {
-	.page-banner {
-		height: 60%;
+	.products-page {
+		height: 20%;
 		text-align: center;
 	}
   }
@@ -188,29 +212,10 @@ html {
 	font-size: 28px;
 	font-weight: 600;
 	display:inline-block;
-	color: rgb(66, 133, 244);
+	margin: 40px 8px 10px 8px; 
+	color: #c79416;
   }
-
-  h1 {
-	text-align: center;
-	font-size: 24px !important;
-	font-weight: 600;
-	display:inline-block;
-	margin: 5px 0px 0px 0px; 
-	color: white;
-  }
-
-  @media screen and (min-width: 600px) {
-	h1{
-		text-align: center;
-		font-size: 24px;
-		font-weight: 600;
-		display:inline-block;
-		margin: 5px 8px 10px 8px; 
-		color: white;
-	}
-  }
-
+  
   p {
 	font-family: 'Didot';
 	color: #858585;
@@ -227,6 +232,18 @@ html {
 	min-height: 100%;
 	padding: 20px;
   }
+
+.cart-span{
+	font-size: 12px;
+	color: #ffffff;
+	background: rgb(228, 120, 31);
+	border-radius: 50%;
+	padding: 5px;
+	position: relative;
+	left: -3px;
+	top: -10px;
+	opacity: 0.9;
+}
   
   #loginform {
 	-webkit-border-radius: 10px 10px 10px 10px;
@@ -300,35 +317,14 @@ html {
   }
 
   .select-control{
-	background-color: #f6f6f6;
-	border: none;
-	color: #0d0d0d;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-ms-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
-	height: 3.25rem !important;
-  }
-  
-  .select-control:focus {
-	background-color: #fff;
-	border-bottom: 2px solid rgb(66, 133, 244);
-  }
-  
-  .select-control:placeholder {
-	color: #cccccc;
+	height: 4rem !important;
   }
   
   input[type=button], input[type=submit], input[type=reset]  {
-	background-color: rgb(66, 133, 244);
+	background-color: #c79416;
 	border: none;
 	color: white;
+	padding: 10px 120px 10px 60px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
@@ -346,7 +342,7 @@ html {
   }
   
   input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-	background-color: rgb(66, 133, 244);
+	background-color: #c79416;
   }
   
   input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
@@ -357,14 +353,18 @@ html {
 	transform: scale(0.95);
   }
   
-  input[type=text], input[type=number]{
+  input[type=text] {
 	background-color: #f6f6f6;
 	border: none;
 	color: #0d0d0d;
-	padding: 15px 10px;
+	padding: 15px 32px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
+	font-size: 16px;
+	margin: 5px;
+	width: 85%;
+	border: 2px solid #f6f6f6;
 	-webkit-transition: all 0.5s ease-in-out;
 	-moz-transition: all 0.5s ease-in-out;
 	-ms-transition: all 0.5s ease-in-out;
@@ -374,12 +374,12 @@ html {
 	border-radius: 5px 5px 5px 5px;
   }
   
-  input[type=text]:focus, input[type=number]:focus{
+  input[type=text]:focus {
 	background-color: #fff;
-	border-bottom: 2px solid rgb(66, 133, 244);
+	border-bottom: 2px solid #c79416;
   }
   
-  input[type=text]:placeholder,input[type=number]:placeholder {
+  input[type=text]:placeholder {
 	color: #cccccc;
   }
   
@@ -387,10 +387,13 @@ html {
 	background-color: #f6f6f6;
 	border: none;
 	color: #0d0d0d;
-	padding: 15px 10px;
+	padding: 15px 32px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
+	font-size: 16px;
+	margin: 5px;
+	width: 85%;
 	border: 2px solid #f6f6f6;
 	-webkit-transition: all 0.5s ease-in-out;
 	-moz-transition: all 0.5s ease-in-out;
@@ -403,7 +406,7 @@ html {
   
   input[type=password]:focus {
 	background-color: #fff;
-	border-bottom: 2px solid rgb(66, 133, 244);
+	border-bottom: 2px solid #c79416;
   }
   
   input[type=password]:placeholder {
@@ -413,8 +416,6 @@ html {
   input[type=radio] {
 	  margin-left: 15px;
 	  margin-right: 15px;
-
-
 // 	background-color: #f6f6f6;
 // 	border: none;
 // 	position: absolute;
@@ -435,7 +436,7 @@ html {
   
 //   input[type=radio]:focus {
 // 	background-color: #fff;
-// 	border-bottom: 2px solid rgb(66, 133, 244);
+// 	border-bottom: 2px solid #c79416;
 //   }
   
 //   input[type=radio]:placeholder {
@@ -500,27 +501,27 @@ html {
   }
   
   .fadeIn.first {
-	-webkit-animation-delay: 0.1s;
-	-moz-animation-delay: 0.1s;
-	animation-delay: 0.1s;
-  }
-  
-  .fadeIn.second {
 	-webkit-animation-delay: 0.2s;
 	-moz-animation-delay: 0.2s;
 	animation-delay: 0.2s;
   }
   
-  .fadeIn.third {
-	-webkit-animation-delay: 0.3s;
-	-moz-animation-delay: 0.3s;
-	animation-delay: 0.3s;
-  }
-  
-  .fadeIn.fourth {
+  .fadeIn.second {
 	-webkit-animation-delay: 0.4s;
 	-moz-animation-delay: 0.4s;
 	animation-delay: 0.4s;
+  }
+  
+  .fadeIn.third {
+	-webkit-animation-delay: 0.6s;
+	-moz-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+  }
+  
+  .fadeIn.fourth {
+	-webkit-animation-delay: 0.8s;
+	-moz-animation-delay: 0.8s;
+	animation-delay: 0.8s;
   }
   
   /* Simple CSS3 Fade-in Animation */
@@ -559,13 +560,12 @@ html {
   .sidebar {
 	margin: 0;
 	padding: 0;
-	width: 15%;
-	background-color: rgb(107, 143, 202);
+	width: 12%;
+	background-color: #2a4225;
 	position: fixed;
 	height: 100%;
 	overflow: auto;
 	color: #fff;
-	font-weight: bold;
   }
   
   .sidebar a {
@@ -577,20 +577,17 @@ html {
 	padding-right: 10px;
 	text-decoration: none;
 	font-size: 12px;
-	font-weight: bold;
   }
    
   .sidebar a.active {
 	background-color: #ffff;
-	color: rgb(66, 133, 244);
-	font-weight: bold;
+	color: #c79416;
   }
   
   .sidebar a:hover:not(.active) {
 	background-color: #ffff;
-	color: rgb(66, 133, 244);
+	color: #c79416;
 	width: inherit;
-	font-weight: bold;
   }
   
   div.content {
@@ -609,9 +606,8 @@ html {
 	  width: 100%;
 	  height: auto;
 	  position: relative;
-	  font-weight: bold;
 	}
-	.sidebar a {float: left;font-weight: bold;}
+	.sidebar a {float: left;}
 	div.content {margin-left: 0;}
   }
   
@@ -619,7 +615,6 @@ html {
 	.sidebar a {
 	  text-align: center;
 	  float: none;
-	  font-weight: bold;
 	}
   }
 
@@ -630,7 +625,7 @@ html {
 }
 
   .navbar-light .navbar-brand {
-	color: rgb(66, 133, 244);
+	color: #c79416;
 	font-size: 32px;
 	font-weight: bold;
 	letter-spacing: 2px;
@@ -641,12 +636,12 @@ html {
   }
   
   .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
-	color: rgb(224, 27, 132);
+	color: #030303;
 	background-color: white;
   }
   
   .navbar-light .navbar-nav .nav-link {
-	color: rgb(224, 27, 132);
+	color: #030303;
 	padding: 8px;
 	background-color: white;
   }
@@ -664,11 +659,11 @@ html {
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 14px;
   }
   
   .nav-link.active,.nav-link:focus{
-	color: rgb(66, 133, 244);
+	color: #c79416;
 	font-weight: bold;
   }
   
@@ -680,7 +675,7 @@ html {
   }
   
   .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-	color: rgb(66, 133, 244);
+	color: #c79416;
 	text-decoration: underline;
   }
 
@@ -788,7 +783,7 @@ html {
 }
 
   .main {
-	margin-left: 15%;
+	margin-left: 12%;
 	padding: 16px;
 	height: 1500px; /* Used in this example to enable scrolling */
   }
@@ -910,7 +905,7 @@ html {
 }
 
 .card_title {
-  color: rgb(66, 133, 244);
+  color: #c79416;
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: 1px;
@@ -977,7 +972,7 @@ html {
   }
 
   .vl {
-	border-left: 6px solid rgb(66, 133, 244);
+	border-left: 6px solid #c79416;
 	height: 100%;
   }
 
@@ -989,7 +984,7 @@ html {
 	display: inline-block;
 	border-radius: 10px;
 	background-color: #f4501e00;
-	color: rgb(66, 133, 244);
+	color: #c79416;
 	text-align: center;
 	font-size: 16px;
 	padding: 5px;
@@ -997,7 +992,7 @@ html {
 	transition: all 1s;
 	cursor: pointer;
 	margin: 5px 100px 20px;
-	border-color: rgb(66, 133, 244);
+	border-color: #c79416;
   }
   
   .btntransparent span {
@@ -1028,7 +1023,7 @@ html {
   .btnsubmit {
 	display: inline-block;
 	border-radius: 10px;
-	background-color: rgb(66, 133, 244);
+	background-color: #c79416;
 	color: rgb(255, 255, 255);
 	text-align: center;
 	font-size: 20px;
@@ -1037,7 +1032,7 @@ html {
 	transition: all 1s;
 	cursor: pointer;
 	margin: 5px;
-	border-color: rgb(66, 133, 244);
+	border-color: #c79416;
   }
   
   .btnsubmit span {
@@ -1104,8 +1099,89 @@ html {
 	right: 0;
   }
 
+
+  .btnsubmit3 {
+	display: inline-block;
+	border-radius: 10px;
+	background-color: #a10606;
+	color: #ffffff;
+	text-align: center;
+	font-size: 14px;
+	padding: 6px;
+	transition: all 1s;
+	cursor: pointer;
+	border-color: #a10606;
+	border: none;
+  }
+  
+  .btnsubmit3 span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+  }
+  
+  .btnsubmit3 span:after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
+  }
+  
+  .btnsubmit3:hover span {
+	padding-right: 25px;
+  }
+  
+  .btnsubmit3:hover span:after {
+	opacity: 1;
+	right: 0;
+  }
+
+
+  .btnsubmitfavourite {
+	display: inline-block;
+	border-radius: 10px;
+	background-color: #e78e08;
+	color: #ffffff;
+	text-align: center;
+	font-size: 14px;
+	padding-left: 8px;
+	padding-right: 8px;
+	transition: all 1s;
+	cursor: pointer;
+	border-color: #e78e08;
+	border: none;
+  }
+  
+  .btnsubmitfavourite span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+  }
+  
+  .btnsubmitfavourite span:after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
+  }
+  
+  .btnsubmitfavourite:hover span {
+	padding-right: 25px;
+  }
+  
+  .btnsubmitfavourite:hover span:after {
+	opacity: 1;
+	right: 0;
+  }
+
   .btnfixed {
-	background-color: rgb(66, 133, 244);
+	background-color: #c79416;
 	border: none;
 	color: white;
 	padding-top: 5px;
@@ -1159,7 +1235,7 @@ html {
   .btnsubmitlanding {
 	display: inline-block;
 	border-radius: 10px;
-	background-color: rgb(66, 133, 244);
+	background-color: #c79416;
 	color: rgb(255, 255, 255);
 	text-align: center;
 	font-size: 16px;
@@ -1167,7 +1243,7 @@ html {
 	width: 30%;
 	transition: all 1s;
 	cursor: pointer;
-	border-color: rgb(66, 133, 244);
+	border-color: #c79416;
   }
   
   .btnsubmitlanding span {
@@ -1193,28 +1269,6 @@ html {
   .btnsubmitlanding:hover span:after {
 	opacity: 1;
 	right: 0;
-  }
-
-  .saveButton {
-	background-color: #38afba;
-	color: white;
-	border-color: #38afba;
-  }
-
-  .saveButton:hover {
-	background-color: #38afba;
-	color: white;
-	border-color: #38afba;
-  }
-
-  .saveButton:hover span {
-	padding-right: 25px;
-  }
-  
-  .saveButton:hover span:after {
-	opacity: 1;
-	right: 0;
-	color: white;
   }
 
 .div2 {
@@ -1262,7 +1316,7 @@ html {
 }
 
 .divheader {
-	border:5px solid rgb(66, 133, 244);
+	border:5px solid #c79416;
 	padding: 20px;
 }
 
@@ -1641,7 +1695,7 @@ html {
 	font-size: 26px;
 	cursor: pointer;
 	background-color: rgb(218, 218, 218);;
-	color: rgb(66, 133, 244);
+	color: #c79416;
 	height: 10%;
 	border: none;
   }
@@ -1649,16 +1703,13 @@ html {
 .fixedbreadcrumb{
 	height: 8%;
 	background-color: rgb(218, 218, 218);
-	color: #696d72;
 }
 
 .navtext{
 	font-family: 'Segoe UI';
-	font-size: 14px !important;
+	font-size: 18px;
 	color: #c5c4c4;
 	text-align: left;
-	font-weight: bold;
-	cursor: pointer;
 }
 
 #footer {
@@ -1750,8 +1801,9 @@ pre {
 	word-wrap:break-word;
 	text-align: left;
 	font-size: 16px;
+	background-color: #13152e;
 	padding: 5px;
-	color: white;
+	color: #f89602;
 }
 
 .fa-badge:after{
@@ -1847,9 +1899,6 @@ pre {
 	  }
 	}
   }
-	.col-form-label{
-		font-size: 14px;
-	}
 
   .box {
 	padding: 5px 20px 10px 0px;
@@ -1963,6 +2012,32 @@ input,
 button {
     padding: 5px;
 }
+
+.background1{
+	background: url('assets/images/total_solution_provider_section_BG.png');
+	height: 250px;
+}
+
+@media screen and (min-width: 600px) {
+	.background1{
+		background: url('assets/images/total_solution_provider_section_BG.png');
+		height: 500px;
+	}
+  }
+
+
+.background2{
+	background: url('assets/images/bottom_section_BG.png');
+	height: 250px;
+}
+
+@media screen and (min-width: 600px) {
+	.background2{
+		background: url('assets/images/bottom_section_BG.png');
+		height: 700px;
+	}
+  }
+
 
 .layer1{
 	position: absolute;
@@ -2099,28 +2174,26 @@ button {
   .services-text {
 	font-size: 7px;
 	font-weight: bold;
-	color:#696d72;
 }
 
 @media screen and (min-width: 600px) {
 	.services-text {
 		font-size: 16px;
 		font-weight: bold;
-		color:#696d72
 	}
   }
 
   .services-text2 {
 	font-size: 7px;
 	font-weight: bold;
-	color: #6b8fca !important;
+	color: #0d2878 !important;
 }
 
 @media screen and (min-width: 600px) {
 	.services-text2 {
 		font-size: 12px;
 		font-weight: bold;
-		color: #6b8fca !important;
+		color: #0d2878 !important;
 	}
   }
 

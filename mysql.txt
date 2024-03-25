@@ -1,4 +1,4 @@
-CREATE TABLE `cvddb`.`tblbanner`(
+CREATE TABLE `sriteldb`.`banner`(
 `Id` VARCHAR(100) NOT NULL , 
 `Title` VARCHAR(100) NULL DEFAULT NULL , 
 `Image` LONGTEXT NULL DEFAULT NULL , 
@@ -6,36 +6,28 @@ CREATE TABLE `cvddb`.`tblbanner`(
 `DatePublished` DATETIME NULL DEFAULT NULL , 
 PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
 
-CREATE TABLE `cvddb`.`tblpredictionhistory`(
-`Id` VARCHAR(100) NOT NULL , 
-`UserId` VARCHAR(100) NULL DEFAULT NULL , 
-`HeartDiseasesRiskProbabilty` DOUBLE NULL DEFAULT '0' , 
-`StrokeRiskProbabilty` DOUBLE NULL DEFAULT '0' , 
-`MentalDiseasesRiskProbabilty` DOUBLE NULL DEFAULT '0' , 
-`CombinedRiskProbabilty` DOUBLE NULL DEFAULT '0' , 
-`DatePublished` DATETIME NULL DEFAULT NULL , 
-PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
 
-
-CREATE TABLE `cvddb`.`tbluser`(
+CREATE TABLE `sriteldb`.`systemuser`(
 `Id` VARCHAR(100) NOT NULL , 
 `Name` VARCHAR(100) NULL DEFAULT NULL , 
 `Username` VARCHAR(200) NULL DEFAULT NULL , 
 `Password` VARCHAR(200) NULL DEFAULT NULL , 
-`Phone` INT NULL DEFAULT NULL , 
+`Phone` VARCHAR(200) NULL DEFAULT NULL , 
 `Active` VARCHAR(10) NULL DEFAULT NULL , 
 `UserRole` VARCHAR(10) NULL DEFAULT NULL ,
-`Weight` DECIMAL(19,4) NULL DEFAULT '0' , 
-`Height` DECIMAL(19,4) NULL DEFAULT '0' , 
-`BMI` DECIMAL(19,4) NULL DEFAULT '0' , 
-`IsSmokingYes` BOOLEAN NULL DEFAULT FALSE , 
-`IsAlcoholDrinkingYes` BOOLEAN NULL DEFAULT FALSE , 
-`PhysicalHealth` INT NULL DEFAULT '0' ,
-`MentalHealth` INT NULL DEFAULT '0' ,
-`IsDiffWalkingYes` BOOLEAN NULL DEFAULT FALSE ,
-`IsPhysicalActivityYes` BOOLEAN NULL DEFAULT FALSE ,
-`GenHealth` INT NULL DEFAULT '0' ,
-`SleepTime` INT NULL DEFAULT '0' ,
-`IsHeartDiseaseYes` BOOLEAN NULL DEFAULT FALSE ,
-`IsStrokeYes` BOOLEAN NULL DEFAULT FALSE ,
+`Roaming` VARCHAR(10) NULL DEFAULT NULL , 
+`RingingTone` VARCHAR(10) NULL DEFAULT NULL , 
+`WorkPackage` VARCHAR(10) NULL DEFAULT NULL , 
+`StudentPackage` VARCHAR(10) NULL DEFAULT NULL ,
+`FamilyPackage` VARCHAR(10) NULL DEFAULT NULL ,
+`FamilyPlusPackage` VARCHAR(10) NULL DEFAULT NULL ,
+`WorkStudentPackage` VARCHAR(10) NULL DEFAULT NULL ,
+PRIMARY KEY (`Id`)) ENGINE = InnoDB; 
+
+CREATE TABLE `sriteldb`.`bills`(
+`Id` VARCHAR(100) NOT NULL , 
+`UserId` VARCHAR(100) NOT NULL , 
+`TotalAmount` VARCHAR(100) NULL DEFAULT NULL , 
+`Payment` VARCHAR(100) NULL DEFAULT NULL ,  
+`DatePublished` DATETIME NULL DEFAULT NULL , 
 PRIMARY KEY (`Id`)) ENGINE = InnoDB; 

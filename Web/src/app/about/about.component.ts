@@ -14,7 +14,7 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     AOS.init();
     if(this.router.url === '/about'){
-      document.body.style.backgroundImage = "url('assets/images/aboutus/aboutbanner.jpg')"; 
+      document.body.style.backgroundImage = "url('assets/images/aboutus/AboutUsBanner.png')"; 
       document.body.className = "products-body"
     }
   }

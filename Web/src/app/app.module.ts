@@ -15,6 +15,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './register/register.component';
+import { ServicesComponent } from './services/services.component';
+import { PaymentComponent } from './payment/payment.component';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -27,11 +29,7 @@ import {NgxImageCompressService} from 'ngx-image-compress';
 import {DirectPayIpgModule} from 'ng-direct-pay-ipg';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
-import { FactorsComponent } from './factors/factors.component';
-import { AnalysisHistoryComponent } from './analysis-history/analysis-history.component';
-import { RiskAnalysisComponent } from './risk-analysis/risk-analysis.component';
-
-import { ChartModule } from 'angular-highcharts';
+import { BillsComponent } from './bills/bills.component';
 
 @NgModule({
   declarations: [
@@ -42,14 +40,14 @@ import { ChartModule } from 'angular-highcharts';
     DashboardComponent,
     AlertComponent,
     ProfileComponent,
+    BillsComponent,
     LandingComponent,
     RegisterComponent,
-    FactorsComponent,
+    ServicesComponent,
+    PaymentComponent,
     BannerComponent,
     AboutComponent,
     ContactusComponent,
-    AnalysisHistoryComponent,
-    RiskAnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +56,6 @@ import { ChartModule } from 'angular-highcharts';
     HttpClientModule,
     NgbModule,
     CommonModule,
-    ChartModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,

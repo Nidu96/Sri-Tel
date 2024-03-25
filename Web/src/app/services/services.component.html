@@ -1,0 +1,102 @@
+<app-header></app-header>
+<div class="row products-page">
+</div>
+<div class="row justify-content-center" style="background-color: white">
+    <p style="padding-left: 70px;padding-top: 30px;">Home / Services</p>
+    <div class="col-12">
+    <section class="section-custom">
+      <div class="justify-content-center">
+        <p class="textstylegery" style="color:#0d2878;font-weight:bold;font-size: 18px;padding-top: 0%;padding-bottom: 0%;margin-top: 0%;">
+          What we provide in Sri tel
+        </p>
+        <div class="row justify-content-center mb-5" style="padding-top: 8px">
+            <div class="col-2 divservices2 pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/roaming.png" style="width: 40%;">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Roaming</h4>
+                      <h4 class="mb-5 mt-1 services-text2" style="color:black">Rs. 1200 | Per Month</h4>
+                      <input type="button" class="fadeIn third activatebutton" [value]="roaming" (click)="SaveRoaming()">
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 divservices2 pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/ringingtone.png">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Ringing Tone</h4>
+                      <h4 class="mb-5 mt-1 services-text2" style="color:black">Rs. 200 | Per month</h4>
+                      <input type="button" class="fadeIn third activatebutton" [value]="ringingtone" (click)="SaveRingingTone()">
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 divservices2 pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/work.png" style="width: 40%;">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Work Data Plan</h4>
+                      <h4 class="mb-5 services-text2" style="color:black">Rs. 1850 | 55GB | Per Month</h4>
+                      <input type="button" class="fadeIn third activatebutton" [value]="work" (click)="SaveWork()">
+                  </li>
+                </ul>
+            </div>
+            <div class="col-2 divservices2 pb-5">
+                <ul class="list-inline justify-content-center" style="text-align: center">
+                  <li>
+                      <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/student.png">
+                      <h4 class="mb-5 mt-1 services-text" style="color:black">Student Data Plan</h4>
+                      <h4 class="mb-5 mt-1 services-text2" style="color:black">Rs. 550 | 16GB | Per Month</h4>
+                      <input type="button" class="fadeIn third activatebutton" [value]="student" (click)="SaveStudent()">
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-5" style="padding-top: 8px">
+          <div class="col-2 divservices2 pb-5">
+              <ul class="list-inline justify-content-center" style="text-align: center">
+                <li>
+                    <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/workstudent.png">
+                    <h4 class="mb-5 mt-1 services-text" style="color:black">Work Student Combo Pack</h4>
+                    <h4 class="mb-5 mt-1 services-text2" style="color:black">Rs. 1500 | 40GB | Per Month</h4>
+                    <input type="button" class="fadeIn third activatebutton" [value]="workstudent" (click)="SaveWorkStudent()">
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservices2 pb-5">
+              <ul class="list-inline justify-content-center" style="text-align: center">
+                <li>
+                    <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/family.png">
+                    <h4 class="mb-5 mt-1 services-text" style="color:black">Family Pack</h4>
+                    <h4 class="mb-5 mt-1 services-text2" style="color:black">Rs. 2300 | 65GB | Per Month</h4>
+                    <input type="button" class="fadeIn third activatebutton" [value]="family" (click)="SaveFamily()">
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservices2 pb-5">
+              <ul class="list-inline justify-content-center" style="text-align: center">
+                <li>
+                    <img class="service-icon6 mt-3 mb-2" style="width: 65px;" src="../../assets/images/total_service_provider_section/familyplus.png">
+                    <h4 class="mb-5 mt-1 services-text" style="color:black">Family Plus Pack</h4>
+                    <h4 class="mb-5 mt-1 services-text2" style="color:black">Rs. 3200 | 95GB | Per Month</h4>
+                    <input type="button" class="fadeIn third activatebutton" [value]="familyplus" (click)="SaveFamilyPlus()">
+                </li>
+              </ul>
+          </div>
+          <div class="col-2 divservices2 pb-5">
+              <ul class="list-inline justify-content-center" style="text-align: center">
+                <li>
+                    <img class="service-icon6 mt-3 mb-2" src="../../assets/images/total_service_provider_section/other.png" style="width: 50%;">
+                    <h4 class="mb-5 mt-1 services-texts" style="color:black">Other Packages</h4>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-12 footer-box1-about-us ml-5 mr-5">
+      <p style="color:white;" class="justify-content-center mt-5">Copyright © 2021 Sri-Tel</p>
+  </div>
+</div>

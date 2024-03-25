@@ -5,12 +5,12 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './register/register.component';
+import { ServicesComponent } from './services/services.component';
+import { PaymentComponent } from './payment/payment.component';
 import { BannerComponent } from './admin/banner/banner.component';
 import { AboutComponent } from './about/about.component';
 import { ContactusComponent } from './contactus/contactus.component';
-import { FactorsComponent } from './factors/factors.component';
-import { AnalysisHistoryComponent } from './analysis-history/analysis-history.component';
-import { RiskAnalysisComponent } from './risk-analysis/risk-analysis.component';
+import { BillsComponent } from './bills/bills.component';
 
 
 const routes: Routes = [
@@ -19,18 +19,17 @@ const routes: Routes = [
 
   //home
   { path: '', component: LandingComponent, data: { allowed: false } },
-  { path: 'factors', component: FactorsComponent, data: { allowed: false } },
+  { path: 'services', component: ServicesComponent, data: { allowed: false } },
   { path: 'about', component: AboutComponent, data: { allowed: false } },
   { path: 'contactus', component: ContactusComponent, data: { allowed: false } },
+  { path: 'bills', component: BillsComponent, data: { allowed: false } },
+  { path: 'payment', component: PaymentComponent, data: { allowed: false } },
 
   //admin
   { path: 'dashboard', component: DashboardComponent, data: { allowed: false } },
   { path: 'banner', component: BannerComponent, data: { allowed: false } },
 
-  //user
   { path: 'profile', component: ProfileComponent, data: { allowed: false } },
-  { path: 'analysishistory', component: AnalysisHistoryComponent, data: { allowed: false } },
-  { path: 'riskanalysis', component: RiskAnalysisComponent, data: { allowed: false } }
 
 ];
 

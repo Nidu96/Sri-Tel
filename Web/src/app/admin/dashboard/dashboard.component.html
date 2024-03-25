@@ -2,7 +2,7 @@
 
 <div class="maincontent">
     <div class="main">
-      <h1 data-aos="zoom-in" data-aos-duration="1000" style="text-align: left;;color: gray;">Dashboard</h1>
+      <h1 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Dashboard</h1>
       
       <!-- users -->
       <table class="table">
@@ -28,6 +28,26 @@
         </tbody>
       </table>
       <pagination-controls (pageChange)="pusers = $event" class="float-right"></pagination-controls>
+
+      <h3 data-aos="zoom-in" data-aos-duration="2000" style="text-align: left;">Payments</h3>
+      <!-- payments -->
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Date Of Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of permissionlist | paginate: { itemsPerPage: 5, currentPage: ppermissions }; let i = index">
+          <td>{{i.Name}}</td>
+          <td>{{i.Email}}</td>
+          <td>{{i.Date| date:'yyyy-MM-dd'}}</td>
+        </tr>
+      </tbody>
+      </table>
+      <pagination-controls (pageChange)="ppermissions = $event" class="float-right"></pagination-controls>
     </div>
 </div>
 
@@ -76,6 +96,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn saveButton" (click)="SaveUser()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="SaveUser()" [hidden]="!savebtn" [disabled]="!savebtnactive">Save</button>
   </div>
 </ng-template>
